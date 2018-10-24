@@ -1,4 +1,10 @@
-package ch.bfh.btx8081.w2018.blue;
+
+/**
+ *date: 24.10.2018   -  time: 11:25:08
+ *user: yanng   -  yann.gund@gmx.ch
+ *
+ */
+package project_test;
 
 public class JavaTestClass {
 
@@ -24,7 +30,7 @@ public class JavaTestClass {
 		}
 
 		public void setI(int i) {
-			this.i = i+5;
+			this.i = i + 5;
 		}
 	}
 }
