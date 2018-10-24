@@ -6,11 +6,11 @@
  */
 package project_test;
 
-public class JavaTestClass {
+public class YannTestclass {
 
 	public static void main(String[] args) {
 		System.out.println("Java test file - Yann / Robin");
-		JavaTestClass testing = new JavaTestClass();
+		YannTestclass testing = new YannTestclass();
 		Test abc = testing.new Test(0);
 		System.out.println(abc.getI());
 		abc.setI(5);
