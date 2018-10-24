@@ -1,1 +1,20 @@
-So I has o gschafft :D - Yann
+19.10.2018 - Alle
+
+Gruppenbildung in Moodle.
+Installation des SVN Plugins und des SVN Connectors mit mehr und weniger Schwierigkeiten.
+Aufbau einer grundlegenden Projektstruktur in Github und Eclipse.
+Erstes Eindenken in Problemstellung und Beginn der Suche nach einem geeigneten Interviewspartner.
+
+
+
+21.10.2018 - Yann
+
+Email an Andrea Hufschmid, Hausärztin in Lenzburg, zur Abklärung ob Interview möglich ist. 
+Erste Testversuche um Java Klassen ins Dateienrepository zu laden. Versuche waren nach einigen Testen erfolgreich.
+
+
+
+23.10.2018 - Yann
+
+A. Hufschmid ist mit dem Interview einverstanden. Weitere e-mail um Interviewform zu klären, und Terminfindung. 
+Interview wird voraussichtlich in den nächsten 14 Tagen durchgeführt werden.
