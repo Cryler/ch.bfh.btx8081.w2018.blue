@@ -1,8 +1,8 @@
 package project_test;
 
-class AmirTestClass {
+public class AndiTestClass {
 
 	public static void main(String[] args) {
-		System.out.println("Test");
+		System.out.println("AndiPandy");
 	}
 }
