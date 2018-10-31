@@ -1,45 +1,17 @@
 19.10.2018 - Alle - 120min
-
 Gruppenbildung in Moodle.
 Installation des SVN Plugins und des SVN Connectors mit mehr und weniger Schwierigkeiten.
 Aufbau einer grundlegenden Projektstruktur in Github und Eclipse.
 Erstes Eindenken in Problemstellung und Beginn der Suche nach einem geeigneten Interviewspartner.
 
 
-
 21.10.2018 - Yann - 60min
-
 Email an Andrea Hufschmid, Hausärztin in Lenzburg, zur Abklärung ob Interview möglich ist. 
 Erste Testversuche um Java Klassen ins Dateienrepository zu laden. Versuche waren nach einigen Testen erfolgreich.
 
 
-
 23.10.2018 - Yann - 20min
-
 A. Hufschmid ist mit dem Interview einverstanden. Weitere e-mail um Interviewform zu klären, und Terminfindung. 
 Interview wird voraussichtlich in den nächsten 14 Tagen durchgeführt werden.
-
-
-
-25.10.2018 - Alle - 200min
-
-Task 1: Design Thinking
-Recherche und Brainstorming: Erwartete Resultate gesammelt mit Interview im Hinterkopf
-Storyboards gezeichnet, weitere Aufgaben gesammelt, Planung Interview
-
-
-26.10.2018 - Alle - 120min
-Zeichnung der Storyboards, Erstellen der Personas, Beginn mit dem Prototypen.
-Wir mussten beim Interview noch improvisieren, da unsere Interviewpartnerin so spontan keine Zeit hat.
-M.Lehmann angefragt ob wir das Interview mit ihm machen können. M.Lehmann - OK
-
-28.10.2018 - Yann - 40min
-Fertigstellung der Storyboards.
-
-30.10.2018 - Alle 45min
-Interview mit M.Lehmann zu Medizinischer Dokumentation bei Suchterkrankungen.
-
-30.10.2018 - Yann - 10min
-Festlegen des Interviewtermins mit A.Hufschmid auf den 09.11.2018 14:30.
 
 
