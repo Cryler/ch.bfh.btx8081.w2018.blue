@@ -6,12 +6,12 @@ Erstes Eindenken in Problemstellung und Beginn der Suche nach einem geeigneten I
 
 
 21.10.2018 - Yann - 60min
-Email an Andrea Hufschmid, Hausärztin in Lenzburg, zur Abklärung ob Interview möglich ist. 
+Email an Andrea Hufschmid, HausÃ¤rztin in Lenzburg, zur AbklÃ¤rung ob Interview mÃ¶glich ist. 
 Erste Testversuche um Java Klassen ins Dateienrepository zu laden. Versuche waren nach einigen Testen erfolgreich.
 
 
 23.10.2018 - Yann - 20min
-A. Hufschmid ist mit dem Interview einverstanden. Weitere e-mail um Interviewform zu klären, und Terminfindung. 
-Interview wird voraussichtlich in den nächsten 14 Tagen durchgeführt werden.
+A. Hufschmid ist mit dem Interview einverstanden. Weitere e-mail um Interviewform zu klÃ¤ren, und Terminfindung. 
+Interview wird voraussichtlich in den nÃ¤chsten 14 Tagen durchgefÃ¼hrt werden.
 
 
