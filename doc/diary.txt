@@ -5,11 +5,10 @@ Aufbau einer grundlegenden Projektstruktur in Github und Eclipse.
 Erstes Eindenken in Problemstellung und Beginn der Suche nach einem geeigneten Interviewspartner.
 
 
-
 ////////////////////////
 //                    //
-//		TASK01        //
-//		              //
+//      TASK01        //
+//                    //
 ////////////////////////
 
 
@@ -102,7 +101,7 @@ Korrektur Dokumentation
 
 ////////////////////////
 //                    //
-//		TASK02        //
-//		              //
+//      TASK02        //
+//                    //
 ////////////////////////
 
