@@ -5,6 +5,14 @@ Aufbau einer grundlegenden Projektstruktur in Github und Eclipse.
 Erstes Eindenken in Problemstellung und Beginn der Suche nach einem geeigneten Interviewspartner.
 
 
+
+////////////////////////
+//                    //
+//		TASK01        //
+//		              //
+////////////////////////
+
+
 21.10.2018 - Yann - 60min
 Email an Andrea Hufschmid, Hausärztin in Lenzburg, zur Abklärung ob Interview möglich ist. 
 Erste Testversuche um Java Klassen ins Dateienrepository zu laden. Versuche waren nach einigen Testen erfolgreich.
@@ -14,4 +22,87 @@ Erste Testversuche um Java Klassen ins Dateienrepository zu laden. Versuche ware
 A. Hufschmid ist mit dem Interview einverstanden. Weitere e-mail um Interviewform zu klären, und Terminfindung. 
 Interview wird voraussichtlich in den nächsten 14 Tagen durchgeführt werden.
 
+
+25.10.2018 - Alle - 200min
+Task 1: Design Thinking
+Recherche und Brainstorming: Erwartete Resultate gesammelt mit Interview im Hinterkopf
+Storyboards gezeichnet, weitere Aufgaben gesammelt, Planung Interview
+
+
+26.10.2018 - Alle - 120min
+Zeichnung der Storyboards, Erstellen der Personas, Beginn mit dem Prototypen.
+Wir mussten beim Interview noch improvisieren, da unsere Interviewpartnerin so spontan keine Zeit hat.
+M.Lehmann angefragt ob wir das Interview mit ihm machen können. M.Lehmann - OK
+
+
+28.10.2018 - Yann - 40min
+Fertigstellung der Storyboards.
+
+
+28.10.2018 - Yannick - 30min
+Fertigstellung der Storyboards
+
+
+28.10.2018 - Luca - 120min
+Fertigstellung der Storyboards, Bearbeitung der Mockups
+
+
+28.10.2018 - Amir - 60min
+Fertigstellung der Storyboard, kurzes Interview mit Dr. Jean Ziada.
+
+
+29.10.2018 - Andi - 360min
+Digitalisierung der Ausgewählten Storyboards
+
+
+30.10.2018 - Alle 45min
+Interview mit M.Lehmann zu Medizinischer Dokumentation bei Suchterkrankungen.
+
+
+30.10.2018 - Yann - 10min
+Festlegen des Interviewtermins mit A.Hufschmid auf den 09.11.2018 14:30.
+
+
+30.10.2018 - Luca - 40min 
+Bearbeitung der Mockups
+
+
+31.10.2018 - Yannick - 120min
+Zusammentragen der Informationen für das Kapitel Synthesize. Bearbeitung der fiktiven Personenprofile. 
+
+
+31.10.2018 - Luca - 60min
+Fertigstellung der Mockups, Dokumentation schreiben
+
+
+31.10.2018 - Yann - 120min
+Schreiben des Bereichs Research in der Dokumentation, Formatierung und Fertigstellung der PPT.
+
+
+31.10.2018 - Andy - 75min
+Dokumentation schreiben, Persona erstellen
+
+
+31.10.2018 - Amir - 60 min
+Schreiben des Bereichs Scoping in der Dokumentation.
+
+
+31.10.2018 - Andi - 240min
+Schreiben der Bereiche Design und Diskussion in der Dokumentation.
+Zusammentragen der Dokumentation, Fertigstellung Powerpoint.
+
+
+01.11.2018 - Yann / Andi / Luca - 15min
+Vortrag Task01, Fragerunde
+
+
+01.11.2018 - Andy / Yann / Andi - 25min
+Korrektur Dokumentation
+
+
+////////////////////////
+//                    //
+//		TASK02        //
+//		              //
+////////////////////////
 
