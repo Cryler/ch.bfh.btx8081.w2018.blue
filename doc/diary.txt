@@ -111,4 +111,4 @@ Zeichnen des UML domain models und UML sequence diagrams.
 
 
 02.11.2018 - Yannick / Andy - 90min
-Sich über CRC-Cards informieren und erstellen.
+Sich über CRC-Cards informieren und erstellen dieser.
