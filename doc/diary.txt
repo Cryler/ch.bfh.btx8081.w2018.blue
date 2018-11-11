@@ -119,3 +119,6 @@ Interview mit A.Hufschmidt in Lenzburg.
 
 09.11.2018 - Yann - 30min
 Nachbearbeitung der Interviewdaten und Schreiben einer kurzen Zusammenfassung
+
+11.11.2018 - Yann - 90min
+Fertigstellung der Sequence Diagramme
