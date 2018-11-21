@@ -123,5 +123,13 @@ Nachbearbeitung der Interviewdaten und Schreiben einer kurzen Zusammenfassung
 11.11.2018 - Yann - 90min
 Fertigstellung der Sequence Diagramme
 
+
+////////////////////////
+//                    //
+//      TASK03        //
+//                    //
+////////////////////////
+
+
 17.11.2018 - Luca - 60min
 Fertigstellung des Deployment Diagramms
