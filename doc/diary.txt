@@ -143,6 +143,6 @@ Erstellung des detaillierten UML Diagramms
 20.11.2018 - Yann - 60min
 weitere Versuche mit Vaadin und implementierung der ersten Klassen.
 
-22.11.2018 - Andy - 30 min
+22.11.2018 - Andy - 20 min
 Erstellen der Dokumentation zum Task 3
 
