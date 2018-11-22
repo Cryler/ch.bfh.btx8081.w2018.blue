@@ -13,44 +13,62 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.BoxSizing;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.polymertemplate.Id;
+import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.internal.BeforeEnterHandler;
 
 @Route("Home")
 public class InstitutionView extends VerticalLayout {
 
+	private InstitutionPresenterAdmin presentorAdmin;
+	private Label zuluLabel;
+	private Label institutionName;
+	private Label institutionStreet;
+	private Label institutionCity;
+
 	public InstitutionView() {
-		
-		
+
+		// Layoutsetting for Whole Screen.
 		HorizontalLayout topSection = new HorizontalLayout();
 		VerticalLayout addressSection = new VerticalLayout();
 		HorizontalLayout institutionNameSection = new HorizontalLayout();
-		
-		Label zuluLabel = new Label("ZULU: ");
-		Label institutionName = new Label("DefaultInstitution");
-		Label institutionStreet = new Label("Defaultstreet 50");
-		Label institutionCity = new Label("3000 Defaultcity");
+
+		// Creating the Labels for the Top Section with Institution Name and Address.
+		this.zuluLabel = new Label("ZULU: ");
+
+		this.institutionName = new Label();
+		this.institutionStreet = new Label();
+		this.institutionCity = new Label();
 		Button settingsButton = new Button("Settings", new Icon(VaadinIcon.COG_O));
+		settingsButton.addClickListener(e -> {
+			
+			settingsButton.getUI().ifPresent(ui -> ui.navigate("Settings"));
+		});
 		settingsButton.setWidth("200px");
-		
-		
-		institutionNameSection.add(zuluLabel, institutionName);
-		addressSection.add(institutionNameSection, institutionStreet, institutionCity);
+
+		// Adding all Components to the Layouts.
+		institutionNameSection.add(this.zuluLabel, this.institutionName);
+		addressSection.add(institutionNameSection, this.institutionStreet, this.institutionCity);
 		topSection.add(addressSection, settingsButton);
-	
-		
-		
-		
-		
-		
-		
-		
+
+		// Creating all Buttons for the lower part of the Screen.
 		Button calendarButton = new Button("Calendar");
-
 		Button newPatientButton = new Button("Neuer Patient");
-
 		Button searchPatientButton = new Button("Patient suchen");
 
 		this.add(topSection, calendarButton, newPatientButton, searchPatientButton);
+		this.init();
+
+	}
+
+	public void init() {
+		this.presentorAdmin = new InstitutionPresenterAdmin(this);
+		this.institutionName.setText(this.presentorAdmin.getInstitutionName());
+		this.institutionStreet.setText(this.presentorAdmin.getInstitutionAddress().getStreet() + " "
+				+ this.presentorAdmin.getInstitutionAddress().getStreetNr());
+		this.institutionCity.setText(this.presentorAdmin.getInstitutionAddress().getZipCode() + " "
+				+ this.presentorAdmin.getInstitutionAddress().getCity());
 	}
 
 }

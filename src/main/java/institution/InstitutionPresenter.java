@@ -10,11 +10,13 @@ import address.Address;
 
 public class InstitutionPresenter {
 	
-	private InstitutionModel model;
+	protected InstitutionModel model;
 	private InstitutionView view;
 	
-	public InstitutionPresenter() {
-		this.model = new InstitutionModel();
+	public InstitutionPresenter(InstitutionView view) {
+		this.view = view;
+		this.model = new InstitutionModel(this);
+		
 	}
 	
 	public String getInstitutionName() {
@@ -25,5 +27,8 @@ public class InstitutionPresenter {
 		return this.model.getAddress();
 	}
 	
-	
+	public InstitutionModel getModel() {
+		return this.model;
+	}
+
 }
