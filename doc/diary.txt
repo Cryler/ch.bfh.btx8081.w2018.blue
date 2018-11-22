@@ -133,3 +133,9 @@ Fertigstellung der Sequence Diagramme
 
 17.11.2018 - Luca - 60min
 Fertigstellung des Deployment Diagramms
+
+19.11.2018 - Yann - 60min
+Erstellung des detaillierten UML Diagramms
+
+20.11.2018 - Yann - 60min
+weitere Versuche mit Vaadin und implementierung der ersten Klassen.
