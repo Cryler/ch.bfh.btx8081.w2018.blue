@@ -59,7 +59,6 @@ public class InstitutionView extends VerticalLayout {
 
 		this.add(topSection, calendarButton, newPatientButton, searchPatientButton);
 		this.init();
-
 	}
 
 	public void init() {

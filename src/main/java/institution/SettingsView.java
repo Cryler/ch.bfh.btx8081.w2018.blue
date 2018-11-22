@@ -26,7 +26,7 @@ public class SettingsView extends VerticalLayout {
 	private TextField actualCityOfInstitution;
 
 	public SettingsView() {
-		
+
 		HorizontalLayout mainSections = new HorizontalLayout();
 		VerticalLayout leftSection = new VerticalLayout();
 		VerticalLayout rightSection = new VerticalLayout();
@@ -58,15 +58,16 @@ public class SettingsView extends VerticalLayout {
 					this.actualCityOfInstitution.getValue());
 			this.presenter.setInstitutionName(this.actualNameOfInstitution.getValue());
 			this.presenter.setInstitutionAddress(newAddress);
-    	   saveButton.getUI().ifPresent(ui -> ui.navigate("Home"));
-       });
-		
+			saveButton.getUI().ifPresent(ui -> ui.navigate("Home"));
+		});
+
 		bottomSection.add(saveButton);
 		this.add(mainSections, bottomSection);
-		
+
 	}
 
-	private void init() {
+	public void init(InstitutionPresenterAdmin presenter) {
+		this.presenter = presenter;
 		this.actualNameOfInstitution.setValue(this.presenter.getInstitutionName());
 		this.actualStreetOfInstitution.setValue(this.presenter.getInstitutionAddress().getStreet());
 		this.actualStreetNrOfInstitution
@@ -74,8 +75,6 @@ public class SettingsView extends VerticalLayout {
 		this.actualZipCodeOfInstitution.setValue(Integer.toString(this.presenter.getInstitutionAddress().getZipCode()));
 		this.actualCityOfInstitution.setValue(this.presenter.getInstitutionAddress().getCity());
 	}
-	public void initialize(InstitutionPresenterAdmin presenter) {
-		this.presenter = presenter;
-		this.init();
-	}
+
+	
 }
