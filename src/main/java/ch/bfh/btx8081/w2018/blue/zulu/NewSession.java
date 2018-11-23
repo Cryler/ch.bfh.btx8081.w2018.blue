@@ -14,31 +14,37 @@ import com.vaadin.flow.router.Route;
  *
  */
 @Route("New Session")
-public class NewSession extends HorizontalLayout {
+public class NewSession extends VerticalLayout {
 
-	final HorizontalLayout layout = new HorizontalLayout();
-	VerticalLayout layoutPatient = new VerticalLayout();
+	
+	 HorizontalLayout layout = new HorizontalLayout();
+
 
 	public NewSession() { 
+		
 		session();
 		patient();
 		action();
-		this.add(layout, layoutPatient);
+		
+		this.add(layout);
 
 	}
 
 	private void patient() {
+		VerticalLayout layoutPatient = new VerticalLayout();
 		ComboBox<String> combobox = new ComboBox<String>("Patient auswählen:");
 		combobox.setItems("Leuenberger, Luca", "Gund, Yann", "Gehri, Yannick"); // TODO Connect with patientlist
-		
-		this.layoutPatient.add(combobox);
+		combobox.setPlaceholder("Auswählen");
+		layoutPatient.add(combobox);
+		layoutPatient.setAlignItems(Alignment.START);
+		this.layout.add(layoutPatient);
 
 	}
 
 	private void session() {
-		VerticalLayout layout = new VerticalLayout();
+		VerticalLayout layoutSession = new VerticalLayout();
 		TextArea condition = new TextArea("Zustand des Patienten/Informationen der Session:");
-		condition.setWidth("500px");
+		condition.setWidth("600px");
 		condition.setHeight("300px");
 		Label lblCraving = new Label("Craving Skala");
 		RadioButtonGroup<Integer> craving = new RadioButtonGroup<>();
@@ -46,13 +52,15 @@ public class NewSession extends HorizontalLayout {
 //		craving.addValueChangeListener(e -> {
 //			  e.getValue();
 //		});
-		layout.add(condition, lblCraving, craving);
-		this.layout.add(layout);
+		layoutSession.add(condition, lblCraving, craving);
+		this.layout.add(layoutSession);
+		this.layout.setAlignSelf(Alignment.CENTER, layoutSession);
 	}
 
 	
 	private void action() {
-		HorizontalLayout layout = new HorizontalLayout();
+		VerticalLayout layoutAction = new VerticalLayout();
+		HorizontalLayout layoutButtons = new HorizontalLayout();
 		Button save = new Button("Speichern");
 		save.addClickListener(e -> {
 			save.getUI().ifPresent(ui -> ui.navigate("patient sessions")); // put in right route
@@ -61,10 +69,13 @@ public class NewSession extends HorizontalLayout {
 		cancel.addClickListener(e -> {
 			cancel.getUI().ifPresent(ui -> ui.navigate("Home")); // put in right route
 		});
-		layout.add(cancel, save);
-		layout.setDefaultVerticalComponentAlignment(Alignment.START);
-		layoutPatient.setHorizontalComponentAlignment(Alignment.START, layout);
-		this.layoutPatient.add(layout);
+		layoutButtons.add(cancel, save);
+
+		layoutAction.add(layoutButtons);
+		layoutAction.setAlignItems(Alignment.START);
+		this.layout.add(layoutAction);
+		this.layout.setAlignSelf(Alignment.END, layoutAction);
+
 	}
 
 }
