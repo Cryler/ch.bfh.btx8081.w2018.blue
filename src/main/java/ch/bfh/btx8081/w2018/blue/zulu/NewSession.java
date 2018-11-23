@@ -8,28 +8,31 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.Route;
+
 /**
+ * View for the new session site. 
  * 
  * @author Luca Leuenberger
  *
  */
 @Route("New Session")
 public class NewSession extends VerticalLayout {
-
 	
-	 HorizontalLayout layout = new HorizontalLayout();
+	HorizontalLayout layout = new HorizontalLayout();
 
-
-	public NewSession() { 
-		
+	/**
+	 * Cosntructor for the new session site. 
+	 */
+	public NewSession() {
 		session();
 		patient();
 		action();
-		
 		this.add(layout);
-
 	}
 
+	/**
+	 * Vertical layout with a combobox to select whose patient session it is. 
+	 */
 	private void patient() {
 		VerticalLayout layoutPatient = new VerticalLayout();
 		ComboBox<String> combobox = new ComboBox<String>("Patient auswählen:");
@@ -38,9 +41,11 @@ public class NewSession extends VerticalLayout {
 		layoutPatient.add(combobox);
 		layoutPatient.setAlignItems(Alignment.START);
 		this.layout.add(layoutPatient);
-
 	}
 
+	/**
+	 * Vertical layout with text areas and scales for various information asked during the session. 
+	 */
 	private void session() {
 		VerticalLayout layoutSession = new VerticalLayout();
 		TextArea condition = new TextArea("Zustand des Patienten/Informationen der Session:");
@@ -57,7 +62,9 @@ public class NewSession extends VerticalLayout {
 		this.layout.setAlignSelf(Alignment.CENTER, layoutSession);
 	}
 
-	
+	/**
+	 * Horizontal layout with 2 buttons to save or cancel the session.
+	 */
 	private void action() {
 		VerticalLayout layoutAction = new VerticalLayout();
 		HorizontalLayout layoutButtons = new HorizontalLayout();
@@ -75,7 +82,5 @@ public class NewSession extends VerticalLayout {
 		layoutAction.setAlignItems(Alignment.START);
 		this.layout.add(layoutAction);
 		this.layout.setAlignSelf(Alignment.END, layoutAction);
-
 	}
-
 }
