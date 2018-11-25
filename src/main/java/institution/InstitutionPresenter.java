@@ -6,18 +6,19 @@
  */
 package institution;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import address.Address;
 
-public class InstitutionPresenter {
+public class InstitutionPresenter extends Observable implements Observer {
 
-	protected InstitutionModel model;
-	private InstitutionView view;
+	private InstitutionModel model;
 
-	public InstitutionPresenter(InstitutionView view) {
-		
-		this.view = view;
-		this.model = new InstitutionModel(this);
+	public InstitutionPresenter() {
 
+		this.model = new InstitutionModel();
+		this.model.addObserver(this);
 	}
 
 	public String getInstitutionName() {
@@ -28,12 +29,13 @@ public class InstitutionPresenter {
 		return this.model.getAddress();
 	}
 
-	public InstitutionModel getModel() {
+	protected InstitutionModel getModel() {
 		return this.model;
 	}
 
-	public InstitutionView getView() {
-		return this.view;
+	@Override
+	public void update(Observable o, Object arg) {
+		this.setChanged();
+		this.notifyObservers();
 	}
-
 }

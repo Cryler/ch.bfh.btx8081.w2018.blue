@@ -6,68 +6,82 @@
  */
 package institution;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.orderedlayout.BoxSizing;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.polymertemplate.Id;
-import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.internal.BeforeEnterHandler;
+
+import backend.Backend;
 
 @Route("Home")
-public class InstitutionView extends VerticalLayout {
+public class InstitutionView extends VerticalLayout implements Observer {
 
-	private InstitutionPresenterAdmin presentorAdmin;
-	private Label zuluLabel;
-	private Label institutionName;
-	private Label institutionStreet;
-	private Label institutionCity;
+	private static InstitutionPresenterAdmin presentorAdmin;
+	private TextArea address;
+	private int i = 0;
 
 	public InstitutionView() {
+		this.initView();
+		this.initPresentor();
+		this.addComponents();
+		this.updateView();
 
-		// Layoutsetting for Whole Screen.
-		HorizontalLayout topSection = new HorizontalLayout();
-		VerticalLayout addressSection = new VerticalLayout();
-		HorizontalLayout institutionNameSection = new HorizontalLayout();
+	}
 
-		// Creating the Labels for the Top Section with Institution Name and Address.
-		this.zuluLabel = new Label("ZULU: ");
+	private void initView() {
+		this.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+	}
 
-		this.institutionName = new Label();
-		this.institutionStreet = new Label();
-		this.institutionCity = new Label();
+	private void addComponents() {
+		HorizontalLayout homeLayout = new HorizontalLayout();
+		VerticalLayout leftSection = new VerticalLayout();
+		VerticalLayout rightSection = new VerticalLayout();
+
 		Button settingsButton = new Button("Settings", new Icon(VaadinIcon.COG_O));
+		settingsButton.setWidth("200px");
 		settingsButton.addClickListener(e -> {
-			
 			settingsButton.getUI().ifPresent(ui -> ui.navigate("Settings"));
 		});
-		settingsButton.setWidth("200px");
 
-		// Adding all Components to the Layouts.
-		institutionNameSection.add(this.zuluLabel, this.institutionName);
-		addressSection.add(institutionNameSection, this.institutionStreet, this.institutionCity);
-		topSection.add(addressSection, settingsButton);
+		rightSection.add(settingsButton);
 
-		// Creating all Buttons for the lower part of the Screen.
+		this.address = new TextArea();
+		this.address.setWidth("300px");
+
 		Button calendarButton = new Button("Calendar");
 		Button newPatientButton = new Button("Neuer Patient");
 		Button searchPatientButton = new Button("Patient suchen");
 
-		this.add(topSection, calendarButton, newPatientButton, searchPatientButton);
-		this.init();
+		leftSection.add(this.address, calendarButton, newPatientButton, searchPatientButton);
+
+		homeLayout.add(leftSection, rightSection);
+		this.add(homeLayout);
+
 	}
 
-	public void init() {
-		this.presentorAdmin = new InstitutionPresenterAdmin(this);
-		this.institutionName.setText(this.presentorAdmin.getInstitutionName());
-		this.institutionStreet.setText(this.presentorAdmin.getInstitutionAddress().getStreet() + " "
-				+ this.presentorAdmin.getInstitutionAddress().getStreetNr());
-		this.institutionCity.setText(this.presentorAdmin.getInstitutionAddress().getZipCode() + " "
-				+ this.presentorAdmin.getInstitutionAddress().getCity());
+	private void updateView() {
+		this.address.setValue(
+				presentorAdmin.getInstitutionName() + "\n" + presentorAdmin.getInstitutionAddress().getStreet() + " "
+						+ presentorAdmin.getInstitutionAddress().getStreetNr() + "\n"
+						+ presentorAdmin.getInstitutionAddress().getZipCode() + " "
+						+ presentorAdmin.getInstitutionAddress().getCity());
+	}
+
+	public void initPresentor() {
+		presentorAdmin = Backend.getInstitutionPresenterAdminInstance();
+		presentorAdmin.addObserver(this);
+
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		this.updateView();
 	}
 
 }

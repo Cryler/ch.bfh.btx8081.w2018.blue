@@ -6,6 +6,7 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
+import backend.Backend;
 import institution.InstitutionPresenter;
 import institution.InstitutionPresenterAdmin;
 
@@ -18,6 +19,7 @@ public class Login extends VerticalLayout {
 	public Login() {
 		Button loginButton = new Button("Login");
 		loginButton.addClickListener(e -> {
+			new Backend();
 			loginButton.getUI().ifPresent(ui -> ui.navigate("Home"));
 		});
 

@@ -6,19 +6,25 @@
  */
 package institution;
 
+import javax.print.attribute.standard.PresentationDirection;
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
+import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
 import address.Address;
+import backend.Backend;
 
 @Route("Settings")
 public class SettingsView extends VerticalLayout {
 
 	private InstitutionPresenterAdmin presenter;
+
 	private TextField actualNameOfInstitution;
 	private TextField actualStreetOfInstitution;
 	private TextField actualStreetNrOfInstitution;
@@ -26,6 +32,18 @@ public class SettingsView extends VerticalLayout {
 	private TextField actualCityOfInstitution;
 
 	public SettingsView() {
+		this.initView();
+		this.addComponents();
+		this.initData();
+	}
+
+	private void initView() {
+
+		this.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+
+	}
+
+	private void addComponents() {
 
 		HorizontalLayout mainSections = new HorizontalLayout();
 		VerticalLayout leftSection = new VerticalLayout();
@@ -63,11 +81,10 @@ public class SettingsView extends VerticalLayout {
 
 		bottomSection.add(saveButton);
 		this.add(mainSections, bottomSection);
-
 	}
 
-	public void init(InstitutionPresenterAdmin presenter) {
-		this.presenter = presenter;
+	public void initData() {
+		this.presenter = Backend.getInstitutionPresenterAdminInstance();
 		this.actualNameOfInstitution.setValue(this.presenter.getInstitutionName());
 		this.actualStreetOfInstitution.setValue(this.presenter.getInstitutionAddress().getStreet());
 		this.actualStreetNrOfInstitution
@@ -75,6 +92,4 @@ public class SettingsView extends VerticalLayout {
 		this.actualZipCodeOfInstitution.setValue(Integer.toString(this.presenter.getInstitutionAddress().getZipCode()));
 		this.actualCityOfInstitution.setValue(this.presenter.getInstitutionAddress().getCity());
 	}
-
-	
 }

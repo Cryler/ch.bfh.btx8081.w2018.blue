@@ -6,16 +6,17 @@
  */
 package institution;
 
+import java.util.Observable;
+
 import address.Address;
 
-public class InstitutionModel {
+public class InstitutionModel extends Observable{
 
-	private InstitutionPresenter presenter;
+	
 	private String institutionName;
 	private Address address;
 
-	public InstitutionModel(InstitutionPresenter presenter) {
-		this.presenter = presenter;
+	public InstitutionModel() {
 		this.setInstitutionName("Default Institution Name");
 		this.setAddress(new Address("Musterweg", 50, 3600, "Musterhausen"));
 	}
@@ -26,6 +27,8 @@ public class InstitutionModel {
 
 	public void setInstitutionName(String institutionName) {
 		this.institutionName = institutionName;
+		this.setChanged();
+		this.notifyObservers();
 	}
 
 	public Address getAddress() {
@@ -34,6 +37,8 @@ public class InstitutionModel {
 
 	public void setAddress(Address address) {
 		this.address = address;
+		this.setChanged();
+		this.notifyObservers();
 	}
 
 }
