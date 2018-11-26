@@ -74,8 +74,7 @@ public class NewPatient extends VerticalLayout {
 		insurance.setValueChangeMode(ValueChangeMode.EAGER);
 		TextField ahvNr = new TextField();
 		ahvNr.setValueChangeMode(ValueChangeMode.EAGER);
-		Button save = new Button("Speichern");
-		Button cancel = new Button("Abbrechen");
+		
 		
 		//Combobox for gender
 		gender.setItems("weiblich","männlich");
@@ -106,6 +105,10 @@ public class NewPatient extends VerticalLayout {
 		this.layout.add(newPatientLayout);
 		
 	}
+	
+	/**
+	 * Horizontal layout with 2 buttons to save or cancel the session.
+	 */
 	
 	public void action() {
 		
