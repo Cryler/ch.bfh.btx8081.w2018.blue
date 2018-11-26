@@ -1,5 +1,6 @@
 package patient;
 
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -33,23 +34,15 @@ public class NewPatient extends VerticalLayout {
 	public NewPatient() {
 //		session();
 		patientData();
-//		action();
-		this.add(layout);
+		action();
+		HorizontalLayout actions = new HorizontalLayout();
+		this.add(this.layout);
 	}
 
 /**
  * Vertical layout with label and textfield for patientdata. 
  */
 	public void patientData() {
-//		VerticalLayout layoutPatientData = new VerticalLayout();
-//		Label lbNewPatient = new Label("Neuer Patient erstellen: ");
-//		TextField tfLastName = new TextField("Nachname: ");
-//		
-//		layoutPatientData.add(lbNewPatient);
-//		layoutPatientData.add(tfLastName);
-//		layoutPatientData.setAlignItems(Alignment.START);
-//		this.layout.add(layoutPatientData);
-		
 		
 		FormLayout newPatientLayout = new FormLayout();
 		Binder<Patient> binder = new Binder<>();
@@ -81,8 +74,8 @@ public class NewPatient extends VerticalLayout {
 		insurance.setValueChangeMode(ValueChangeMode.EAGER);
 		TextField ahvNr = new TextField();
 		ahvNr.setValueChangeMode(ValueChangeMode.EAGER);
-		NativeButton save = new NativeButton("Speichern");
-		NativeButton cancel = new NativeButton("Abbrechen");
+		Button save = new Button("Speichern");
+		Button cancel = new Button("Abbrechen");
 		
 		//Combobox for gender
 		gender.setItems("weiblich","männlich");
@@ -102,15 +95,36 @@ public class NewPatient extends VerticalLayout {
 		newPatientLayout.addFormItem(ahvNr, "AHV-Nr.");
 		
 		// Button bar
-		HorizontalLayout actions = new HorizontalLayout();
-		actions.add(save,cancel);
-		save.getStyle().set("marginRight", "10px");
+//		HorizontalLayout actions = new HorizontalLayout();
+//		actions.add(save,cancel);
+//		save.getStyle().set("marginRight", "10px");
 		
 		// Birthdate
 		//binder.bind(birthDate, Patient::getBirthDate, Patient::setBirthDate);
 		
 		
 		this.layout.add(newPatientLayout);
+		
+	}
+	
+	public void action() {
+		
+		VerticalLayout layoutAction = new VerticalLayout();
+		HorizontalLayout layoutButtons = new HorizontalLayout();
+		Button save = new Button("Speichern");
+		save.addClickListener(e -> {
+			save.getUI().ifPresent(ui -> ui.navigate("Home")); // put in right route
+		});
+		Button cancel = new Button("Abbrechen");
+		cancel.addClickListener(e -> {
+			cancel.getUI().ifPresent(ui -> ui.navigate("Home")); // put in right route
+		});
+		layoutButtons.add(cancel, save);
+
+		layoutAction.add(layoutButtons);
+		layoutAction.setAlignItems(Alignment.START);
+		this.layout.add(layoutAction);
+		this.layout.setAlignSelf(Alignment.END, layoutAction);
 		
 	}
 }
