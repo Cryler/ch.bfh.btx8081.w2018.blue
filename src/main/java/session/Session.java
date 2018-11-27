@@ -137,44 +137,44 @@ public class Session extends HorizontalLayout {
 
 	private void menu() {
 		Button home = new Button("Zurück zum Hautpmenü");
-		home.setWidth("250px");
+		home.setWidth("230px");
 		home.addClickListener(e -> {
 			home.getUI().ifPresent(ui -> ui.navigate("Home"));
 		});
 
 		Button patNew = new Button("Neuer Patient erfassen");
-		patNew.setWidth("250px");
+		patNew.setWidth("230px");
 		patNew.addClickListener(e -> {
 			patNew.getUI().ifPresent(ui -> ui.navigate("New Patient"));
 		});
 
 		Button patList = new Button("Patientenliste");
-		patList.setWidth("250px");
+		patList.setWidth("230px");
 		patList.addClickListener(e -> {
 			patList.getUI().ifPresent(ui -> ui.navigate("Patientlist"));
 		});
 
 		Button calendar = new Button("Kalender");
-		calendar.setWidth("250px");
+		calendar.setWidth("230px");
 		calendar.addClickListener(e -> {
 			calendar.getUI().ifPresent(ui -> ui.navigate("Calendar"));
 		});
 
 		Button sesNew = new Button("Neue Konsultation");
-		sesNew.setWidth("250px");
+		sesNew.setWidth("230px");
 		sesNew.addClickListener(e -> {
 			sesNew.getUI().ifPresent(ui -> ui.navigate("New Session"));
 		});
 		
 		Button logout = new Button("Logout");
-		logout.setWidth("250px");
+		logout.setWidth("230px");
 		logout.addClickListener(e -> {
 			logout.getUI().ifPresent(ui -> ui.navigate("Logout"));
 		});
 		
 		VerticalLayout layout = new VerticalLayout(home, patNew, patList, calendar, sesNew, logout);
 		layout.setSizeFull();
-		this.layoutMenu.setWidth("300px");
+		this.layoutMenu.setWidth("250px");
 		this.layoutMenu.add(layout);
 	}
 }
