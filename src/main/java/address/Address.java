@@ -6,6 +6,14 @@
  */
 package address;
 
+/**
+ * A Class that represents a simple Address Function.
+ * 
+ * 
+ * @author yanng
+ *
+ */
+
 public class Address {
 
 	private String street;

@@ -17,7 +17,7 @@ public class InstitutionModel extends Observable{
 	private Address address;
 
 	public InstitutionModel() {
-		this.setInstitutionName("Default Institution Name");
+		this.setInstitutionName("Default Name");
 		this.setAddress(new Address("Musterweg", 50, 3600, "Musterhausen"));
 	}
 

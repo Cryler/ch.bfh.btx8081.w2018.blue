@@ -9,14 +9,24 @@ import com.vaadin.flow.router.Route;
 import backend.Backend;
 import institution.InstitutionPresenter;
 import institution.InstitutionPresenterAdmin;
-
 /**
- * The main view contains a button and a click listener.
+ * Login for the Application
+ * 
+ * @author yanng
+ *
  */
+
+
 @Route("")
 public class Login extends VerticalLayout {
 
+	
+	//TODO Authentifikationslogik muss noch implementiert werden.
 	public Login() {
+
+		this.setAlignItems(Alignment.CENTER);
+		
+		
 		Button loginButton = new Button("Login");
 		loginButton.addClickListener(e -> {
 			new Backend();
@@ -28,7 +38,7 @@ public class Login extends VerticalLayout {
 
 		PasswordField password = new PasswordField();
 		password.setPlaceholder("Passwort");
-		this.setAlignItems(Alignment.CENTER);
+		
 		add(username, password, loginButton);
 	}
 }

@@ -6,21 +6,27 @@
  */
 package institution;
 
+import com.vaadin.flow.component.ClickEvent;
+import com.vaadin.flow.component.button.Button;
+
 import address.Address;
 
 public class InstitutionPresenterAdmin extends InstitutionPresenter {
 
-	
 	public InstitutionPresenterAdmin() {
-				
+
+	}
+
+	public void settingsButtonClicked(ClickEvent<Button> e) {
+		e.getSource().getUI().ifPresent(ui -> ui.navigate("Settings"));
 	}
 
 	public void setInstitutionName(String institutionName) {
-		super.getModel().setInstitutionName(institutionName);
+		super.model.setInstitutionName(institutionName);
 	}
 
 	public void setInstitutionAddress(Address address) {
-		super.getModel().setAddress(address);
+		super.model.setAddress(address);
 	}
 
 }

@@ -6,14 +6,12 @@
  */
 package institution;
 
-import javax.print.attribute.standard.PresentationDirection;
-
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.orderedlayout.BoxSizing;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
-import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
@@ -40,35 +38,39 @@ public class SettingsView extends VerticalLayout {
 	private void initView() {
 
 		this.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-
+		this.setSizeFull();
 	}
 
 	private void addComponents() {
 
-		HorizontalLayout mainSections = new HorizontalLayout();
-		VerticalLayout leftSection = new VerticalLayout();
-		VerticalLayout rightSection = new VerticalLayout();
 		HorizontalLayout bottomSection = new HorizontalLayout();
 
-		Label nameOfInstitution = new Label("Name of Institution: ");
-		Label streetOfInstitution = new Label("Street: ");
-		Label streetNrOfInstitution = new Label("Streetnumber: ");
-		Label zipCodeOfInstitution = new Label("Zip Code: ");
-		Label cityOfInstitution = new Label("City: ");
-		leftSection.add(nameOfInstitution, streetOfInstitution, streetNrOfInstitution, zipCodeOfInstitution,
-				cityOfInstitution);
+		Label nameOfInstitution = this.createLabel("Name of Institution: ");
+		this.actualNameOfInstitution = this.createTextfield();
+		HorizontalLayout nameLayout = new HorizontalLayout();
+		nameLayout.add(nameOfInstitution, this.actualNameOfInstitution);
 
-		this.actualNameOfInstitution = new TextField();
-		this.actualStreetOfInstitution = new TextField();
-		this.actualStreetNrOfInstitution = new TextField();
-		this.actualZipCodeOfInstitution = new TextField();
-		this.actualCityOfInstitution = new TextField();
-		rightSection.add(this.actualNameOfInstitution, this.actualStreetOfInstitution, this.actualStreetNrOfInstitution,
-				this.actualZipCodeOfInstitution, this.actualCityOfInstitution);
+		Label streetOfInstitution = this.createLabel("Street: ");
+		this.actualStreetOfInstitution = this.createTextfield();
+		HorizontalLayout streetLayout = new HorizontalLayout();
+		streetLayout.add(streetOfInstitution, this.actualStreetOfInstitution);
 
-		mainSections.add(leftSection, rightSection);
+		Label streetNrOfInstitution = this.createLabel("Streetnumber: ");
+		this.actualStreetNrOfInstitution = this.createTextfield();
+		HorizontalLayout streetNrLayout = new HorizontalLayout();
+		streetNrLayout.add(streetNrOfInstitution, this.actualStreetNrOfInstitution);
 
-		Button saveButton = new Button("Save");
+		Label zipCodeOfInstitution = this.createLabel("Zip Code: ");
+		this.actualZipCodeOfInstitution = this.createTextfield();
+		HorizontalLayout zipLayout = new HorizontalLayout();
+		zipLayout.add(zipCodeOfInstitution, this.actualZipCodeOfInstitution);
+
+		Label cityOfInstitution = this.createLabel("City: ");
+		this.actualCityOfInstitution = this.createTextfield();
+		HorizontalLayout cityLayout = new HorizontalLayout();
+		cityLayout.add(cityOfInstitution, this.actualCityOfInstitution);
+
+		Button saveButton = this.createButton("Speichern");
 		saveButton.addClickListener(e -> {
 			Address newAddress = new Address(this.actualStreetOfInstitution.getValue(),
 					Integer.valueOf(this.actualStreetNrOfInstitution.getValue()),
@@ -79,8 +81,16 @@ public class SettingsView extends VerticalLayout {
 			saveButton.getUI().ifPresent(ui -> ui.navigate("Home"));
 		});
 
-		bottomSection.add(saveButton);
-		this.add(mainSections, bottomSection);
+		Button cancelButton = this.createButton("Abbrechen");
+		cancelButton.addClickListener(e -> {
+			cancelButton.getUI().ifPresent(ui -> ui.navigate("Home"));
+		});
+
+		bottomSection.add(cancelButton, saveButton);
+		bottomSection.setWidth(nameLayout.getWidth());
+	
+		this.add(nameLayout, streetLayout, streetNrLayout, zipLayout, cityLayout, bottomSection);
+		
 	}
 
 	public void initData() {
@@ -91,5 +101,23 @@ public class SettingsView extends VerticalLayout {
 				.setValue(Integer.toString(this.presenter.getInstitutionAddress().getStreetNr()));
 		this.actualZipCodeOfInstitution.setValue(Integer.toString(this.presenter.getInstitutionAddress().getZipCode()));
 		this.actualCityOfInstitution.setValue(this.presenter.getInstitutionAddress().getCity());
+	}
+
+	private TextField createTextfield() {
+		TextField newTextfield = new TextField();
+		new TextField().setWidth("100px");
+		return newTextfield;
+	}
+
+	private Label createLabel(String value) {
+		Label newLabel = new Label(value);
+		newLabel.setWidth("100px");
+		return newLabel;
+	}
+
+	private Button createButton(String value) {
+		Button newButton = new Button(value);
+		newButton.setWidth("150px");
+		return newButton;
 	}
 }
