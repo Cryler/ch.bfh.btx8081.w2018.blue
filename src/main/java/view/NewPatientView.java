@@ -46,7 +46,7 @@ public class NewPatientView extends VerticalLayout {
 		Binder<PatientModel> binder = new Binder<>();
 		
 		// The object that will be edited
-		PatientModel patientCreate = new PatientModel();
+		// PatientModel patientCreate = new PatientModel();
 		
 		//The fields for the Form
 				

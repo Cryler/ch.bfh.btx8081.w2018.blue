@@ -31,7 +31,7 @@ public class SessionView extends HorizontalLayout {
 	VerticalLayout layoutPage = new VerticalLayout();
 
 	/**
-	 * Cosntructor for the session site.
+	 * Constructor for the session site.
 	 */
 	public SessionView() {
 		menu();

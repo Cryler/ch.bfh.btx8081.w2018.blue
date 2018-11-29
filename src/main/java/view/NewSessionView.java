@@ -16,14 +16,14 @@ import com.vaadin.flow.router.Route;
  *
  */
 @Route("New Session")
-public class NewSession extends VerticalLayout {
+public class NewSessionView extends VerticalLayout {
 	
 	HorizontalLayout layout = new HorizontalLayout();
 
 	/**
-	 * Cosntructor for the new session site. 
+	 * Constructor for the new session site. 
 	 */
-	public NewSession() {
+	public NewSessionView() {
 		session();
 		patient();
 		action();
