@@ -22,7 +22,7 @@ import com.vaadin.flow.router.Route;
  *
  */
 
-@Route("New Patient")
+@Route("Neuer Patient")
 public class NewPatient extends VerticalLayout {
 	
 	HorizontalLayout layout = new HorizontalLayout();
