@@ -1,4 +1,4 @@
- package session;
+ package view;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +23,7 @@ import com.vaadin.flow.router.Route;
  */
 
 @Route("Session")
-public class Session extends HorizontalLayout {
+public class SessionView extends HorizontalLayout {
 
 	HorizontalLayout layout = new HorizontalLayout();
 	VerticalLayout layoutTabs = new VerticalLayout();
@@ -33,7 +33,7 @@ public class Session extends HorizontalLayout {
 	/**
 	 * Cosntructor for the session site.
 	 */
-	public Session() {
+	public SessionView() {
 		menu();
 		session();
 		patient();

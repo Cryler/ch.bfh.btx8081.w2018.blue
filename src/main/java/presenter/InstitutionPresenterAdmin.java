@@ -4,12 +4,12 @@
  *user: yanng   -  yann.gund@gmx.ch
  *
  */
-package institution;
+package presenter;
 
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 
-import address.Address;
+import model.Address;
 
 public class InstitutionPresenterAdmin extends InstitutionPresenter {
 

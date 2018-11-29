@@ -7,8 +7,8 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
 import backend.Backend;
-import institution.InstitutionPresenter;
-import institution.InstitutionPresenterAdmin;
+import presenter.InstitutionPresenter;
+import presenter.InstitutionPresenterAdmin;
 /**
  * Login for the Application
  * 

@@ -4,11 +4,9 @@
  *user: yanng   -  yann.gund@gmx.ch
  *
  */
-package institution;
+package model;
 
 import java.util.Observable;
-
-import address.Address;
 
 public class InstitutionModel extends Observable{
 

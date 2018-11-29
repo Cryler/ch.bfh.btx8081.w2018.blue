@@ -4,7 +4,7 @@
  *user: yanng   -  yann.gund@gmx.ch
  *
  */
-package institution;
+package view;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -17,6 +17,7 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.Route;
 
 import backend.Backend;
+import presenter.InstitutionPresenterAdmin;
 
 @Route("Home")
 public class InstitutionView extends VerticalLayout implements Observer {

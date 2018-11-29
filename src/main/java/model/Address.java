@@ -4,7 +4,7 @@
  *user: yanng   -  yann.gund@gmx.ch
  *
  */
-package address;
+package model;
 
 /**
  * A Class that represents a simple Address Function.

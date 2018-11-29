@@ -1,4 +1,4 @@
-package patient;
+package view;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -11,6 +11,8 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
 
+import model.PatientModel;
+
 /**
  * View for the new patient site.  
  * 
@@ -20,16 +22,15 @@ import com.vaadin.flow.router.Route;
  */
 
 @Route("Neuer Patient")
-public class NewPatient extends VerticalLayout {
+public class NewPatientView extends VerticalLayout {
 	
 	HorizontalLayout layout = new HorizontalLayout();
 	
 	/**
-	 * Cosntructor for the new session site. 
+	 * Cosntructor for the new patient site. 
 	 */
 	
-	public NewPatient() {
-//		session();
+	public NewPatientView() {
 		patientData();
 		action();
 		HorizontalLayout actions = new HorizontalLayout();
@@ -42,10 +43,10 @@ public class NewPatient extends VerticalLayout {
 	public void patientData() {
 		
 		FormLayout newPatientLayout = new FormLayout();
-		Binder<Patient> binder = new Binder<>();
+		Binder<PatientModel> binder = new Binder<>();
 		
 		// The object that will be edited
-		Patient patientCreate = new Patient();
+		PatientModel patientCreate = new PatientModel();
 		
 		//The fields for the Form
 				

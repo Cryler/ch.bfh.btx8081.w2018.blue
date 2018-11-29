@@ -4,7 +4,7 @@
  *user: yanng   -  yann.gund@gmx.ch
  *
  */
-package institution;
+package presenter;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -12,7 +12,8 @@ import java.util.Observer;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 
-import address.Address;
+import model.Address;
+import model.InstitutionModel;
 
 public class InstitutionPresenter extends Observable implements Observer {
 

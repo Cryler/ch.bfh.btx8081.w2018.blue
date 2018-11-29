@@ -4,7 +4,7 @@
  *user: yanng   -  yann.gund@gmx.ch
  *
  */
-package institution;
+package view;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -15,8 +15,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
-import address.Address;
 import backend.Backend;
+import model.Address;
+import presenter.InstitutionPresenterAdmin;
 
 @Route("Settings")
 public class SettingsView extends VerticalLayout {

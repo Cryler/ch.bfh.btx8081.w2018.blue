@@ -6,8 +6,8 @@
  */
 package backend;
 
-import institution.InstitutionPresenter;
-import institution.InstitutionPresenterAdmin;
+import presenter.InstitutionPresenter;
+import presenter.InstitutionPresenterAdmin;
 
 public class Backend {
 
