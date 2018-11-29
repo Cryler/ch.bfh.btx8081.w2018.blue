@@ -4,16 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
+
+
 
 /**
  * View for the new session site.
@@ -22,8 +22,8 @@ import com.vaadin.flow.router.Route;
  *
  */
 
-@Route("Session")
-public class Session extends HorizontalLayout {
+@Route("Diagram")
+public class Diagram extends HorizontalLayout {
 
 	HorizontalLayout layout = new HorizontalLayout();
 	VerticalLayout layoutTabs = new VerticalLayout();
@@ -33,7 +33,7 @@ public class Session extends HorizontalLayout {
 	/**
 	 * Cosntructor for the session site.
 	 */
-	public Session() {
+	public Diagram() {
 		menu();
 		session();
 		patient();
@@ -62,16 +62,9 @@ public class Session extends HorizontalLayout {
 	 */
 	private void session() {
 		VerticalLayout layoutSession = new VerticalLayout();
-		TextArea condition = new TextArea("Zustand des Patienten/Informationen der Session:");
-		condition.setWidth("600px");
-		condition.setHeight("300px");
-		Label lblCraving = new Label("Craving Skala");
-		RadioButtonGroup<Integer> craving = new RadioButtonGroup<>();
-		craving.setItems(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-//		craving.addValueChangeListener(e -> {
-//			  e.getValue();
-//		});
-		layoutSession.add(condition, lblCraving, craving);
+		Image image = new Image();
+		image.setSrc("https://www.benlcollins.com/wp-content/uploads/2017/05/basic_line_chart.png");
+		layoutSession.add(image);
 		this.layout.add(layoutSession);
 		this.layout.setAlignSelf(Alignment.CENTER, layoutSession);
 	}
@@ -95,12 +88,12 @@ public class Session extends HorizontalLayout {
 		tabsAndPages.put(tab2, page2);
 		tabsAndPages.put(tab3, page3);
 		Tabs tabs = new Tabs(tab1, tab2, tab3);
-		tabs.setSelectedTab(tab2);
+
 		tabs.addSelectedChangeListener(event -> {
 			String selectedPage = tabsAndPages.get(tabs.getSelectedTab());
 			tabs.getUI().ifPresent(ui -> ui.navigate(selectedPage));
 		});
-
+		tabs.setSelectedTab(tab3);
 		layoutTabs.add(tabs);
 		this.layoutTabs.add(layoutTabs);
 

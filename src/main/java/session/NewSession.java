@@ -70,7 +70,7 @@ public class NewSession extends VerticalLayout {
 		HorizontalLayout layoutButtons = new HorizontalLayout();
 		Button save = new Button("Speichern");
 		save.addClickListener(e -> {
-			save.getUI().ifPresent(ui -> ui.navigate("patient sessions")); // put in right route
+			save.getUI().ifPresent(ui -> ui.navigate("Sessions")); // put in right route
 		});
 		Button cancel = new Button("Abbrechen");
 		cancel.addClickListener(e -> {
