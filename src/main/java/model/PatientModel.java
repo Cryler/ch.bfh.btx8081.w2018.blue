@@ -30,4 +30,24 @@ public class PatientModel extends Person {
 	public String getEmail() {
 		return super.getEmail();
 	}
+	
+	public String getAddress() {
+		return super.getAddress();
+	}
+	
+	public void setFirstName(String aFirstName) {
+		super.setFirstName(aFirstName);
+	}
+	
+	public void setLastName(String aLastName) {
+		super.setLastName(aLastName);
+	}
+	
+	public void setBirthdate(String aBirthdate) {
+		super.setBirthdate(aBirthdate);
+	}
+	
+	public void setAddress(String anAddress) {
+		super.setAddress(anAddress);
+	}
 }
