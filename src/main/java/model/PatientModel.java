@@ -1,24 +1,33 @@
 package model;
 
-public class PatientModel {
+public class PatientModel extends Person {
 	
-	private String lastName;
-	private String firstName;
-	private String birthDate;
-	private String gender;
-	private String address;
-	private String city;
-	private String nationality;
-	private String language;
-	private String phoneNumber;
-	private String email;
+	
 	private String insurance;
 	private String ahvNr;
 	
 	
 
-	public PatientModel(){
+	public PatientModel(String aLastName, String aFirstName, String aBirthdate, String aGender, String anAddress, String aCity, String aNationality, String aLanguage, String aPhoneNumber, String anEmail, String anInsurance, String anAhvNr){
+		super(aLastName, aFirstName, aBirthdate, aGender, anAddress, aCity, aNationality, aLanguage, aPhoneNumber, anEmail);
+		insurance = anInsurance;
+		ahvNr = anAhvNr;
 		
 	}
 	
+	public String getFirstName() {
+		return super.getFirstName();
+	}
+	
+	public String getLastName() {
+		return super.getLastName();
+	}
+	
+	public String getBirthdate() {
+		return super.getBirthdate();
+	}
+	
+	public String getEmail() {
+		return super.getEmail();
+	}
 }
