@@ -45,7 +45,8 @@ public class InstitutionView extends VerticalLayout implements Observer {
 
 		this.address = new TextArea();
 		this.address.setWidth("200px");
-
+		this.address.setEnabled(false);
+		
 		Button calendarButton = this.createButton("Kalender", new Icon(VaadinIcon.CALENDAR));
 		Button newPatientButton = this.createButton("Neuer Patient", new Icon(VaadinIcon.USER_CHECK));
 		Button searchPatientButton = this.createButton("Patient suchen", new Icon(VaadinIcon.USERS));
