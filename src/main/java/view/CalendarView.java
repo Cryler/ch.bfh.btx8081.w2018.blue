@@ -6,11 +6,11 @@
  */
 package view;
 
-
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -25,9 +25,9 @@ public class CalendarView extends Grid<CalendarWeekTile> {
 	private Calendar calendar;
 
 	public CalendarView() {
-
-		this.initData();
 		this.initView();
+		this.initCalendar();
+		this.initData();
 
 	}
 
@@ -35,9 +35,6 @@ public class CalendarView extends Grid<CalendarWeekTile> {
 		this.setSelectionMode(SelectionMode.SINGLE);
 		this.setHeightByRows(true);
 
-//		this.addColumn(CalendarTile::getDay).setHeader("Montag");
-//		this.addColumn(new LocalDateTimeRenderer<>(CalendarTile::getDate, "dd/MM")).setHeader("Purchase date and time");
-//	
 		this.addComponentColumn(CalendarWeekTile::getMonday).setHeader("Montag");
 		this.addComponentColumn(CalendarWeekTile::getTuesday).setHeader("Dienstag");
 		this.addComponentColumn(CalendarWeekTile::getWednesday).setHeader("Mittwoch");
@@ -46,21 +43,27 @@ public class CalendarView extends Grid<CalendarWeekTile> {
 		this.addComponentColumn(CalendarWeekTile::getSameday).setHeader("Samstag");
 		this.addComponentColumn(CalendarWeekTile::getSunday).setHeader("Sonntag");
 
-//		this.setItemDetailsRenderer(new ComponentRenderer<>(MyCalendarTile::new));
+	}
+
+	private void initCalendar() {
+		this.calendar = new GregorianCalendar();
+		this.calendar.setFirstDayOfWeek(Calendar.MONDAY);
+		LocalDate firstDayOfMonth = LocalDate.now().minusDays(LocalDate.now().getDayOfMonth() - 1);
+		this.calendar.setTime(Date.valueOf(firstDayOfMonth));
+		LocalDate mondayInWeek1 = firstDayOfMonth.minusDays((this.calendar.DAY_OF_WEEK + 3) % 7);
+		this.calendar.setTime(Date.valueOf(mondayInWeek1));
+
 	}
 
 	private void initData() {
-		this.calendar = new GregorianCalendar();
-		this.calendar.setFirstDayOfWeek(Calendar.MONDAY);
 		List<CalendarWeekTile> tiles = createTiles();
 		this.setItems(tiles);
 	}
 
 	private List<CalendarWeekTile> createTiles() {
 		ArrayList<CalendarWeekTile> tiles = new ArrayList<>();
-		
-		
-		for (int i = 0; i < 4; i++) {
+
+		for (int i = 0; i < 5; i++) {
 			tiles.add(new CalendarWeekTile(this.calendar.getTime()));
 			this.calendar.setTimeInMillis(this.calendar.getTimeInMillis() + 604800000);
 		}
