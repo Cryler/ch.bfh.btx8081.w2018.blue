@@ -4,12 +4,13 @@
  *user: yanng   -  yann.gund@gmx.ch
  *
  */
-package model;
+package model.calendar;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
@@ -18,27 +19,24 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-@com.vaadin.flow.component.Tag(value = "test")
+import javafx.scene.text.Text;
+
+@Tag(value = "test")
 public class CalendarTile extends Div {
 
-	String date;
-	LocalDateTime myDate;
+	private SimpleDateFormat dateformatter = new SimpleDateFormat("dd.MM");
+	private String date;
 
 	public CalendarTile(Date date) {
 
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM");
-		this.date = dateFormatter.format(date);
-		this.myDate = LocalDateTime.now();
-		
+		VerticalLayout vl1 = new VerticalLayout();
+		vl1.setHeight("100px");
+		this.date = this.dateformatter.format(date);
+		vl1.add(new Label(this.date));
+		this.add(vl1);
 
 	}
-	public String getDay() {
-		return this.date;
-	}
-	public LocalDateTime getDate() {
-		return this.myDate;
-	}
-	
+
 	public static class MyCalendarTile extends Div {
 		public MyCalendarTile(CalendarTile tile) {
 			HorizontalLayout hl1 = new HorizontalLayout();
@@ -48,12 +46,10 @@ public class CalendarTile extends Div {
 			vl1.add(new Label("Datum: "));
 			vl1.setAlignItems(Alignment.END);
 			vl2.add(new Icon(VaadinIcon.CHEVRON_RIGHT_SMALL));
-			vl2.add(new Label(tile.getDay()));
-			hl1.add(vl1,vl2);
+			vl2.add(new Label("Just Some testing"));
+			hl1.add(vl1, vl2);
 			this.add(hl1);
 			hl1.setAlignItems(Alignment.CENTER);
-			
-		}	
+		}
 	}
-
 }
