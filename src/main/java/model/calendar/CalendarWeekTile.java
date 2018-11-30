@@ -12,16 +12,23 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class CalendarWeekTile {
+import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+
+@Tag("WeekTile")
+public class CalendarWeekTile extends Div{
 	
 	private Calendar cal = new GregorianCalendar();
-	private ArrayList<CalendarTile> week = new ArrayList<>();
+	private HorizontalLayout hl1 ;
+	ArrayList<CalendarTile> week = new ArrayList<>();
 
 	public CalendarWeekTile(Date date) {
 		this.cal.setTime(date);
 		this.fillWeek();
 		
 	}
+
 
 	public CalendarTile getMonday() {
 		return this.week.get(0);
@@ -52,9 +59,12 @@ public class CalendarWeekTile {
 	}
 
 	private void fillWeek() {
+		this.hl1 = new HorizontalLayout();
 		for (int i = 0; i < 7; i++) {
 			this.week.add(new CalendarTile(this.cal.getTime()));
 			this.cal.setTimeInMillis(this.cal.getTimeInMillis()+86400000);
 		}
+		
 	}
+	
 }

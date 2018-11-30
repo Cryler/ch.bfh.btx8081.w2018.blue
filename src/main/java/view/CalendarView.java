@@ -10,7 +10,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
-
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -22,6 +21,10 @@ import model.calendar.CalendarWeekTile;
 @Route("Kalender")
 public class CalendarView extends Grid<CalendarWeekTile> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Calendar calendar;
 
 	public CalendarView() {
@@ -50,6 +53,7 @@ public class CalendarView extends Grid<CalendarWeekTile> {
 		this.calendar.setFirstDayOfWeek(Calendar.MONDAY);
 		LocalDate firstDayOfMonth = LocalDate.now().minusDays(LocalDate.now().getDayOfMonth() - 1);
 		this.calendar.setTime(Date.valueOf(firstDayOfMonth));
+		@SuppressWarnings("static-access")
 		LocalDate mondayInWeek1 = firstDayOfMonth.minusDays((this.calendar.DAY_OF_WEEK + 3) % 7);
 		this.calendar.setTime(Date.valueOf(mondayInWeek1));
 
