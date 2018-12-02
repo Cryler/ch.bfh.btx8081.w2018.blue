@@ -38,7 +38,7 @@ public class CalendarTile extends Div {
 		
 		
 		vl1.add(new Label(this.dateformatter.format(date)));
-		vl1.add(new Button(" ",e -> {
+		vl1.add(new Button(new Icon(VaadinIcon.PLUS_CIRCLE_O),e -> {
 			Notification.show(this.dateformatter.format(date));
 		}));
 		this.add(vl1);
