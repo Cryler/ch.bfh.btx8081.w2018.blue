@@ -27,7 +27,7 @@ public class NewPatientView extends VerticalLayout {
 	HorizontalLayout layout = new HorizontalLayout();
 	
 	/**
-	 * Cosntructor for the new patient site. 
+	 * Cosntructor for the new patient site.. 
 	 */
 	
 	public NewPatientView() {
