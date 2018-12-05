@@ -6,10 +6,10 @@
  */
 package view;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class CalendarView extends VerticalLayout {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private Grid<CalendarWeekTile> grid;
 	private Calendar calendar;
 
@@ -55,31 +55,26 @@ public class CalendarView extends VerticalLayout {
 		this.grid.addComponentColumn(CalendarWeekTile::getSameday).setHeader("Samstag");
 		this.grid.addComponentColumn(CalendarWeekTile::getSunday).setHeader("Sonntag");
 
-		
 		VerticalLayout vl1 = new VerticalLayout();
 		vl1.setWidth("300px");
 		vl1.add(this.createButton("Home", new Icon(VaadinIcon.HOME)));
 		vl1.add(this.createButton("Neuer Patient", new Icon(VaadinIcon.USER_CHECK)));
 		vl1.add(this.createButton("Patient suchen", new Icon(VaadinIcon.USERS)));
-	
-		
+
 		HorizontalLayout hl1 = new HorizontalLayout();
 		hl1.setWidth("100%");
 		hl1.setHeight("100%");
 		hl1.add(vl1, this.grid);
-		
+
 		this.add(hl1);
 	}
 
 	private void initCalendar() {
 		this.calendar = new GregorianCalendar();
-		this.calendar.setFirstDayOfWeek(Calendar.MONDAY);
-		LocalDate firstDayOfMonth = LocalDate.now().minusDays(LocalDate.now().getDayOfMonth() - 1);
-		this.calendar.setTime(Date.valueOf(firstDayOfMonth));
-		@SuppressWarnings("static-access")
-		LocalDate mondayInWeek1 = firstDayOfMonth.minusDays((this.calendar.DAY_OF_WEEK + 5) % 7);
-		this.calendar.setTime(Date.valueOf(mondayInWeek1));
-
+		this.calendar.set(Calendar.DAY_OF_MONTH, 1);
+		while (!this.calendar.getTime().toString().substring(0, 3).equals("Mon")) {
+			this.theDayBefore();
+		}
 	}
 
 	private void initData() {
@@ -90,13 +85,13 @@ public class CalendarView extends VerticalLayout {
 	private List<CalendarWeekTile> createTiles() {
 		ArrayList<CalendarWeekTile> tiles = new ArrayList<>();
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 6; i++) {
 			tiles.add(new CalendarWeekTile(this.calendar.getTime()));
 			this.calendar.setTimeInMillis(this.calendar.getTimeInMillis() + 604800000);
 		}
 		return tiles;
 	}
-	
+
 	private Button createButton(String value, Icon icon) {
 		Button newButton = new Button(value, icon);
 		newButton.addClickListener(e -> {
@@ -104,6 +99,10 @@ public class CalendarView extends VerticalLayout {
 		});
 		newButton.setWidth("200px");
 		return newButton;
+	}
+
+	private void theDayBefore() {
+		this.calendar.set(Calendar.DATE, this.calendar.get(Calendar.DATE) - 1);
 	}
 
 }
