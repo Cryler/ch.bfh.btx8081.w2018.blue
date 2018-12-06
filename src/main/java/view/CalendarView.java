@@ -26,7 +26,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.shared.ui.LoadMode;
 
-import model.calendar.CalendarWeekTile;
+import model.CalendarWeekTile;
 
 @Route("Kalender")
 
@@ -76,6 +76,8 @@ public class CalendarView extends VerticalLayout {
 		this.add(hl1);
 	}
 
+	
+	//Sets the Date of the Calendar on the Monday of the Week in wich the first of the actual Month is.
 	private void initCalendar() {
 		this.calendar = new GregorianCalendar();
 		this.calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -84,6 +86,7 @@ public class CalendarView extends VerticalLayout {
 		}
 	}
 
+	//Creates all Data Tiles and Fethches the Data from the Database.
 	private void initData() {
 		List<CalendarWeekTile> tiles = createTiles();
 		this.grid.setItems(tiles);
@@ -94,10 +97,14 @@ public class CalendarView extends VerticalLayout {
 
 		for (int i = 0; i < 6; i++) {
 			tiles.add(new CalendarWeekTile(this.calendar.getTime()));
-			this.calendar.setTimeInMillis(this.calendar.getTimeInMillis() + 604800000);
+			this.calendar.set(Calendar.WEEK_OF_YEAR, this.calendar.get(Calendar.WEEK_OF_YEAR)+1);
 		}
 		return tiles;
 	}
+	
+	
+	
+	// Hilfsmethoden
 
 	private Button createButton(String value, Icon icon) {
 		Button newButton = new Button(value, icon);
