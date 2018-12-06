@@ -6,6 +6,8 @@
  */
 package model;
 
+
+
 /**
  * A Class that represents a simple Address Function.
  * 
