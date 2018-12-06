@@ -21,43 +21,44 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.shared.ui.LoadMode;
 
 @SuppressWarnings("serial")
 @Tag("Tile")
+@StyleSheet(value = "styles/style.css", loadMode = LoadMode.INLINE)
 public class CalendarTile extends Div {
 
 	private SimpleDateFormat dateformatter = new SimpleDateFormat("dd.MM");
 
 	public CalendarTile(Date date) {
 
-		VerticalLayout vl1 = new VerticalLayout();
-		vl1.setAlignItems(Alignment.START);
-		vl1.setMargin(false);
-		vl1.setPadding(false);
-		vl1.setHeight("100px");
-		vl1.add(new Label(this.dateformatter.format(date)));
-		vl1.add(new Button(new Icon(VaadinIcon.PLUS_CIRCLE_O), e -> {
+		HorizontalLayout hl1 = new HorizontalLayout();
+		hl1.setAlignItems(Alignment.CENTER);
+		hl1.add(this.createLabel(date));
+		hl1.add(new Button(new Icon(VaadinIcon.PLUS_CIRCLE_O), e -> {
 			Notification.show(this.dateformatter.format(date));
 		}));
 
-		VerticalLayout vl2 = new VerticalLayout();
-		vl2.setAlignItems(Alignment.START);
-		vl2.setMargin(false);
-		vl2.setPadding(false);
+		HorizontalLayout hl2 = new HorizontalLayout();
+		hl2.setAlignItems(Alignment.CENTER);
 		TextArea area = new TextArea();
-		area.setHeight("90px");
+		area.setWidth("150px");
 		area.setEnabled(false);
+		hl2.add(area);
 
-		vl2.add(area);
+		VerticalLayout vl1 = new VerticalLayout();
+		vl1.setHeight("100px");
+		vl1.setAlignItems(Alignment.STRETCH);
+		vl1.setMargin(false);
+		vl1.setPadding(false);
+		vl1.add(hl1, hl2);
 
-		HorizontalLayout hl1 = new HorizontalLayout();
+		this.add(vl1);
 
-		hl1.setAlignItems(Alignment.STRETCH);
-		hl1.setMargin(false);
-		hl1.setPadding(false);
-		hl1.add(vl1, vl2);
-
-		this.add(hl1);
-
+	} 
+	private Label createLabel(Date date) {
+		Label label = new Label(this.dateformatter.format(date));
+		label.getStyle().set("fontSize", "15px");
+		return label;
 	}
 }

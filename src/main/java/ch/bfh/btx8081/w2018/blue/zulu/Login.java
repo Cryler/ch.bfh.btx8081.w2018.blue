@@ -7,8 +7,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
 import backend.Backend;
-import presenter.InstitutionPresenter;
-import presenter.InstitutionPresenterAdmin;
 /**
  * Login for the Application
  * 
@@ -24,21 +22,30 @@ public class Login extends VerticalLayout {
 	//TODO Authentifikationslogik muss noch implementiert werden.
 	public Login() {
 
+		
 		this.setAlignItems(Alignment.CENTER);
 		
 		
+		VerticalLayout vl1 = new VerticalLayout();
+		vl1.setAlignItems(Alignment.CENTER);
+		vl1.setWidth("300px");
+		
 		Button loginButton = new Button("Login");
+		
 		loginButton.addClickListener(e -> {
 			new Backend();
 			loginButton.getUI().ifPresent(ui -> ui.navigate("Home"));
 		});
 
 		TextField username = new TextField();
-		username.setPlaceholder("Benutzername eingeben");
-
-		PasswordField password = new PasswordField();
-		password.setPlaceholder("Passwort");
+		username.setLabel("Benutzername");
 		
-		add(username, password, loginButton);
+		
+		PasswordField password = new PasswordField();
+		password.setLabel("Passwort");
+		
+		
+		vl1.add(username, password, loginButton);
+		this.add(vl1);
 	}
 }

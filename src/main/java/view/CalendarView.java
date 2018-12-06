@@ -13,7 +13,10 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.servlet.annotation.ServletSecurity;
+
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.icon.Icon;
@@ -21,10 +24,12 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.shared.ui.LoadMode;
 
 import model.calendar.CalendarWeekTile;
 
 @Route("Kalender")
+
 public class CalendarView extends VerticalLayout {
 
 	/**
@@ -54,6 +59,8 @@ public class CalendarView extends VerticalLayout {
 		this.grid.addComponentColumn(CalendarWeekTile::getFriday).setHeader("Freitag");
 		this.grid.addComponentColumn(CalendarWeekTile::getSameday).setHeader("Samstag");
 		this.grid.addComponentColumn(CalendarWeekTile::getSunday).setHeader("Sonntag");
+		
+		
 
 		VerticalLayout vl1 = new VerticalLayout();
 		vl1.setWidth("300px");

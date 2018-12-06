@@ -9,12 +9,16 @@ package view;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.servlet.annotation.ServletSecurity;
+
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.shared.ui.LoadMode;
 
 import backend.Backend;
 import presenter.InstitutionPresenterAdmin;
