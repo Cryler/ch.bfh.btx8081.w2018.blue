@@ -8,13 +8,19 @@ package model;
 
 import java.util.Observable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+
 public class InstitutionModel extends Observable{
 
-	
+	@Id
 	private String institutionName;
 	private Address address;
 
+	
 	public InstitutionModel() {
+		super();
 		this.setInstitutionName("Default Name");
 		this.setAddress(new Address("Musterweg", 50, 3600, "Musterhausen"));
 	}

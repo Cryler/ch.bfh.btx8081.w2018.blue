@@ -8,3 +8,8 @@ vaadin-horizontal-layout{
 	padding-top: 12px;
 	
 }
+vaadin-text-area{
+	--lumo-disabled-text-color: grb(60,60,60);
+	
+}
+

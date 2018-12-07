@@ -24,6 +24,7 @@ import backend.Backend;
 import presenter.InstitutionPresenterAdmin;
 
 @Route("Home")
+@StyleSheet(value = "styles/style.css", loadMode = LoadMode.INLINE)
 public class InstitutionView extends VerticalLayout implements Observer {
 
 	/**
