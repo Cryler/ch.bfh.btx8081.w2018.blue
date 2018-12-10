@@ -33,61 +33,41 @@ public class Address {
 	private int streetNr;
 	private int zipCode;
 	private String city;
-	
+
 	public Address() {
-		
-	}
 
-	public Address(String street, int streetNr, int zipCode, String city) {
-		
-//		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("ch.bfh.btx8081.w2018.blue");
-//		EntityManager entitymanager = emfactory.createEntityManager();
-//		
-//		
-		this.setStreet(street);
-		this.setStreetNr(streetNr);
-		this.setZipCode(zipCode);
-		this.setCity(city);
-		
-//		try {
-//			entitymanager.getTransaction().begin();
-//			entitymanager.merge(this);
-//			entitymanager.getTransaction().commit();
-//		} catch (Exception e) {
-//			entitymanager.getTransaction().rollback();
-//		}
-	}
-
-	public String getStreet() {
-		return street;
 	}
 
 	public void setStreet(String street) {
 		this.street = street;
 	}
 
-	public int getStreetNr() {
-		return streetNr;
+	public String getStreet() {
+		return this.street;
 	}
 
 	public void setStreetNr(int streetNr) {
 		this.streetNr = streetNr;
 	}
 
-	public String getCity() {
-		return city;
+	public int getStreetNr() {
+		return this.streetNr;
 	}
 
 	public void setCity(String city) {
 		this.city = city;
 	}
 
-	public int getZipCode() {
-		return zipCode;
+	public String getCity() {
+		return this.city;
 	}
 
 	public void setZipCode(int zipCode) {
 		this.zipCode = zipCode;
+	}
+
+	public int getZipCode() {
+		return this.zipCode;
 	}
 
 	@Override
@@ -95,4 +75,3 @@ public class Address {
 		return this.street + " " + this.streetNr + "\n" + this.zipCode + this.city;
 	}
 }
-

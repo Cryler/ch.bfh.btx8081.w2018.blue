@@ -3,7 +3,9 @@
 	<persistence-unit name="ch.bfh.btx8081.w2018.blue" transaction-type="RESOURCE_LOCAL">
 	
 	
+	
 	<class>model.Address</class>
+	<class>model.InstitutionModel</class>
 	<class>model.PatientModel</class>
 	<class>model.Person</class>
 		<properties>

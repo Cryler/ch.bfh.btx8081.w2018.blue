@@ -6,23 +6,26 @@
  */
 package model;
 
-import java.util.Observable;
-
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-
-public class InstitutionModel extends Observable{
+@Entity
+@Table(name = "institution")
+public class InstitutionModel {
 
 	@Id
+	@GeneratedValue
+	private int institutionID;
 	private String institutionName;
+	@ManyToOne
 	private Address address;
 
 	
 	public InstitutionModel() {
-		super();
-		this.setInstitutionName("Default Name");
-		this.setAddress(new Address("Musterweg", 50, 3600, "Musterhausen"));
+		
 	}
 
 	public String getInstitutionName() {
@@ -31,8 +34,6 @@ public class InstitutionModel extends Observable{
 
 	public void setInstitutionName(String institutionName) {
 		this.institutionName = institutionName;
-		this.setChanged();
-		this.notifyObservers();
 	}
 
 	public Address getAddress() {
@@ -41,8 +42,5 @@ public class InstitutionModel extends Observable{
 
 	public void setAddress(Address address) {
 		this.address = address;
-		this.setChanged();
-		this.notifyObservers();
 	}
-
 }

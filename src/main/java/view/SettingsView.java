@@ -7,15 +7,12 @@
 package view;
 
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.orderedlayout.BoxSizing;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
-import backend.Backend;
 import model.Address;
 import presenter.InstitutionPresenterAdmin;
 
@@ -37,9 +34,9 @@ public class SettingsView extends VerticalLayout {
 	}
 
 	private void initView() {
-
 		this.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 		this.setSizeFull();
+		this.presenter = new InstitutionPresenterAdmin();
 	}
 
 	private void addComponents() {
@@ -73,12 +70,15 @@ public class SettingsView extends VerticalLayout {
 
 		Button saveButton = this.createButton("Speichern");
 		saveButton.addClickListener(e -> {
-			Address newAddress = new Address(this.actualStreetOfInstitution.getValue(),
-					Integer.valueOf(this.actualStreetNrOfInstitution.getValue()),
-					Integer.valueOf(this.actualZipCodeOfInstitution.getValue()),
-					this.actualCityOfInstitution.getValue());
-			this.presenter.setInstitutionName(this.actualNameOfInstitution.getValue());
+			Address newAddress = new Address();
+			newAddress.setStreet(this.actualStreetOfInstitution.getValue());
+			newAddress.setStreetNr(Integer.valueOf(this.actualStreetNrOfInstitution.getValue()));
+			newAddress.setCity(this.actualCityOfInstitution.getValue());
+			newAddress.setZipCode(Integer.valueOf(this.actualZipCodeOfInstitution.getValue()));
+		
+			
 			this.presenter.setInstitutionAddress(newAddress);
+			this.presenter.setInstitutionName(this.actualNameOfInstitution.getValue(), newAddress);
 			saveButton.getUI().ifPresent(ui -> ui.navigate("Home"));
 		});
 
@@ -95,7 +95,7 @@ public class SettingsView extends VerticalLayout {
 	}
 
 	public void initData() {
-		this.presenter = Backend.getInstitutionPresenterAdminInstance();
+		this.presenter = new InstitutionPresenterAdmin();
 		this.actualNameOfInstitution.setValue(this.presenter.getInstitutionName());
 		this.actualStreetOfInstitution.setValue(this.presenter.getInstitutionAddress().getStreet());
 		this.actualStreetNrOfInstitution

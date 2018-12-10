@@ -9,8 +9,6 @@ package view;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.servlet.annotation.ServletSecurity;
-
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.icon.Icon;
@@ -20,7 +18,6 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.shared.ui.LoadMode;
 
-import backend.Backend;
 import presenter.InstitutionPresenterAdmin;
 
 @Route("Home")
@@ -32,11 +29,10 @@ public class InstitutionView extends VerticalLayout implements Observer {
 	 */
 	private static final long serialVersionUID = 1L;
 	private InstitutionPresenterAdmin presentorAdmin;
-	private TextArea address;
+	private TextArea addressField;
 
 	public InstitutionView() {
 		this.initView();
-		this.initPresentor();
 		this.addComponents();
 		this.updateView();
 
@@ -44,28 +40,30 @@ public class InstitutionView extends VerticalLayout implements Observer {
 
 	private void initView() {
 		this.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+		this.presentorAdmin = new InstitutionPresenterAdmin();
 	}
 
 	private void addComponents() {
+		this.addressField = new TextArea();
+		this.addressField = new TextArea();
+		this.addressField.setWidth("200px");
+		this.addressField.setEnabled(false);
 
-		this.address = new TextArea();
-		this.address.setWidth("200px");
-		this.address.setEnabled(false);
-		
 		Button calendarButton = this.createButton("Kalender", new Icon(VaadinIcon.CALENDAR));
 		Button newPatientButton = this.createButton("Neuer Patient", new Icon(VaadinIcon.USER_CHECK));
 		Button searchPatientButton = this.createButton("Patient suchen", new Icon(VaadinIcon.USERS));
 		Button settingsButton = this.createButton("Settings", new Icon(VaadinIcon.COG_O));
 
-		this.add(this.address, calendarButton, newPatientButton, searchPatientButton, settingsButton);
+		this.add(this.addressField, calendarButton, newPatientButton, searchPatientButton, settingsButton);
+
 	}
 
 	private void updateView() {
-		this.address.setValue(
-				presentorAdmin.getInstitutionName() + "\n" + presentorAdmin.getInstitutionAddress().getStreet() + " "
-						+ presentorAdmin.getInstitutionAddress().getStreetNr() + "\n"
-						+ presentorAdmin.getInstitutionAddress().getZipCode() + " "
-						+ presentorAdmin.getInstitutionAddress().getCity());
+		this.addressField.setValue(this.presentorAdmin.getInstitutionName() + "\n"
+				+ this.presentorAdmin.getInstitutionAddress().getStreet() + " "
+				+ this.presentorAdmin.getInstitutionAddress().getStreetNr() + "\n"
+				+ this.presentorAdmin.getInstitutionAddress().getZipCode() + " "
+				+ this.presentorAdmin.getInstitutionAddress().getCity());
 	}
 
 	private Button createButton(String value, Icon icon) {
@@ -75,12 +73,6 @@ public class InstitutionView extends VerticalLayout implements Observer {
 		});
 		newButton.setWidth("200px");
 		return newButton;
-	}
-
-	public void initPresentor() {
-		presentorAdmin = Backend.getInstitutionPresenterAdminInstance();
-		presentorAdmin.addObserver(this);
-
 	}
 
 	@Override

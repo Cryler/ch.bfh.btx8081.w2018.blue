@@ -7,7 +7,11 @@
 package presenter;
 
 import java.util.Observable;
-import java.util.Observer;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
@@ -15,32 +19,46 @@ import com.vaadin.flow.component.button.Button;
 import model.Address;
 import model.InstitutionModel;
 
-public class InstitutionPresenter extends Observable implements Observer {
+public class InstitutionPresenter extends Observable {
 
-	protected InstitutionModel model;
+	private static final String PERSISTENCE_UNIT_NAME = "ch.bfh.btx8081.w2018.blue";
 
 	public InstitutionPresenter() {
 
-		this.model = new InstitutionModel();
-		this.model.addObserver(this);
 	}
-	
+
 	public void buttonClicked(ClickEvent<Button> e) {
 		e.getSource().getUI().ifPresent(ui -> ui.navigate(e.getSource().getText()));
-	}	
+	}
 
 	public String getInstitutionName() {
-		return this.model.getInstitutionName();
+		EntityManager em = Persistence.createEntityManagerFactory(InstitutionPresenter.PERSISTENCE_UNIT_NAME)
+				.createEntityManager();
+		EntityTransaction transaction = em.getTransaction();
+		transaction.begin();
+		Query q = em.createNativeQuery("select * from institution where institution.address_addressid = 1",InstitutionModel.class);
+		if(q.getResultList().size() > 0) {
+			InstitutionModel model = (InstitutionModel) q.getSingleResult();
+			return model.getInstitutionName();
+		}
+		return "Default_Name";
+		
 	}
 
 	public Address getInstitutionAddress() {
-		return this.model.getAddress();
-	}
-
-	
-	@Override
-	public void update(Observable o, Object arg) {
-		this.setChanged();
-		this.notifyObservers();
+		EntityManager em = Persistence.createEntityManagerFactory(InstitutionPresenter.PERSISTENCE_UNIT_NAME)
+				.createEntityManager();
+		EntityTransaction transaction = em.getTransaction();
+		transaction.begin();
+		Query q = em.createQuery("select a from Address a where a.addressID = 1", Address.class);
+		if(q.getResultList().size() > 0) {
+			return (Address) q.getSingleResult();
+		}
+		Address defaultAddress = new Address();
+		defaultAddress.setStreet("Default_Street");
+		defaultAddress.setStreetNr(1);
+		defaultAddress.setCity("Default_City");
+		defaultAddress.setZipCode(1234);
+		return defaultAddress;
 	}
 }
