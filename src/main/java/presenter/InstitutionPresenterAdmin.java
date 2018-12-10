@@ -19,12 +19,8 @@ import model.InstitutionModel;
 
 public class InstitutionPresenterAdmin extends InstitutionPresenter {
 
-	private InstitutionModel model;
-	private static final String PERSISTENCE_UNIT_NAME = "ch.bfh.btx8081.w2018.blue";
-
 	public InstitutionPresenterAdmin() {
 		super();
-		this.model = new InstitutionModel();
 	}
 
 	public void settingsButtonClicked(ClickEvent<Button> e) {
@@ -32,8 +28,7 @@ public class InstitutionPresenterAdmin extends InstitutionPresenter {
 	}
 
 	public void setInstitutionName(String institutionName, Address address) {
-		EntityManager em = Persistence.createEntityManagerFactory(InstitutionPresenterAdmin.PERSISTENCE_UNIT_NAME)
-				.createEntityManager();
+		EntityManager em = super.getEM();
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		InstitutionModel model = new InstitutionModel();
@@ -53,13 +48,11 @@ public class InstitutionPresenterAdmin extends InstitutionPresenter {
 	}
 
 	public void setInstitutionAddress(Address address) {
-		EntityManager em = Persistence.createEntityManagerFactory(InstitutionPresenterAdmin.PERSISTENCE_UNIT_NAME)
-				.createEntityManager();
+		EntityManager em = super.getEM();
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		em.persist(address);
 		em.flush();
 		transaction.commit();
 	}
-
 }

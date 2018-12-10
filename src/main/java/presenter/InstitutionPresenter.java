@@ -19,6 +19,7 @@ import com.vaadin.flow.component.button.Button;
 import model.Address;
 import model.InstitutionModel;
 
+
 public class InstitutionPresenter extends Observable {
 
 	private static final String PERSISTENCE_UNIT_NAME = "ch.bfh.btx8081.w2018.blue";
@@ -32,28 +33,34 @@ public class InstitutionPresenter extends Observable {
 	}
 
 	public String getInstitutionName() {
-		EntityManager em = Persistence.createEntityManagerFactory(InstitutionPresenter.PERSISTENCE_UNIT_NAME)
-				.createEntityManager();
+		EntityManager em = this.getEM();
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
-		Query q = em.createNativeQuery("select * from institution where institution.address_addressid = 1",InstitutionModel.class);
-		if(q.getResultList().size() > 0) {
+		Query q = em.createNativeQuery("select * from institution where institution.address_addressid = 1",
+				InstitutionModel.class);
+		if (q.getResultList().size() > 0) {
 			InstitutionModel model = (InstitutionModel) q.getSingleResult();
 			return model.getInstitutionName();
 		}
 		return "Default_Name";
-		
 	}
 
 	public Address getInstitutionAddress() {
-		EntityManager em = Persistence.createEntityManagerFactory(InstitutionPresenter.PERSISTENCE_UNIT_NAME)
-				.createEntityManager();
+		EntityManager em = this.getEM();
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		Query q = em.createQuery("select a from Address a where a.addressID = 1", Address.class);
-		if(q.getResultList().size() > 0) {
+		if (q.getResultList().size() > 0) {
 			return (Address) q.getSingleResult();
 		}
+		return this.createDefaultAddress();
+	}
+
+	protected EntityManager getEM() {
+		return Persistence.createEntityManagerFactory(InstitutionPresenter.PERSISTENCE_UNIT_NAME).createEntityManager();
+	}
+
+	private Address createDefaultAddress() {
 		Address defaultAddress = new Address();
 		defaultAddress.setStreet("Default_Street");
 		defaultAddress.setStreetNr(1);
