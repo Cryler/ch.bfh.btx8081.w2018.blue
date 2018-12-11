@@ -6,6 +6,7 @@
  */
 package model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,10 +18,9 @@ import javax.persistence.Table;
 public class InstitutionModel {
 
 	@Id
-	@GeneratedValue
-	private int institutionID;
+	private int institutionID = 1;
 	private String institutionName;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Address address;
 
 	

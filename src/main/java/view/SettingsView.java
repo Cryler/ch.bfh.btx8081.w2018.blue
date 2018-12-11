@@ -78,7 +78,7 @@ public class SettingsView extends VerticalLayout {
 		
 			
 			this.presenter.setInstitutionAddress(newAddress);
-			this.presenter.setInstitutionName(this.actualNameOfInstitution.getValue(), newAddress);
+			this.presenter.setInstitutionName(this.actualNameOfInstitution.getValue());
 			saveButton.getUI().ifPresent(ui -> ui.navigate("Home"));
 		});
 

@@ -8,7 +8,6 @@ package presenter;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import com.vaadin.flow.component.ClickEvent;
@@ -27,32 +26,49 @@ public class InstitutionPresenterAdmin extends InstitutionPresenter {
 		e.getSource().getUI().ifPresent(ui -> ui.navigate("Settings"));
 	}
 
-	public void setInstitutionName(String institutionName, Address address) {
+	public void setInstitutionName(String institutionName) {
 		EntityManager em = super.getEM();
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		InstitutionModel model = new InstitutionModel();
-		Query q = em.createNativeQuery("select * from institution where institution.address_addressid = 1",
-				InstitutionModel.class);
+		Query q = em.createNativeQuery("select * from institution where institutionid = 1", InstitutionModel.class);
 		if (q.getResultList().size() > 0) {
 			model = (InstitutionModel) q.getSingleResult();
-			model.setInstitutionName(institutionName);
-			model.setAddress(address);
 		} else {
-			model.setInstitutionName(institutionName);
-			model.setAddress(address);
+			model.setAddress(this.createDefaultAddress());
 		}
+		model.setInstitutionName(institutionName);
 		em.persist(model);
 		em.flush();
 		transaction.commit();
 	}
 
-	public void setInstitutionAddress(Address address) {
+	public void setInstitutionAddress(Address newAddress) {
 		EntityManager em = super.getEM();
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
+		Address address = new Address();
+		Query q = em.createNativeQuery(
+				"select * from address where addressid = (select addressid from institution where institutionid = 1)",
+				Address.class);
+		if (q.getResultList().size() > 0) {
+			address = (Address) q.getSingleResult();
+		}
+		address.setStreet(newAddress.getStreet());
+		address.setCity(newAddress.getCity());
+		address.setStreetNr(newAddress.getStreetNr());
+		address.setZipCode(newAddress.getZipCode());
 		em.persist(address);
 		em.flush();
 		transaction.commit();
+	}
+
+	private Address createDefaultAddress() {
+		Address defaultAddress = new Address();
+		defaultAddress.setStreet("Default_Street");
+		defaultAddress.setStreetNr(1);
+		defaultAddress.setCity("Default_City");
+		defaultAddress.setZipCode(1234);
+		return defaultAddress;
 	}
 }

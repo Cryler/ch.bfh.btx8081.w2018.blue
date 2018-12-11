@@ -6,9 +6,6 @@
  */
 package view;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.icon.Icon;
@@ -22,7 +19,7 @@ import presenter.InstitutionPresenterAdmin;
 
 @Route("Home")
 @StyleSheet(value = "styles/style.css", loadMode = LoadMode.INLINE)
-public class InstitutionView extends VerticalLayout implements Observer {
+public class InstitutionView extends VerticalLayout  {
 
 	/**
 	 * 
@@ -35,7 +32,7 @@ public class InstitutionView extends VerticalLayout implements Observer {
 		this.initView();
 		this.addComponents();
 		this.updateView();
-
+		 
 	}
 
 	private void initView() {
@@ -74,10 +71,4 @@ public class InstitutionView extends VerticalLayout implements Observer {
 		newButton.setWidth("200px");
 		return newButton;
 	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-		this.updateView();
-	}
-
 }
