@@ -42,7 +42,7 @@ public class InstitutionPresenter  {
 		EntityManager em = this.getEM();
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
-		Query q = em.createNativeQuery("select * from address where addressid = (select addressid from institution where institutionid = 1)", Address.class);
+		Query q = em.createNativeQuery("select * from address where addressid = (select institution.address_addressid from institution where institutionid = 1)", Address.class);
 		if (q.getResultList().size() > 0) {
 		 return (Address) q.getSingleResult();
 		}

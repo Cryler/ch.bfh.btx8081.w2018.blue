@@ -4,23 +4,31 @@
  *user: yanng   -  yann.gund@gmx.ch
  *
  */
-package model;
+package presenter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
+import model.CalendarTileModel;
+import model.PatientModel;
 import view.CalendarTileView;
 
 @Tag("WeekTile")
 public class CalendarWeekTile extends Div {
 
 	private Calendar cal = new GregorianCalendar();
+
 	private static final int MONTAG = 0;
 	private static final int DIENSTAG = 1;
 	private static final int MITTWOCH = 2;
@@ -28,20 +36,20 @@ public class CalendarWeekTile extends Div {
 	private static final int FREITAG = 4;
 	private static final int SAMSTAG = 5;
 	private static final int SONNTAG = 6;
-	
-	private int weekID;
-	
+
 	ArrayList<CalendarTileView> week = new ArrayList<>();
 
 	public CalendarWeekTile(Date date) {
 		this.cal.setTime(date);
 		this.fillWeek();
-		this.initValues();
 	}
 
-	private void initValues() {
-		// TODO Auto-generated method stub
-		//Here Comes the Database connection anf fetching the values of current existing Entrys.
+	private void fillWeek() {
+		for (int i = 0; i < 7; i++) {
+			this.week.add(new CalendarTileView(this.cal.getTime()));
+			this.cal.set(Calendar.DAY_OF_MONTH, this.cal.get(Calendar.DAY_OF_MONTH) + 1);
+		}
+
 	}
 
 	public CalendarTileView getMonday() {
@@ -71,14 +79,4 @@ public class CalendarWeekTile extends Div {
 	public CalendarTileView getSunday() {
 		return this.week.get(CalendarWeekTile.SONNTAG);
 	}
-
-	private void fillWeek() {
-		new HorizontalLayout();
-		for (int i = 0; i < 7; i++) {
-			this.week.add(new CalendarTileView(this.cal.getTime()));
-			this.cal.set(Calendar.DAY_OF_MONTH, this.cal.get(Calendar.DAY_OF_MONTH) + 1);
-		}
-
-	}
-
 }

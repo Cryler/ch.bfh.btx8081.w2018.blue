@@ -76,9 +76,9 @@ public class SettingsView extends VerticalLayout {
 			newAddress.setCity(this.actualCityOfInstitution.getValue());
 			newAddress.setZipCode(Integer.valueOf(this.actualZipCodeOfInstitution.getValue()));
 		
-			
-			this.presenter.setInstitutionAddress(newAddress);
 			this.presenter.setInstitutionName(this.actualNameOfInstitution.getValue());
+			this.presenter.setInstitutionAddress(newAddress);
+			
 			saveButton.getUI().ifPresent(ui -> ui.navigate("Home"));
 		});
 

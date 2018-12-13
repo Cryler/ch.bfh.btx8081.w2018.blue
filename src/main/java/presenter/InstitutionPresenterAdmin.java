@@ -30,11 +30,12 @@ public class InstitutionPresenterAdmin extends InstitutionPresenter {
 		EntityManager em = super.getEM();
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
-		InstitutionModel model = new InstitutionModel();
+		InstitutionModel model;
 		Query q = em.createNativeQuery("select * from institution where institutionid = 1", InstitutionModel.class);
 		if (q.getResultList().size() > 0) {
 			model = (InstitutionModel) q.getSingleResult();
 		} else {
+			model = new InstitutionModel();
 			model.setAddress(this.createDefaultAddress());
 		}
 		model.setInstitutionName(institutionName);
@@ -46,19 +47,18 @@ public class InstitutionPresenterAdmin extends InstitutionPresenter {
 	public void setInstitutionAddress(Address newAddress) {
 		EntityManager em = super.getEM();
 		EntityTransaction transaction = em.getTransaction();
-		transaction.begin();
-		Address address = new Address();
+		transaction.begin();		
 		Query q = em.createNativeQuery(
-				"select * from address where addressid = (select addressid from institution where institutionid = 1)",
+				"select * from address where addressid = (select institution.address_addressid from institution where institutionid = 1)",
 				Address.class);
 		if (q.getResultList().size() > 0) {
-			address = (Address) q.getSingleResult();
-		}
-		address.setStreet(newAddress.getStreet());
-		address.setCity(newAddress.getCity());
-		address.setStreetNr(newAddress.getStreetNr());
-		address.setZipCode(newAddress.getZipCode());
-		em.persist(address);
+			Address address = (Address) q.getSingleResult();
+			address.setStreet(newAddress.getStreet());
+			address.setCity(newAddress.getCity());
+			address.setStreetNr(newAddress.getStreetNr());
+			address.setZipCode(newAddress.getZipCode());
+			em.persist(address);
+		}	
 		em.flush();
 		transaction.commit();
 	}

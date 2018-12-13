@@ -21,8 +21,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.Route;
 
-import model.CalendarWeekTile;
 import presenter.CalendarPresenter;
+import presenter.CalendarWeekTile;
 
 @Route("Kalender")
 
@@ -40,9 +40,10 @@ public class CalendarView extends VerticalLayout {
 
 	public CalendarView() {
 		this.initView();
+		this.updateLabelOfInstitution();
 		this.initCalendar();
-		this.initData();
-		this.updateView();
+		this.createTilesOfCalendar();
+		this.loadDataFromDB();
 	}
 
 	private void initView() {
@@ -72,6 +73,7 @@ public class CalendarView extends VerticalLayout {
 		hl1.add(vl1, this.grid);
 
 		this.add(hl1);
+
 	}
 
 	// Sets the Date of the Calendar on the Monday of the Week in wich the first of
@@ -82,28 +84,44 @@ public class CalendarView extends VerticalLayout {
 		while (!this.calendar.getTime().toString().substring(0, 3).equals("Mon")) {
 			this.theDayBefore();
 		}
-	}
 
-	// Creates all Data Tiles and Fethches the Data from the Database.
-	private void initData() {
-		List<CalendarWeekTile> tiles = createTiles();
-		this.grid.setItems(tiles);
-	}
-
-	private void updateView() {
-		this.area.setValue(this.presenter.getInstitutionData());
 	}
 
 	// Hilfsmethoden
+
+	private void createTilesOfCalendar() {
+		List<CalendarWeekTile> tiles = createTiles();
+		for(CalendarWeekTile weekTile : tiles) {
+			weekTile.loadData();
+		}
+		this.grid.setItems(tiles);
+		System.out.println("Calendar-initData-End");
+	}
+	
+	
+	
+
+	private void updateLabelOfInstitution() {
+		this.area.setValue(this.presenter.getInstitutionData());
+	}
+	
+	
+	
+	
+
 	private List<CalendarWeekTile> createTiles() {
 		ArrayList<CalendarWeekTile> tiles = new ArrayList<>();
 
 		for (int i = 0; i < 6; i++) {
 			tiles.add(new CalendarWeekTile(this.calendar.getTime()));
 			this.calendar.set(Calendar.WEEK_OF_YEAR, this.calendar.get(Calendar.WEEK_OF_YEAR) + 1);
+
 		}
 		return tiles;
 	}
+	
+	
+	
 
 	private Button createButton(String value, Icon icon) {
 		Button newButton = new Button(value, icon);
@@ -113,6 +131,9 @@ public class CalendarView extends VerticalLayout {
 		newButton.setWidth("200px");
 		return newButton;
 	}
+	
+	
+	
 
 	private TextArea createTextArea() {
 		this.area = new TextArea();
@@ -120,6 +141,9 @@ public class CalendarView extends VerticalLayout {
 		this.area.setEnabled(false);
 		return this.area;
 	}
+	
+	
+	
 
 	private void theDayBefore() {
 		this.calendar.set(Calendar.DATE, this.calendar.get(Calendar.DATE) - 1);

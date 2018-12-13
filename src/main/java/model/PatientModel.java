@@ -1,30 +1,26 @@
 package model;
 
 import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
-
 
 @Entity
-@PrimaryKeyJoinColumn(referencedColumnName="id")
+
 public class PatientModel extends Person {
-	
-	
+
 	private String insurance;
 	private String ahvNr;
-	
-	
-	
 
-	public PatientModel(int id, String aLastName, String aFirstName, String aBirthdate, String aGender, String anAddress, String aCity, String aNationality, String aLanguage, String aPhoneNumber, String anEmail, String anInsurance, String anAhvNr){
-		super(id,aLastName, aFirstName, aBirthdate, aGender, anAddress, aCity, aNationality, aLanguage, aPhoneNumber, anEmail);
+	public PatientModel(int id, String aLastName, String aFirstName, String aBirthdate, String aGender,
+			String anAddress, String aCity, String aNationality, String aLanguage, String aPhoneNumber, String anEmail,
+			String anInsurance, String anAhvNr) {
+		super(id, aLastName, aFirstName, aBirthdate, aGender, anAddress, aCity, aNationality, aLanguage, aPhoneNumber,
+				anEmail);
 		this.insurance = anInsurance;
 		this.ahvNr = anAhvNr;
-		
+
 	}
-	
+
 	public PatientModel() {
-		
+
 		super();
 	}
 //	

@@ -6,22 +6,30 @@
  */
 package model;
 
-import java.sql.Time;
 import java.util.Date;
 
-import com.vaadin.flow.component.textfield.TextArea;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+@Entity
+@Table(name = "calendartile")
 public class CalendarTileModel {
-	private int id;
+
+	@Id
+	@Temporal(TemporalType.DATE)
 	private Date date;
 	private PatientModel patient;
 	private String kommentar;
+	
 
 	public CalendarTileModel() {
 
 	}
 
-	public CalendarTileModel(Date date,  String kommentar) {
+	public CalendarTileModel(Date date, String kommentar) {
 		this.date = date;
 		this.kommentar = kommentar;
 	}
@@ -30,8 +38,24 @@ public class CalendarTileModel {
 		return this.date;
 	}
 
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	public String getKommentar() {
 		return this.kommentar;
+	}
+
+	public void setKommentar(String kommentar) {
+		this.kommentar = kommentar;
+	}
+
+	public PatientModel getPatient() {
+		return patient;
+	}
+
+	public void setPatient(PatientModel patient) {
+		this.patient = patient;
 	}
 
 }

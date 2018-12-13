@@ -25,6 +25,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.shared.ui.LoadMode;
 
 import model.CalendarTileModel;
+import presenter.CalendarTilePresenter;
 
 @Tag("Tile")
 @StyleSheet(value = "styles/style.css", loadMode = LoadMode.INLINE)
@@ -32,26 +33,19 @@ public class CalendarTileView extends Div {
 
 	private SimpleDateFormat dateformatter = new SimpleDateFormat("dd.MM");
 
-	private Date date;
-	private CalendarTileModel model;
 	private TextArea info;
+	private Label dateLabel;
+	private CalendarTilePresenter presenter;
 
-	public CalendarTileView(Date date) {
-		this.date = date;
+		
+	public CalendarTileView(Date date) {		
 		this.initView();
+		this.initValues(date);
 	}
-	
-	public CalendarTileView(Date date, CalendarTileModel model) {
-		this.date = date;
-		this.model = model;
-		this.initView();
-		this.update();
-	}
-
 	private void initView() {
 		HorizontalLayout hl1 = new HorizontalLayout();
 		hl1.setAlignItems(Alignment.CENTER);
-		hl1.add(this.createLabel(date));
+		hl1.add(this.createLabel());
 		hl1.add(new Button(new Icon(VaadinIcon.PLUS_CIRCLE_O), e -> {
 			Dialog dialog = this.createDialog();
 			dialog.open();
@@ -74,33 +68,41 @@ public class CalendarTileView extends Div {
 		this.add(vl1);
 	}
 
-	private Label createLabel(Date date) {
-		Label label = new Label(this.dateformatter.format(date));
-		label.getStyle().set("fontSize", "15px");
-		return label;
+	private Label createLabel() {
+		this.dateLabel = new Label();
+		this.dateLabel.getStyle().set("fontSize", "15px");
+		return this.dateLabel;
+	}
+	
+	private void initValues(Date date) {
+		this.presenter = new CalendarTilePresenter();
+		this.presenter.setDate(date);
+		this.info.setValue("");
+		this.dateLabel.setText(this.dateformatter.format(date));
+//		this.info.setValue(this.presenter.getPatientName());
+//		this.dateLabel.setText(this.dateformatter.format(this.presenter.getDate()));
 	}
 
 	private Dialog createDialog() {
 		Dialog dialog = new Dialog();
 		TextField patientField = new TextField();
+		patientField.setValue(this.presenter.getPatientName());
 		patientField.setLabel("Patient");
 
 		TextArea area = new TextArea();
+		area.setValue(this.presenter.getKommentar());
 		area.setLabel("Kommentar");
 
 		Button saveButton = new Button("speichern");
 		saveButton.addClickListener(event -> {
-			this.model = new CalendarTileModel(this.date, area.getValue());
-			this.update();
+			this.presenter.setKommentar(area.getValue());
+			this.presenter.setPatientName(patientField.getValue());
+					
 			dialog.close();
 		});
 		VerticalLayout vl1 = new VerticalLayout();
 		vl1.add(patientField, area, saveButton);
 		dialog.add(vl1);
 		return dialog;
-	}
-
-	private void update() {
-		this.info.setValue(this.model.getKommentar());
 	}
 }
