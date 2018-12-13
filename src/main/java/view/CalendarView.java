@@ -43,7 +43,7 @@ public class CalendarView extends VerticalLayout {
 		this.updateLabelOfInstitution();
 		this.initCalendar();
 		this.createTilesOfCalendar();
-		this.loadDataFromDB();
+
 	}
 
 	private void initView() {
@@ -91,23 +91,12 @@ public class CalendarView extends VerticalLayout {
 
 	private void createTilesOfCalendar() {
 		List<CalendarWeekTile> tiles = createTiles();
-		for(CalendarWeekTile weekTile : tiles) {
-			weekTile.loadData();
-		}
 		this.grid.setItems(tiles);
-		System.out.println("Calendar-initData-End");
 	}
-	
-	
-	
 
 	private void updateLabelOfInstitution() {
 		this.area.setValue(this.presenter.getInstitutionData());
 	}
-	
-	
-	
-	
 
 	private List<CalendarWeekTile> createTiles() {
 		ArrayList<CalendarWeekTile> tiles = new ArrayList<>();
@@ -119,9 +108,6 @@ public class CalendarView extends VerticalLayout {
 		}
 		return tiles;
 	}
-	
-	
-	
 
 	private Button createButton(String value, Icon icon) {
 		Button newButton = new Button(value, icon);
@@ -131,9 +117,6 @@ public class CalendarView extends VerticalLayout {
 		newButton.setWidth("200px");
 		return newButton;
 	}
-	
-	
-	
 
 	private TextArea createTextArea() {
 		this.area = new TextArea();
@@ -141,9 +124,6 @@ public class CalendarView extends VerticalLayout {
 		this.area.setEnabled(false);
 		return this.area;
 	}
-	
-	
-	
 
 	private void theDayBefore() {
 		this.calendar.set(Calendar.DATE, this.calendar.get(Calendar.DATE) - 1);
