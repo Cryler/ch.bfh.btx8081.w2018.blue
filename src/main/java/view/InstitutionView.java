@@ -17,13 +17,18 @@ import com.vaadin.flow.shared.ui.LoadMode;
 
 import presenter.InstitutionPresenterAdmin;
 
+/**
+ * this Class represents the Homescreen of our Application. The
+ * {@code InstitutionView} connects all parts of the UI with Navigaton Buttons.
+ * 
+ * @author yanng
+ *
+ */
+
 @Route("Home")
 @StyleSheet(value = "styles/style.css", loadMode = LoadMode.INLINE)
-public class InstitutionView extends VerticalLayout  {
+public class InstitutionView extends VerticalLayout {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private InstitutionPresenterAdmin presentorAdmin;
 	private TextArea addressField;
@@ -32,7 +37,6 @@ public class InstitutionView extends VerticalLayout  {
 		this.initView();
 		this.addComponents();
 		this.updateView();
-		 
 	}
 
 	private void initView() {
@@ -52,7 +56,6 @@ public class InstitutionView extends VerticalLayout  {
 		Button settingsButton = this.createButton("Settings", new Icon(VaadinIcon.COG_O));
 
 		this.add(this.addressField, calendarButton, newPatientButton, searchPatientButton, settingsButton);
-
 	}
 
 	private void updateView() {

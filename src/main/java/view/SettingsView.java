@@ -14,7 +14,16 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
 import model.Address;
+import model.InstitutionModel;
+import presenter.InstitutionPresenter;
 import presenter.InstitutionPresenterAdmin;
+
+/**
+ * The {@code SettingsView} is part of the UI and is used to change the Data of the {@code InstitutionModel}
+ * It also uses the {@code InstitutionPresenter} to get the initial Data.
+ * @author yanng
+ *
+ */
 
 @Route("Settings")
 public class SettingsView extends VerticalLayout {
@@ -29,17 +38,20 @@ public class SettingsView extends VerticalLayout {
 
 	public SettingsView() {
 		this.initView();
-		this.addComponents();
+		this.addVisualComponents();
 		this.initData();
 	}
 
+	/** 
+	 * This Method sets all parameters of the root Vertical Layout and initializes the {@code InstitutionPresenter}.
+	 */
 	private void initView() {
 		this.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 		this.setSizeFull();
 		this.presenter = new InstitutionPresenterAdmin();
 	}
 
-	private void addComponents() {
+	private void addVisualComponents() {
 
 		HorizontalLayout bottomSection = new HorizontalLayout();
 
@@ -68,6 +80,10 @@ public class SettingsView extends VerticalLayout {
 		HorizontalLayout cityLayout = new HorizontalLayout();
 		cityLayout.add(cityOfInstitution, this.actualCityOfInstitution);
 
+		
+		/**
+		 * This creates a button that calls the setters of the {@code InstiutionPresenter} and navigates back to {@code InstitutionView}.
+		 */
 		Button saveButton = this.createButton("Speichern");
 		saveButton.addClickListener(e -> {
 			Address newAddress = new Address();
@@ -94,6 +110,10 @@ public class SettingsView extends VerticalLayout {
 		
 	}
 
+	
+	/**
+	 * this method gets the informations about the {@code InstitutionModel}, that can be changed by clicking the {@value saveButton}.
+	 */
 	public void initData() {
 		this.presenter = new InstitutionPresenterAdmin();
 		this.actualNameOfInstitution.setValue(this.presenter.getInstitutionName());
@@ -103,6 +123,9 @@ public class SettingsView extends VerticalLayout {
 		this.actualZipCodeOfInstitution.setValue(Integer.toString(this.presenter.getInstitutionAddress().getZipCode()));
 		this.actualCityOfInstitution.setValue(this.presenter.getInstitutionAddress().getCity());
 	}
+	
+
+	// Below are all methods that create specific types of visual Components.
 
 	private TextField createTextfield() {
 		TextField newTextfield = new TextField();

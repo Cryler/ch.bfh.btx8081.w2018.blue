@@ -15,10 +15,10 @@ import javax.persistence.Persistence;
 import javax.persistence.Table;
 
 /**
- * A Class that represents a simple Address Function.
- * 
- * 
- * @author yanng
+ * A Class that represents a simple {@code Address} Function.
+ * The Data is stored in the {@code Address} DB.
+ *   
+ * @author gundy1
  *
  */
 
@@ -26,9 +26,13 @@ import javax.persistence.Table;
 @Table(name = "address")
 public class Address {
 
+	/*
+	 * A generated value that acts as the identifier of the address.
+	 */
 	@Id
 	@GeneratedValue
 	private int addressID;
+	
 	private String street;
 	private int streetNr;
 	private int zipCode;

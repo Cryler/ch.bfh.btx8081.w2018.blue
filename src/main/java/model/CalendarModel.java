@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import presenter.CalendarWeekTile;
 
+
 @Entity
 @Table(name = "calendar")
 public class CalendarModel {

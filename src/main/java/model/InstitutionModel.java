@@ -14,10 +14,23 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+/**
+ * This class stores and represents the {@code Institution} in the DB.
+ * It contains a name and a {@code Address}.
+ * 
+ * 
+ * @author yanng
+ *
+ */
 @Entity
 @Table(name = "institution")
 public class InstitutionModel {
 
+	
+	/**
+	 * The {@value institutionID} is set to 1 because there should only be one institution at a given time. 
+	 * 
+	 */
 	@Id
 	private int institutionID = 1;
 	private String institutionName;
