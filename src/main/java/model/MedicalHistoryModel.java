@@ -32,6 +32,10 @@ public class MedicalHistoryModel {
 	public String getDiagnosisDesc() {
 		return this.diagnosisDesc;
 	}
+	
+	public void setDiagnosisDesc(String diagnosisDesc) {
+		this.diagnosisDesc = diagnosisDesc;
+	}
 
 	public String getProcedureDesc() {
 		return this.procedureDesc;
