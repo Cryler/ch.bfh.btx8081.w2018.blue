@@ -3,43 +3,42 @@ package model;
 public class MedicalHistoryModel {
 	private String reportTitle;
 	private String anamneseDesc;
-	private String diagnosisTitle;
 	private String diagnosisDesc;
-	private String procedureTitle;
 	private String procedureDesc;
 
-	public MedicalHistoryModel(String reportTitle, String anamneseDesc, String diagnosisTitle, String diagnosisDesc, String procedureTitle,
-			String procedureDesc) {
+	public MedicalHistoryModel(String reportTitle, String anamneseDesc, String diagnosisDesc, String procedureDesc) {
 		this.reportTitle = reportTitle;
 		this.anamneseDesc = anamneseDesc;
-		this.diagnosisTitle = diagnosisTitle;
 		this.diagnosisDesc = diagnosisDesc;
-		this.procedureTitle = procedureTitle;
-		this.procedureDesc = procedureTitle;
+		this.procedureDesc = procedureDesc;
 	}
-	
+
 	public String getReportTitle() {
 		return this.reportTitle;
 	}
-	
-	public String getDiagnosisTitle () {
-		return this.diagnosisTitle;
+
+	public void setReportTitle(String reportTitle) {
+		this.reportTitle = reportTitle;
 	}
-	
-	public String getAnamneseDesc () {
+
+	public String getAnamneseDesc() {
 		return this.anamneseDesc;
 	}
-	
-	public String getDiagnosisDesc () {
+
+	public void setAnamneseDesc(String anamneseDesc) {
+		this.anamneseDesc = anamneseDesc;
+	}
+
+	public String getDiagnosisDesc() {
 		return this.diagnosisDesc;
 	}
-	
-	public String getProcedureTitle() {
-		return this.procedureTitle;
-	}
-	
+
 	public String getProcedureDesc() {
 		return this.procedureDesc;
 	}
 	
+	public void setProcedureDesc(String procedureDesc) {
+		this.procedureDesc = procedureDesc;
+	}
+
 }
