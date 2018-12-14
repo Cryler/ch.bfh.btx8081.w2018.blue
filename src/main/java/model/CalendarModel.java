@@ -12,8 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import entity.InstitutionEntity;
 import presenter.CalendarWeekTile;
-
 
 @Entity
 @Table(name = "calendar")
@@ -23,17 +23,17 @@ public class CalendarModel {
 	@GeneratedValue
 	private int calendarID;
 	@OneToOne
-	private InstitutionModel institution;
+	private InstitutionEntity institution;
 
 	public CalendarModel() {
 
 	}
 
-	public InstitutionModel getInstitution() {
+	public InstitutionEntity getInstitution() {
 		return this.institution;
 	}
 
-	public void setInstitution(InstitutionModel institution) {
+	public void setInstitution(InstitutionEntity institution) {
 		this.institution = institution;
 	}
 //

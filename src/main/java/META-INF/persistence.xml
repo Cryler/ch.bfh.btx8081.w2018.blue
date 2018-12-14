@@ -9,7 +9,7 @@
 		<class>model.Address</class>
 		<class>model.CalendarModel</class>
 		<class>model.CalendarTileModel</class>
-		<class>model.InstitutionModel</class>
+		<class>entity.InstitutionEntity</class>
 		<class>model.PatientModel</class>
 		<class>model.Person</class>
 		<properties>

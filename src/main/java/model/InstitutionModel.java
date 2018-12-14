@@ -6,55 +6,69 @@
  */
 package model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
+
+import entity.InstitutionEntity;
+import service.EMService;
 
 /**
- * This class stores and represents the {@code Institution} in the DB.
- * It contains a name and a {@code Address}.
+ * This class stores and represents the {@code Institution} in the DB. It
+ * contains a name and a {@code Address}.
  * 
  * 
  * @author yanng
  *
  */
-@Entity
-@Table(name = "institution")
+
 public class InstitutionModel {
 
-	
 	/**
-	 * The {@value institutionID} is set to 1 because there should only be one institution at a given time. 
+	 * The {@value institutionID} is set to 1 because there should only be one
+	 * institution at a given time.
 	 * 
 	 */
-	@Id
-	private int institutionID = 1;
-	private String institutionName;
-	@OneToOne(cascade = CascadeType.PERSIST)
-	private Address address;
-
-	
-	public InstitutionModel() {
-		
-	}
 
 	public String getInstitutionName() {
-		return this.institutionName;
+		try {
+			EntityManager em = EMService.getEM();
+			EntityTransaction transaction = em.getTransaction();
+			transaction.begin();
+			Query q = em.createNativeQuery("select * from institution where institutionid = 1",
+					InstitutionEntity.class);
+			InstitutionEntity entity = (InstitutionEntity) q.getSingleResult();
+			return entity.getInstitutionName();
+		} catch (NoResultException e) {
+			return "Default_Name";
+		}
+
 	}
 
-	public void setInstitutionName(String institutionName) {
-		this.institutionName = institutionName;
+	public Address getInstitutionAddress() {
+		try {
+			EntityManager em = EMService.getEM();
+			EntityTransaction transaction = em.getTransaction();
+			transaction.begin();
+			Query q = em.createNativeQuery("select * from institution where institutionid = 1",
+					InstitutionEntity.class);
+			InstitutionEntity entity = (InstitutionEntity) q.getSingleResult();
+			return entity.getInstitutionAddress();
+
+		} catch (NoResultException e) {
+			return this.createDefaultAddress();
+		}
+
 	}
 
-	public Address getAddress() {
-		return this.address;
+	private Address createDefaultAddress() {
+		Address defaultAddress = new Address();
+		defaultAddress.setStreet("Default_Street");
+		defaultAddress.setStreetNr(1);
+		defaultAddress.setCity("Default_City");
+		defaultAddress.setZipCode(1234);
+		return defaultAddress;
 	}
 
-	public void setAddress(Address address) {
-		this.address = address;
-	}
 }

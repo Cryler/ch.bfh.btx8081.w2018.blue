@@ -16,49 +16,26 @@ import com.vaadin.flow.component.button.Button;
 
 import model.Address;
 import model.InstitutionModel;
+import view.InstitutionViewInterface;
 
-public class InstitutionPresenter  {
+public class InstitutionPresenter implements InstitutionViewInterface {
 
 	private static final String PERSISTENCE_UNIT_NAME = "ch.bfh.btx8081.w2018.blue";
-
 	
+
+	@Override
 	public void buttonClicked(ClickEvent<Button> e) {
 		e.getSource().getUI().ifPresent(ui -> ui.navigate(e.getSource().getText()));
 	}
 
 	public String getInstitutionName() {
-		EntityManager em = this.getEM();
-		EntityTransaction transaction = em.getTransaction();
-		transaction.begin();
-		Query q = em.createNativeQuery("select * from institution where institutionid = 1", InstitutionModel.class);
-		if (q.getResultList().size() > 0) {
-			InstitutionModel model = (InstitutionModel) q.getSingleResult();
-			return model.getInstitutionName();
-		}
-		return "Default_Name";
+		InstitutionModel model = new InstitutionModel();
+		return model.getInstitutionName();
 	}
 
 	public Address getInstitutionAddress() {
-		EntityManager em = this.getEM();
-		EntityTransaction transaction = em.getTransaction();
-		transaction.begin();
-		Query q = em.createNativeQuery("select * from address where addressid = (select institution.address_addressid from institution where institutionid = 1)", Address.class);
-		if (q.getResultList().size() > 0) {
-		 return (Address) q.getSingleResult();
-		}
-		return this.createDefaultAddress();
+		InstitutionModel model = new InstitutionModel();
+		return model.getInstitutionAddress();
 	}
 
-	protected EntityManager getEM() {
-		return Persistence.createEntityManagerFactory(InstitutionPresenter.PERSISTENCE_UNIT_NAME).createEntityManager();
-	}
-
-	private Address createDefaultAddress() {
-		Address defaultAddress = new Address();
-		defaultAddress.setStreet("Default_Street");
-		defaultAddress.setStreetNr(1);
-		defaultAddress.setCity("Default_City");
-		defaultAddress.setZipCode(1234);
-		return defaultAddress;
-	}
 }

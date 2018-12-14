@@ -24,7 +24,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "address")
-public class Address {
+public class Address{
 
 	/*
 	 * A generated value that acts as the identifier of the address.

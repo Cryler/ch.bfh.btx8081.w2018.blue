@@ -6,15 +6,11 @@
  */
 package presenter;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
-
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 
 import model.Address;
-import model.InstitutionModel;
+import model.InstitutionModelAdmin;
 
 public class InstitutionPresenterAdmin extends InstitutionPresenter {
 
@@ -27,48 +23,12 @@ public class InstitutionPresenterAdmin extends InstitutionPresenter {
 	}
 
 	public void setInstitutionName(String institutionName) {
-		EntityManager em = super.getEM();
-		EntityTransaction transaction = em.getTransaction();
-		transaction.begin();
-		InstitutionModel model;
-		Query q = em.createNativeQuery("select * from institution where institutionid = 1", InstitutionModel.class);
-		if (q.getResultList().size() > 0) {
-			model = (InstitutionModel) q.getSingleResult();
-		} else {
-			model = new InstitutionModel();
-			model.setAddress(this.createDefaultAddress());
-		}
+		InstitutionModelAdmin model = new InstitutionModelAdmin();
 		model.setInstitutionName(institutionName);
-		em.persist(model);
-		em.flush();
-		transaction.commit();
 	}
 
 	public void setInstitutionAddress(Address newAddress) {
-		EntityManager em = super.getEM();
-		EntityTransaction transaction = em.getTransaction();
-		transaction.begin();		
-		Query q = em.createNativeQuery(
-				"select * from address where addressid = (select institution.address_addressid from institution where institutionid = 1)",
-				Address.class);
-		if (q.getResultList().size() > 0) {
-			Address address = (Address) q.getSingleResult();
-			address.setStreet(newAddress.getStreet());
-			address.setCity(newAddress.getCity());
-			address.setStreetNr(newAddress.getStreetNr());
-			address.setZipCode(newAddress.getZipCode());
-			em.persist(address);
-		}	
-		em.flush();
-		transaction.commit();
-	}
-
-	private Address createDefaultAddress() {
-		Address defaultAddress = new Address();
-		defaultAddress.setStreet("Default_Street");
-		defaultAddress.setStreetNr(1);
-		defaultAddress.setCity("Default_City");
-		defaultAddress.setZipCode(1234);
-		return defaultAddress;
+		InstitutionModelAdmin model = new InstitutionModelAdmin();
+		model.setInstitutionAddress(newAddress);
 	}
 }
