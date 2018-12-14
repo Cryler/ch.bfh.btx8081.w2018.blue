@@ -1,15 +1,18 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Observable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 @Entity
-@Table(name="Person")
+@Table(name="person")
 
-public abstract class Person extends Observable{
+@NamedQuery(name="person.findAll", query="SELECT p FROM Person p")
+public abstract class Person extends Observable implements Serializable{
 	@Id
 	@GeneratedValue
 	private int id;
@@ -33,23 +36,23 @@ public abstract class Person extends Observable{
 		super();
 		
 	}
-	public Person(int id, String aLastName, String aFirstName, String aBirthdate, String aGender, String anAddress, String aCity, String aNationality, String aLanguage, String aPhoneNumber, String anEmail) {
-	
-		super();
-		
-		this.lastName = aLastName;
-		this.firstName = aFirstName;
-		this.birthdate = aBirthdate;
-		this.gender = aGender;
-		this.address = anAddress;
-		this.city = aCity;
-		this.nationality = aNationality;
-		this.language = aLanguage;
-		this.phoneNumber = aPhoneNumber;
-		this.email = anEmail;
-	
-	
-}
+//	public Person(int id, String aLastName, String aFirstName, String aBirthdate, String aGender, String anAddress, String aCity, String aNationality, String aLanguage, String aPhoneNumber, String anEmail) {
+//	
+//		super();
+//		
+//		this.lastName = aLastName;
+//		this.firstName = aFirstName;
+//		this.birthdate = aBirthdate;
+//		this.gender = aGender;
+//		this.address = anAddress;
+//		this.city = aCity;
+//		this.nationality = aNationality;
+//		this.language = aLanguage;
+//		this.phoneNumber = aPhoneNumber;
+//		this.email = anEmail;
+//	
+//	
+//}
 	
 	
 	public String getFirstName() {
