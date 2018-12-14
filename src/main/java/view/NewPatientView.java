@@ -113,7 +113,7 @@ public class NewPatientView extends VerticalLayout {
 //		binder.readBean(patient);
 //		binder.bind(lastName,
 //				patient -> )
-		
+		//test
 		
 		this.layout.add(newPatientLayout);
 		
