@@ -12,6 +12,7 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
 
 import model.PatientModel;
+import model.Person;
 
 /**
  * View for the new patient site.  
@@ -34,6 +35,9 @@ public class NewPatientView extends VerticalLayout {
 		patientData();
 		action();
 		HorizontalLayout actions = new HorizontalLayout();
+		
+
+		
 		this.add(this.layout);
 	}
 
@@ -91,6 +95,8 @@ public class NewPatientView extends VerticalLayout {
 		newPatientLayout.addFormItem(insurance, "Krankenkasse");
 		newPatientLayout.addFormItem(ahvNr, "AHV-Nr.");
 		
+
+		
 		// Button bar
 //		HorizontalLayout actions = new HorizontalLayout();
 //		actions.add(save,cancel);
@@ -98,6 +104,15 @@ public class NewPatientView extends VerticalLayout {
 		
 		// Birthdate
 		//binder.bind(birthDate, Patient::getBirthDate, Patient::setBirthDate);
+		
+		
+//		binder.forField(lastName).bind(PatientModel::getLastName,PatientModel::setLastName);
+//		
+//		PatientModel patient = new PatientModel();
+//		
+//		binder.readBean(patient);
+//		binder.bind(lastName,
+//				patient -> )
 		
 		
 		this.layout.add(newPatientLayout);
@@ -114,6 +129,7 @@ public class NewPatientView extends VerticalLayout {
 		HorizontalLayout layoutButtons = new HorizontalLayout();
 		Button save = new Button("Speichern");
 		save.addClickListener(e -> {
+			
 			save.getUI().ifPresent(ui -> ui.navigate("Home")); // put in right route
 		});
 		Button cancel = new Button("Abbrechen");
