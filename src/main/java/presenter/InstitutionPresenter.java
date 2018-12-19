@@ -37,5 +37,6 @@ public class InstitutionPresenter implements InstitutionViewInterface {
 		InstitutionModel model = new InstitutionModel();
 		return model.getInstitutionAddress();
 	}
+	
 
 }

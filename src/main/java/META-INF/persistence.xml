@@ -7,8 +7,8 @@
 		transaction-type="RESOURCE_LOCAL">
 
 		<class>model.Address</class>
-		<class>model.CalendarModel</class>
-		<class>model.CalendarTileModel</class>
+		<class>entity.CalendarEntity</class>
+		<class>entity.CalendarTileEntity</class>
 		<class>entity.InstitutionEntity</class>
 		<class>model.PatientModel</class>
 		<class>model.Person</class>

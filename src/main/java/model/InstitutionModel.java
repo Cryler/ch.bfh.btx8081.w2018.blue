@@ -24,6 +24,9 @@ import service.EMService;
  */
 
 public class InstitutionModel {
+	
+	private EntityManager em;
+	private EntityTransaction transaction;
 
 	/**
 	 * The {@value institutionID} is set to 1 because there should only be one
@@ -32,34 +35,42 @@ public class InstitutionModel {
 	 */
 
 	public String getInstitutionName() {
+		this.em = EMService.getEM();
+		this.transaction = em.getTransaction();
+		this.transaction.begin();
 		try {
-			EntityManager em = EMService.getEM();
-			EntityTransaction transaction = em.getTransaction();
-			transaction.begin();
-			Query q = em.createNativeQuery("select * from institution where institutionid = 1",
+			Query q = this.em.createNativeQuery("select * from institution where institutionid = 1",
 					InstitutionEntity.class);
 			InstitutionEntity entity = (InstitutionEntity) q.getSingleResult();
 			return entity.getInstitutionName();
 		} catch (NoResultException e) {
 			return "Default_Name";
+		} finally {
+			this.closeConnection();
 		}
-
 	}
 
 	public Address getInstitutionAddress() {
+		this.em = EMService.getEM();
+		this.transaction = em.getTransaction();
+		this.transaction.begin();
 		try {
-			EntityManager em = EMService.getEM();
-			EntityTransaction transaction = em.getTransaction();
-			transaction.begin();
-			Query q = em.createNativeQuery("select * from institution where institutionid = 1",
+			Query q = this.em.createNativeQuery("select * from institution where institutionid = 1",
 					InstitutionEntity.class);
 			InstitutionEntity entity = (InstitutionEntity) q.getSingleResult();
+
 			return entity.getInstitutionAddress();
 
 		} catch (NoResultException e) {
 			return this.createDefaultAddress();
+		} finally {
+			this.closeConnection();
 		}
-
+	}
+	private void closeConnection() {
+		this.em.flush();
+		this.transaction.commit();
+		this.em.close();
 	}
 
 	private Address createDefaultAddress() {

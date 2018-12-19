@@ -6,82 +6,51 @@
  */
 package model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 import entity.InstitutionEntity;
-import presenter.CalendarWeekTile;
+import service.EMService;
 
-@Entity
-@Table(name = "calendar")
 public class CalendarModel {
-
-	@Id
-	@GeneratedValue
-	private int calendarID;
-	@OneToOne
-	private InstitutionEntity institution;
+	
+	private EntityManager em;
+	private EntityTransaction transaction;
 
 	public CalendarModel() {
 
 	}
 
-	public InstitutionEntity getInstitution() {
-		return this.institution;
+	public String getInstitutionData() {
+		this.em = EMService.getEM();
+		this.transaction = em.getTransaction();
+		this.transaction.begin();
+		try {		
+			Query q = this.em.createNativeQuery("select * from institution where institutionid = 1", InstitutionEntity.class);
+			InstitutionEntity model = (InstitutionEntity) q.getSingleResult();
+			return model.getInstitutionName() + "\n" + model.getInstitutionAddress().toString();
+		} catch (NoResultException e) {
+			return "Default_Institution\n" + this.createDefaultAddress().toString();
+		} finally {
+			this.closeConnection();
+		}
+
 	}
 
-	public void setInstitution(InstitutionEntity institution) {
-		this.institution = institution;
+	private void closeConnection() {
+		this.em.flush();
+		this.transaction.commit();
+		this.em.close();
 	}
-//
-//	public CalendarWeekTileModel getWeek1() {
-//		return this.week1;
-//	}
-//
-//	public void setWeek1(CalendarWeekTileModel week1) {
-//		this.week1 = week1;
-//	}
-//
-//	public CalendarWeekTileModel getWeek2() {
-//		return week2;
-//	}
-//
-//	public void setWeek2(CalendarWeekTileModel week2) {
-//		this.week2 = week2;
-//	}
-//
-//	public CalendarWeekTileModel getWeek3() {
-//		return week3;
-//	}
-//
-//	public void setWeek3(CalendarWeekTileModel week3) {
-//		this.week3 = week3;
-//	}
-//
-//	public CalendarWeekTileModel getWeek4() {
-//		return week4;
-//	}
-//
-//	public void setWeek4(CalendarWeekTileModel week4) {
-//		this.week4 = week4;
-//	}
-//
-//	public CalendarWeekTileModel getWeek5() {
-//		return week5;
-//	}
-//
-//	public void setWeek5(CalendarWeekTileModel week5) {
-//		this.week5 = week5;
-//	}
-//
-//	public CalendarWeekTileModel getWeek6() {
-//		return week6;
-//	}
-//
-//	public void setWeek6(CalendarWeekTileModel week6) {
-//		this.week6 = week6;
-//	}
+
+	private Address createDefaultAddress() {
+		Address defaultAddress = new Address();
+		defaultAddress.setStreet("Default_Street");
+		defaultAddress.setStreetNr(1);
+		defaultAddress.setCity("Default_City");
+		defaultAddress.setZipCode(1234);
+		return defaultAddress;
+	}
 }

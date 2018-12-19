@@ -6,56 +6,76 @@
  */
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Id;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity
-@Table(name = "calendartile")
+import entity.CalendarTileEntity;
+import service.EMService;
+
+
 public class CalendarTileModel {
 
-	@Id
-	@Temporal(TemporalType.DATE)
 	private Date date;
-	private PatientModel patient;
-	private String kommentar;
+	private EntityManager em;
+	private EntityTransaction transaction;
+	private SimpleDateFormat dateformatter = new SimpleDateFormat("yyyy-MM-dd");
 	
 
-	public CalendarTileModel() {
-
-	}
-
-	public CalendarTileModel(Date date, String kommentar) {
-		this.date = date;
-		this.kommentar = kommentar;
-	}
-
-	public Date getDate() {
-		return this.date;
-	}
-
-	public void setDate(Date date) {
+	public CalendarTileModel(Date date) {
 		this.date = date;
 	}
 
 	public String getKommentar() {
-		return this.kommentar;
+		this.em = EMService.getEM();
+		this.transaction = em.getTransaction();
+		this.transaction.begin();
+		try {
+			Query q = em.createNativeQuery(
+					"select * from calendartile where date = '" + this.dateformatter.format(this.date) + "'",
+					CalendarTileEntity.class);
+			CalendarTileEntity model = (CalendarTileEntity) q.getSingleResult();
+			return model.getKommentar();
+		}catch(NoResultException e) {
+			return "";
+		}finally {
+			this.closeConnection();
+		}	
 	}
-
+	
 	public void setKommentar(String kommentar) {
-		this.kommentar = kommentar;
+		this.em = EMService.getEM();
+		this.transaction = em.getTransaction();
+		this.transaction.begin();
+		try {
+			Query q = em.createNativeQuery(
+					"select * from calendartile where date = '" + this.dateformatter.format(this.date) + "'",
+					CalendarTileEntity.class);
+			CalendarTileEntity entity = (CalendarTileEntity) q.getSingleResult();
+			entity.setKommentar(kommentar);
+			this.em.persist(entity);
+		}catch(NoResultException e) {
+			CalendarTileEntity entity = new CalendarTileEntity();
+			entity.setDate(this.date);
+			entity.setKommentar(kommentar);
+			this.em.persist(entity);
+		}finally {
+			this.closeConnection();
+		}		
 	}
-
-	public PatientModel getPatient() {
-		return patient;
+	
+	private void closeConnection() {
+		this.em.flush();
+		this.transaction.commit();
+		this.em.close();
 	}
-
-	public void setPatient(PatientModel patient) {
-		this.patient = patient;
-	}
-
 }

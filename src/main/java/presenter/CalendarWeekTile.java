@@ -37,7 +37,7 @@ public class CalendarWeekTile extends Div {
 	private static final int SAMSTAG = 5;
 	private static final int SONNTAG = 6;
 
-	ArrayList<CalendarTileView> week = new ArrayList<>();
+	private ArrayList<CalendarTileView> week = new ArrayList<>();
 
 	public CalendarWeekTile(Date date) {
 		this.cal.setTime(date);

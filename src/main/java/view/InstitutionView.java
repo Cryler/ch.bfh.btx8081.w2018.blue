@@ -15,6 +15,7 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.shared.ui.LoadMode;
 
+import model.Address;
 import presenter.InstitutionPresenterAdmin;
 
 /**
@@ -59,11 +60,9 @@ public class InstitutionView extends VerticalLayout {
 	}
 
 	private void updateView() {
-		this.addressField.setValue(this.presentorAdmin.getInstitutionName() + "\n"
-				+ this.presentorAdmin.getInstitutionAddress().getStreet() + " "
-				+ this.presentorAdmin.getInstitutionAddress().getStreetNr() + "\n"
-				+ this.presentorAdmin.getInstitutionAddress().getZipCode() + " "
-				+ this.presentorAdmin.getInstitutionAddress().getCity());
+		Address add = this.presentorAdmin.getInstitutionAddress();
+		this.addressField.setValue(this.presentorAdmin.getInstitutionName() + "\n" + add.getStreet() + " "
+				+ add.getStreetNr() + "\n" + add.getZipCode() + " " + add.getCity());
 	}
 
 	private Button createButton(String value, Icon icon) {

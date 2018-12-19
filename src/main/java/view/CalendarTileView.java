@@ -39,15 +39,15 @@ public class CalendarTileView extends Div {
 
 		
 	public CalendarTileView(Date date) {		
-		this.initView();
+		this.initView(date);
 		this.initValues(date);
 	}
-	private void initView() {
+	private void initView(Date date) {
 		HorizontalLayout hl1 = new HorizontalLayout();
 		hl1.setAlignItems(Alignment.CENTER);
 		hl1.add(this.createLabel());
 		hl1.add(new Button(new Icon(VaadinIcon.PLUS_CIRCLE_O), e -> {
-			Dialog dialog = this.createDialog();
+			Dialog dialog = this.createDialog(date);
 			dialog.open();
 		}));
 
@@ -75,18 +75,15 @@ public class CalendarTileView extends Div {
 	}
 	
 	private void initValues(Date date) {
-		this.presenter = new CalendarTilePresenter();
-		this.presenter.setDate(date);
-		this.info.setValue("");
+		this.presenter = new CalendarTilePresenter(date);
+		this.info.setValue(this.presenter.getKommentar());
 		this.dateLabel.setText(this.dateformatter.format(date));
-//		this.info.setValue(this.presenter.getPatientName());
-//		this.dateLabel.setText(this.dateformatter.format(this.presenter.getDate()));
 	}
 
-	private Dialog createDialog() {
+	private Dialog createDialog(Date date) {
 		Dialog dialog = new Dialog();
 		TextField patientField = new TextField();
-		patientField.setValue(this.presenter.getPatientName());
+		//patientField.setValue(this.presenter.getPatientName());
 		patientField.setLabel("Patient");
 
 		TextArea area = new TextArea();
@@ -97,7 +94,7 @@ public class CalendarTileView extends Div {
 		saveButton.addClickListener(event -> {
 			this.presenter.setKommentar(area.getValue());
 			this.presenter.setPatientName(patientField.getValue());
-					
+			this.initValues(date);
 			dialog.close();
 		});
 		VerticalLayout vl1 = new VerticalLayout();
