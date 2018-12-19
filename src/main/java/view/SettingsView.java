@@ -13,7 +13,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
-import model.Address;
+import entity.Address;
 import model.InstitutionModel;
 import presenter.InstitutionPresenter;
 import presenter.InstitutionPresenterAdmin;

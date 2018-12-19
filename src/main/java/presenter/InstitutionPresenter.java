@@ -14,7 +14,7 @@ import javax.persistence.Query;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 
-import model.Address;
+import entity.Address;
 import model.InstitutionModel;
 import view.InstitutionViewInterface;
 

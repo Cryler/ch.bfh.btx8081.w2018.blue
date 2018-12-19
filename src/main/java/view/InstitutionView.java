@@ -15,7 +15,7 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.shared.ui.LoadMode;
 
-import model.Address;
+import entity.Address;
 import presenter.InstitutionPresenterAdmin;
 
 /**

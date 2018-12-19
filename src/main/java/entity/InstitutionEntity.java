@@ -12,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import model.Address;
-
 @Entity
 @Table(name = "institution")
 public class InstitutionEntity {

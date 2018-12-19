@@ -9,7 +9,7 @@ package presenter;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 
-import model.Address;
+import entity.Address;
 import model.InstitutionModelAdmin;
 
 public class InstitutionPresenterAdmin extends InstitutionPresenter {

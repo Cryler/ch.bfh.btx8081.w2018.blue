@@ -4,7 +4,7 @@
  *user: yanng   -  yann.gund@gmx.ch
  *
  */
-package model;
+package entity;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;

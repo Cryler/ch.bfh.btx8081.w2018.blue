@@ -11,6 +11,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
+import entity.Address;
 import entity.InstitutionEntity;
 import service.EMService;
 
