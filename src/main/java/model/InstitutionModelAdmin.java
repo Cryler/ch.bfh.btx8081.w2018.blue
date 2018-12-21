@@ -16,19 +16,22 @@ import entity.InstitutionEntity;
 import service.EMService;
 
 public class InstitutionModelAdmin {
+	
+	private EntityManager em;
+	private EntityTransaction transaction;
 
 	public void setInstitutionName(String institutionName) {
-		try {
-			EntityManager em = EMService.getEM();
-			EntityTransaction transaction = em.getTransaction();
-			transaction.begin();
-			Query q = em.createNativeQuery("select * from institution where institutionid = 1",
+		this.em = EMService.getEM();
+		this.transaction = em.getTransaction();
+		this.transaction.begin();
+		try {			
+			Query q = this.em.createNativeQuery("select * from institution where institutionid = 1",
 					InstitutionEntity.class);
 			InstitutionEntity entity = (InstitutionEntity) q.getSingleResult();
 			entity.setInstitutionName(institutionName);
-			em.persist(entity);
-			em.flush();
-			transaction.commit();
+			this.em.persist(entity);
+			this.closeConnection();
+			
 		} catch (NoResultException e) {
 			EntityManager em = EMService.getEM();
 			EntityTransaction transaction = em.getTransaction();
@@ -36,8 +39,7 @@ public class InstitutionModelAdmin {
 			InstitutionEntity entity = new InstitutionEntity();
 			entity.setInstitutionName(institutionName);
 			em.persist(entity);
-			em.flush();
-			transaction.commit();
+			this.closeConnection();
 		}
 	}
 
@@ -51,5 +53,10 @@ public class InstitutionModelAdmin {
 		em.persist(entity);
 		em.flush();
 		transaction.commit();
+	}
+	
+	private void closeConnection() {		
+		this.em.flush();
+		this.transaction.commit();
 	}
 }

@@ -8,24 +8,24 @@ package presenter;
 
 import java.util.Date;
 
-import model.CalendarTileModel;
+import model.CalendarModel;
 
 public class CalendarTilePresenter {
 
 	private Date date;
-	private CalendarTileModel model;
+	private CalendarModel model;
 
 	public CalendarTilePresenter(Date date) {
 		this.date = date;
-		this.model = new CalendarTileModel(this.date);
+		this.model = new CalendarModel();
 	}
 
 	public String getKommentar() {
-		return model.getKommentar();
+		return model.getKommentar(this.date);
 	}
 
 	public void setKommentar(String kommentar) {
-		this.model.setKommentar(kommentar);
+		this.model.setKommentar(kommentar, this.date);
 	}
 
 	public void getPatientName() {

@@ -24,7 +24,6 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.shared.ui.LoadMode;
 
-import model.CalendarTileModel;
 import presenter.CalendarTilePresenter;
 
 @Tag("Tile")

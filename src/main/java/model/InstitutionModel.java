@@ -71,7 +71,6 @@ public class InstitutionModel {
 	private void closeConnection() {
 		this.em.flush();
 		this.transaction.commit();
-		this.em.close();
 	}
 
 	private Address createDefaultAddress() {

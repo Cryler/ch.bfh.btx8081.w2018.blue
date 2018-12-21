@@ -8,6 +8,7 @@ package view;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class CalendarView extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 	private CalendarPresenter presenter;
 	private TextArea area;
+	private Date firstOfMonth = new Date();
 
 	private Grid<CalendarWeekTile> grid;
 	private Calendar calendar;
@@ -42,7 +44,7 @@ public class CalendarView extends VerticalLayout {
 		this.initView();
 		this.updateLabelOfInstitution();
 		this.initCalendar();
-		this.createTilesOfCalendar();
+		this.createRowsOfCalendar();
 
 	}
 
@@ -60,12 +62,17 @@ public class CalendarView extends VerticalLayout {
 		this.grid.addComponentColumn(CalendarWeekTile::getSameday).setHeader("Samstag");
 		this.grid.addComponentColumn(CalendarWeekTile::getSunday).setHeader("Sonntag");
 
+		HorizontalLayout hl2 = new HorizontalLayout();
+		hl2.add(this.createCalendarNavigationButton(false, new Icon(VaadinIcon.ARROW_CIRCLE_LEFT_O)));
+		hl2.add(this.createCalendarNavigationButton(true, new Icon(VaadinIcon.ARROW_CIRCLE_RIGHT_O)));
+
 		VerticalLayout vl1 = new VerticalLayout();
 		vl1.setWidth("300px");
 		vl1.add(this.createTextArea());
-		vl1.add(this.createButton("Home", new Icon(VaadinIcon.HOME)));
-		vl1.add(this.createButton("Neuer Patient", new Icon(VaadinIcon.USER_CHECK)));
-		vl1.add(this.createButton("Patient suchen", new Icon(VaadinIcon.USERS)));
+		vl1.add(this.createMenuButton("Home", new Icon(VaadinIcon.HOME)));
+		vl1.add(this.createMenuButton("Neuer Patient", new Icon(VaadinIcon.USER_CHECK)));
+		vl1.add(this.createMenuButton("Patient suchen", new Icon(VaadinIcon.USERS)));
+		vl1.add(hl2);
 
 		HorizontalLayout hl1 = new HorizontalLayout();
 		hl1.setWidth("100%");
@@ -81,40 +88,63 @@ public class CalendarView extends VerticalLayout {
 	private void initCalendar() {
 		this.calendar = new GregorianCalendar();
 		this.calendar.set(Calendar.DAY_OF_MONTH, 1);
+		this.firstOfMonth = this.calendar.getTime();
 		while (!this.calendar.getTime().toString().substring(0, 3).equals("Mon")) {
 			this.theDayBefore();
 		}
+		
+	}
 
+	private void setCalendarDate(boolean nextMonth) {
+		if (nextMonth) {
+			this.calendar.set(Calendar.MONTH, this.calendar.get(Calendar.MONTH )+1);
+			this.firstOfMonth = this.calendar.getTime();
+			while (!this.calendar.getTime().toString().substring(0, 3).equals("Mon")) {
+				this.theDayBefore();
+			}
+		} else {
+			this.calendar.set(Calendar.MONTH, this.calendar.get(Calendar.MONTH) - 1);
+			this.firstOfMonth = this.calendar.getTime();
+			while (!this.calendar.getTime().toString().substring(0, 3).equals("Mon")) {
+				this.theDayBefore();
+			}
+		}
+		this.createRowsOfCalendar();
 	}
 
 	// Hilfsmethoden
 
-	private void createTilesOfCalendar() {
+	private void createRowsOfCalendar() {
 		List<CalendarWeekTile> tiles = createTiles();
 		this.grid.setItems(tiles);
 	}
 
-	private void updateLabelOfInstitution() {
-		this.area.setValue(this.presenter.getInstitutionData());
-	}
-
 	private List<CalendarWeekTile> createTiles() {
+		System.out.println(this.calendar.getTime().toString());
 		ArrayList<CalendarWeekTile> tiles = new ArrayList<>();
-
 		for (int i = 0; i < 6; i++) {
 			tiles.add(new CalendarWeekTile(this.calendar.getTime()));
-			this.calendar.set(Calendar.WEEK_OF_YEAR, this.calendar.get(Calendar.WEEK_OF_YEAR) + 1);
+			this.calendar.set(Calendar.DAY_OF_YEAR, this.calendar.get(Calendar.DAY_OF_YEAR) + 7);
 
 		}
+		this.calendar.setTime(this.firstOfMonth);
 		return tiles;
 	}
 
-	private Button createButton(String value, Icon icon) {
+	private Button createMenuButton(String value, Icon icon) {
 		Button newButton = new Button(value, icon);
 		newButton.addClickListener(e -> {
 			this.presenter.buttonClicked(e);
 		});
 		newButton.setWidth("200px");
+		return newButton;
+	}
+
+	private Button createCalendarNavigationButton(boolean nextMonth, Icon icon) {
+		Button newButton = new Button(icon);
+		newButton.addClickListener(e -> {
+			this.setCalendarDate(nextMonth);
+		});
 		return newButton;
 	}
 
@@ -125,8 +155,11 @@ public class CalendarView extends VerticalLayout {
 		return this.area;
 	}
 
+	private void updateLabelOfInstitution() {
+		this.area.setValue(this.presenter.getInstitutionData());
+	}
+
 	private void theDayBefore() {
 		this.calendar.set(Calendar.DATE, this.calendar.get(Calendar.DATE) - 1);
 	}
-
 }

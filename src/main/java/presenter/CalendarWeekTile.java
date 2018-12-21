@@ -10,18 +10,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.html.Div;
 
-import model.CalendarTileModel;
-import model.PatientModel;
 import view.CalendarTileView;
 
 @Tag("WeekTile")

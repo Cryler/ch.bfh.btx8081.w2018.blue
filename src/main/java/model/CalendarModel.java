@@ -6,27 +6,32 @@
  */
 package model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import entity.Address;
+import entity.CalendarTileEntity;
 import entity.InstitutionEntity;
 import service.EMService;
 
 public class CalendarModel {
 	
-	private EntityManager em;
+	
+	private SimpleDateFormat dateformatter = new SimpleDateFormat("yyyy-MM-dd");
 	private EntityTransaction transaction;
+	private EntityManager em;
 
 	public CalendarModel() {
 
 	}
-
-	public String getInstitutionData() {
+	public String getInstitutionData() {	
 		this.em = EMService.getEM();
-		this.transaction = em.getTransaction();
+		this.transaction = EMService.getTransaction();
 		this.transaction.begin();
 		try {		
 			Query q = this.em.createNativeQuery("select * from institution where institutionid = 1", InstitutionEntity.class);
@@ -37,13 +42,49 @@ public class CalendarModel {
 		} finally {
 			this.closeConnection();
 		}
-
 	}
 
+	public String getKommentar(Date date) {
+		this.em = EMService.getEM();
+		this.transaction = em.getTransaction();
+		this.transaction.begin();
+		try {
+			Query q = em.createNativeQuery(
+					"select * from calendartile where date = '" + this.dateformatter.format(date) + "'",
+					CalendarTileEntity.class);
+			CalendarTileEntity model = (CalendarTileEntity) q.getSingleResult();
+			return model.getKommentar();
+		}catch(NoResultException e) {
+			return "";
+		}finally {
+			this.closeConnection();
+		}	
+	}
+	
+	public void setKommentar(String kommentar, Date date) {
+		this.em = EMService.getEM();
+		this.transaction = em.getTransaction();
+		this.transaction.begin();
+		try {
+			Query q = em.createNativeQuery(
+					"select * from calendartile where date = '" + this.dateformatter.format(date) + "'",
+					CalendarTileEntity.class);
+			CalendarTileEntity entity = (CalendarTileEntity) q.getSingleResult();
+			entity.setKommentar(kommentar);
+			this.em.persist(entity);
+		}catch(NoResultException e) {
+			CalendarTileEntity entity = new CalendarTileEntity();
+			entity.setDate(date);
+			entity.setKommentar(kommentar);
+			this.em.persist(entity);
+		}finally {
+			this.closeConnection();
+		}		
+	}
+	
 	private void closeConnection() {
 		this.em.flush();
 		this.transaction.commit();
-		this.em.close();
 	}
 
 	private Address createDefaultAddress() {
