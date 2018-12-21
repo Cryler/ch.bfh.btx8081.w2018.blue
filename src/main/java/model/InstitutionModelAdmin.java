@@ -33,12 +33,9 @@ public class InstitutionModelAdmin {
 			this.closeConnection();
 			
 		} catch (NoResultException e) {
-			EntityManager em = EMService.getEM();
-			EntityTransaction transaction = em.getTransaction();
-			transaction.begin();
 			InstitutionEntity entity = new InstitutionEntity();
 			entity.setInstitutionName(institutionName);
-			em.persist(entity);
+			this.em.persist(entity);
 			this.closeConnection();
 		}
 	}
