@@ -11,6 +11,7 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
 
+import entity.PatientEntity;
 import model.PatientModel;
 import model.Person;
 
@@ -26,6 +27,7 @@ import model.Person;
 public class NewPatientView extends VerticalLayout {
 	
 	HorizontalLayout layout = new HorizontalLayout();
+	PatientEntity patient = new PatientEntity();
 	
 	/**
 	 * Cosntructor for the new patient site.. 
@@ -47,7 +49,7 @@ public class NewPatientView extends VerticalLayout {
 	public void patientData() {
 		
 		FormLayout newPatientLayout = new FormLayout();
-		Binder<PatientModel> binder = new Binder<>();
+		Binder<PatientEntity> binder = new Binder<>(PatientEntity.class);
 		
 		// The object that will be edited
 		// PatientModel patientCreate = new PatientModel();
@@ -98,7 +100,7 @@ public class NewPatientView extends VerticalLayout {
 
 		
 		// Button bar
-//		HorizontalLayout actions = new HorizontalLayout();
+		HorizontalLayout actions = new HorizontalLayout();
 //		actions.add(save,cancel);
 //		save.getStyle().set("marginRight", "10px");
 		
@@ -106,7 +108,16 @@ public class NewPatientView extends VerticalLayout {
 		//binder.bind(birthDate, Patient::getBirthDate, Patient::setBirthDate);
 		
 		
-//		binder.forField(lastName).bind(PatientModel::getLastName,PatientModel::setLastName);
+		binder.bind(lastName, PatientEntity::getLastName, PatientEntity::setLastName);
+		
+		Button save = new Button("Speichern", event -> {
+			try {
+				binder.writeBean(patient);
+			}catch (Exception e) {
+				
+			}
+			
+		});
 //		
 //		PatientModel patient = new PatientModel();
 //		
@@ -115,7 +126,15 @@ public class NewPatientView extends VerticalLayout {
 //				patient -> )
 		//test1
 		
-		this.layout.add(newPatientLayout);
+		
+		
+		
+		
+		
+		
+		
+		
+		this.layout.add(newPatientLayout,save);
 		
 	}
 	
@@ -129,6 +148,8 @@ public class NewPatientView extends VerticalLayout {
 		HorizontalLayout layoutButtons = new HorizontalLayout();
 		Button save = new Button("Speichern");
 		save.addClickListener(e -> {
+			
+			
 			
 			save.getUI().ifPresent(ui -> ui.navigate("Home")); // put in right route
 		});
