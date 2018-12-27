@@ -13,7 +13,9 @@ import javax.persistence.Query;
 
 import entity.Address;
 import entity.InstitutionEntity;
+import entity.UserEntity;
 import service.EMService;
+import service.UserService;
 
 /**
  * This class stores and represents the {@code Institution} in the DB. It
@@ -25,7 +27,7 @@ import service.EMService;
  */
 
 public class InstitutionModel {
-	
+
 	private EntityManager em;
 	private EntityTransaction transaction;
 
@@ -36,42 +38,26 @@ public class InstitutionModel {
 	 */
 
 	public String getInstitutionName() {
-		this.em = EMService.getEM();
-		this.transaction = em.getTransaction();
-		this.transaction.begin();
+		UserEntity currentUser = UserService.getUser();
 		try {
-			Query q = this.em.createNativeQuery("select * from institution where institutionid = 1",
-					InstitutionEntity.class);
-			InstitutionEntity entity = (InstitutionEntity) q.getSingleResult();
-			return entity.getInstitutionName();
-		} catch (NoResultException e) {
+			return currentUser.getInstitution().getInstitutionName();
+		} catch (NullPointerException e) {
 			return "Default_Name";
-		} finally {
-			this.closeConnection();
 		}
 	}
+	
+	
 
 	public Address getInstitutionAddress() {
-		this.em = EMService.getEM();
-		this.transaction = em.getTransaction();
-		this.transaction.begin();
+		UserEntity currentUser = UserService.getUser();
 		try {
-			Query q = this.em.createNativeQuery("select * from institution where institutionid = 1",
-					InstitutionEntity.class);
-			InstitutionEntity entity = (InstitutionEntity) q.getSingleResult();
-
-			return entity.getInstitutionAddress();
-
-		} catch (NoResultException e) {
+			return currentUser.getInstitution().getInstitutionAddress();
+		} catch (NullPointerException e) {
 			return this.createDefaultAddress();
-		} finally {
-			this.closeConnection();
 		}
+
 	}
-	private void closeConnection() {
-		this.em.flush();
-		this.transaction.commit();
-	}
+
 
 	private Address createDefaultAddress() {
 		Address defaultAddress = new Address();

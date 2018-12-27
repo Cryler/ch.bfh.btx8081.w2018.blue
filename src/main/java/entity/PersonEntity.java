@@ -1,8 +1,6 @@
 package entity;
 
-import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Observable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="person")
-@NamedQuery(name="person.findAll", query="SELECT p FROM Person p")
+//@NamedQuery(name="person.findAll", query="SELECT p FROM Person p")
 public abstract class PersonEntity {
 	
 		@Id

@@ -7,13 +7,10 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
 
 import entity.PatientEntity;
-import model.PatientModel;
-import model.Person;
 import presenter.PatientPresenter;
 
 /**
@@ -24,7 +21,7 @@ import presenter.PatientPresenter;
  *
  */
 
-@Route("Neuer Patient") 
+@Route("Neuer Patient")
 public class NewPatientView extends VerticalLayout {
 
 	private TextField lastName;
@@ -39,6 +36,7 @@ public class NewPatientView extends VerticalLayout {
 	private TextField ahvNr;
 	private DatePicker birthdate;
 	private PatientPresenter presenter;
+	private ComboBox<String> gender;
 
 	HorizontalLayout layout = new HorizontalLayout();
 
@@ -69,7 +67,7 @@ public class NewPatientView extends VerticalLayout {
 		this.firstName = new TextField();
 		firstName.setValueChangeMode(ValueChangeMode.EAGER);
 		this.birthdate = new DatePicker();
-		ComboBox<String> gender = new ComboBox();
+		this.gender = new ComboBox<String>();
 		this.address = new TextField();
 		address.setValueChangeMode(ValueChangeMode.EAGER);
 		this.city = new TextField();
@@ -91,18 +89,18 @@ public class NewPatientView extends VerticalLayout {
 		gender.setItems("weiblich", "männlich");
 		gender.setPlaceholder("Geschlecht auswählen");
 
-		newPatientLayout.addFormItem(lastName, "Nachname");
-		newPatientLayout.addFormItem(firstName, "Vorname");
-		newPatientLayout.addFormItem(birthdate, "Geburtsdatum");
-		newPatientLayout.addFormItem(gender, "Geschlecht");
-		newPatientLayout.addFormItem(address, "Adresse");
-		newPatientLayout.addFormItem(city, "Wohnort");
-		newPatientLayout.addFormItem(nationality, "Nationalität");
-		newPatientLayout.addFormItem(language, "Sprache");
-		newPatientLayout.addFormItem(phonenumber, "Telefonnummer");
-		newPatientLayout.addFormItem(email, "Email");
-		newPatientLayout.addFormItem(insurance, "Krankenkasse");
-		newPatientLayout.addFormItem(ahvNr, "AHV-Nr.");
+		newPatientLayout.addFormItem(this.lastName, "Nachname");
+		newPatientLayout.addFormItem(this.firstName, "Vorname");
+		newPatientLayout.addFormItem(this.birthdate, "Geburtsdatum");
+		newPatientLayout.addFormItem(this.gender, "Geschlecht");
+		newPatientLayout.addFormItem(this.address, "Adresse");
+		newPatientLayout.addFormItem(this.city, "Wohnort");
+		newPatientLayout.addFormItem(this.nationality, "Nationalität");
+		newPatientLayout.addFormItem(this.language, "Sprache");
+		newPatientLayout.addFormItem(this.phonenumber, "Telefonnummer");
+		newPatientLayout.addFormItem(this.email, "Email");
+		newPatientLayout.addFormItem(this.insurance, "Krankenkasse");
+		newPatientLayout.addFormItem(this.ahvNr, "AHV-Nr.");
 
 		this.layout.add(newPatientLayout);
 
@@ -118,33 +116,24 @@ public class NewPatientView extends VerticalLayout {
 		HorizontalLayout layoutButtons = new HorizontalLayout();
 		Button save = new Button("Speichern");
 		save.addClickListener(e -> {
-
-			try {
-				PatientEntity patient = new PatientEntity();
-				patient.setFirstName(this.firstName.getValue());
-				patient.setLastName(this.lastName.getValue());
-				patient.setBirthdate(this.birthdate.getValue());
-				patient.setCity(this.city.getValue());
-				patient.setEmail(this.email.getValue());
-				patient.setLanguage(this.language.getValue());
-				patient.setNationality(this.nationality.getValue());
-				patient.setPhoneNumber(this.phonenumber.getValue());
-				patient.setAhvNr(this.ahvNr.getValue());
-				patient.setInsurance(this.insurance.getValue());
-				this.presenter.saveButtonClicked(e, patient);
-				
-
-				this.getUI().ifPresent(ui -> ui.navigate("Home")); 
-
-			} catch (Exception ex) {
-
-			}
-
+			PatientEntity patient = new PatientEntity();
+			patient.setFirstName(this.firstName.getValue());
+			patient.setLastName(this.lastName.getValue());
+			patient.setBirthdate(this.birthdate.getValue());
+			patient.setCity(this.city.getValue());
+			patient.setEmail(this.email.getValue());
+			patient.setLanguage(this.language.getValue());
+			patient.setNationality(this.nationality.getValue());
+			patient.setPhoneNumber(this.phonenumber.getValue());
+			patient.setAhvNr(this.ahvNr.getValue());
+			patient.setInsurance(this.insurance.getValue());
+			this.presenter.saveButtonClicked(e, patient);
+			this.getUI().ifPresent(ui -> ui.navigate("Home"));
 		});
 
 		Button cancel = new Button("Abbrechen");
 		cancel.addClickListener(e -> {
-			cancel.getUI().ifPresent(ui -> ui.navigate("Home")); 
+			cancel.getUI().ifPresent(ui -> ui.navigate("Home"));
 		});
 		layoutButtons.add(cancel, save);
 

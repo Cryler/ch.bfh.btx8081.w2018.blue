@@ -8,6 +8,7 @@ package entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -17,7 +18,8 @@ import javax.persistence.Table;
 public class InstitutionEntity {
 
 	@Id
-	private int institutionID = 1;
+	@GeneratedValue
+	private int institutionID;
 	private String institutionName;
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private Address address;

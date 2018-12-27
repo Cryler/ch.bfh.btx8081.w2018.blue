@@ -20,8 +20,6 @@ import view.InstitutionViewInterface;
 
 public class InstitutionPresenter implements InstitutionViewInterface {
 
-	private static final String PERSISTENCE_UNIT_NAME = "ch.bfh.btx8081.w2018.blue";
-	
 
 	@Override
 	public void buttonClicked(ClickEvent<Button> e) {

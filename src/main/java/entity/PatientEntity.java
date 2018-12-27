@@ -34,8 +34,5 @@ public class PatientEntity extends PersonEntity {
 
 	public void setInsurance(String insurance) {
 		this.insurance = insurance;
-	}
-	
-	
-	
+	}	
 }

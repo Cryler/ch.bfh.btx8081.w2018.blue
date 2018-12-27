@@ -10,11 +10,10 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import model.PatientModel;
 
 @Entity
 @Table(name = "calendartile")
@@ -23,7 +22,8 @@ public class CalendarTileEntity {
 	@Id
 	@Temporal(TemporalType.DATE)
 	private Date date;
-	private PatientModel patient;
+	@OneToOne
+	private PatientEntity patient;
 	private String kommentar;
 	
 	public CalendarTileEntity() {
@@ -46,11 +46,11 @@ public class CalendarTileEntity {
 		this.kommentar = kommentar;
 	}
 
-	public PatientModel getPatient() {
+	public PatientEntity getPatient() {
 		return patient;
 	}
 
-	public void setPatient(PatientModel patient) {
+	public void setPatient(PatientEntity patient) {
 		this.patient = patient;
 	}
 
