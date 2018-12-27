@@ -54,9 +54,10 @@ public class InstitutionView extends VerticalLayout {
 		Button calendarButton = this.createButton("Kalender", new Icon(VaadinIcon.CALENDAR));
 		Button newPatientButton = this.createButton("Neuer Patient", new Icon(VaadinIcon.USER_CHECK));
 		Button searchPatientButton = this.createButton("Patient suchen", new Icon(VaadinIcon.USERS));
-		Button settingsButton = this.createButton("Settings", new Icon(VaadinIcon.COG_O));
+		Button settingsButton = this.createButton("Settings", new Icon(VaadinIcon.COG));
+		Button logoutButton	= this.createButton("Logout", new Icon(VaadinIcon.POWER_OFF));
 
-		this.add(this.addressField, calendarButton, newPatientButton, searchPatientButton, settingsButton);
+		this.add(this.addressField, calendarButton, newPatientButton, searchPatientButton, settingsButton, logoutButton);
 	}
 
 	private void updateView() {

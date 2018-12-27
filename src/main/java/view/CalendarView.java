@@ -15,6 +15,7 @@ import java.util.List;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -35,6 +36,7 @@ public class CalendarView extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 	private CalendarPresenter presenter;
 	private TextArea area;
+	private Label month;
 	private Date firstOfMonth = new Date();
 
 	private Grid<CalendarWeekTile> grid;
@@ -63,11 +65,16 @@ public class CalendarView extends VerticalLayout {
 		this.grid.addComponentColumn(CalendarWeekTile::getSunday).setHeader("Sonntag");
 
 		HorizontalLayout hl2 = new HorizontalLayout();
+		hl2.setWidth("100%");		
 		hl2.add(this.createCalendarNavigationButton(false, new Icon(VaadinIcon.ARROW_CIRCLE_LEFT_O)));
-		hl2.add(this.createCalendarNavigationButton(true, new Icon(VaadinIcon.ARROW_CIRCLE_RIGHT_O)));
+		this.month = new Label();
+		this.month.getStyle().set("margin-top", "10px");
+		hl2.add(this.month);
+		hl2.add(this.createCalendarNavigationButton(true, new Icon(VaadinIcon.ARROW_CIRCLE_RIGHT_O)));		
+		hl2.setFlexGrow(2, this.month);
 
 		VerticalLayout vl1 = new VerticalLayout();
-		vl1.setWidth("300px");
+		vl1.setWidth("250px");
 		vl1.add(this.createTextArea());
 		vl1.add(this.createMenuButton("Home", new Icon(VaadinIcon.HOME)));
 		vl1.add(this.createMenuButton("Neuer Patient", new Icon(VaadinIcon.USER_CHECK)));
@@ -88,6 +95,7 @@ public class CalendarView extends VerticalLayout {
 	private void initCalendar() {
 		this.calendar = new GregorianCalendar();
 		this.calendar.set(Calendar.DAY_OF_MONTH, 1);
+		this.month.setText(this.parseMonth(this.calendar.get(Calendar.MONTH)));
 		this.firstOfMonth = this.calendar.getTime();
 		while (!this.calendar.getTime().toString().substring(0, 3).equals("Mon")) {
 			this.theDayBefore();
@@ -98,12 +106,14 @@ public class CalendarView extends VerticalLayout {
 	private void setCalendarDate(boolean nextMonth) {
 		if (nextMonth) {
 			this.calendar.set(Calendar.MONTH, this.calendar.get(Calendar.MONTH )+1);
+			this.month.setText(this.parseMonth(this.calendar.get(Calendar.MONTH)));
 			this.firstOfMonth = this.calendar.getTime();
 			while (!this.calendar.getTime().toString().substring(0, 3).equals("Mon")) {
 				this.theDayBefore();
 			}
 		} else {
 			this.calendar.set(Calendar.MONTH, this.calendar.get(Calendar.MONTH) - 1);
+			this.month.setText(this.parseMonth(this.calendar.get(Calendar.MONTH)));
 			this.firstOfMonth = this.calendar.getTime();
 			while (!this.calendar.getTime().toString().substring(0, 3).equals("Mon")) {
 				this.theDayBefore();
@@ -157,6 +167,10 @@ public class CalendarView extends VerticalLayout {
 
 	private void updateLabelOfInstitution() {
 		this.area.setValue(this.presenter.getInstitutionData());
+	}
+	private String parseMonth(int i) {
+		String[] months = {"Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"};
+		return months[i];
 	}
 
 	private void theDayBefore() {

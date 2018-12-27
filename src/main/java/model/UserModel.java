@@ -13,6 +13,7 @@ import javax.persistence.Query;
 
 import entity.UserEntity;
 import exception.InvalidEmailException;
+import exception.InvalidPasswordException;
 import exception.InvalidUsernameException;
 import service.EMService;
 
@@ -26,19 +27,38 @@ public class UserModel {
 		this.transaction = EMService.getTransaction();
 		this.transaction.begin();
 		try {
-			Query q = this.em.createNativeQuery("select * from usertable where usertable.username = '" + user.getUsername() + "'",
+			Query q = this.em.createNativeQuery(
+					"select * from usertable where usertable.username = '" + user.getUsername() + "'",
 					UserEntity.class);
-			 q.getSingleResult();
+			q.getSingleResult();
 			throw new InvalidUsernameException("Username existiert bereits");
 		} catch (NoResultException e) {
 			try {
-				Query q2 = this.em.createNativeQuery("select * from usertable where usertable.email = '" + user.getEmail() + "'",
-						UserEntity.class);
-				 q2.getSingleResult();
-				throw new InvalidEmailException("Email existiert bereits");
+				Query q2 = this.em.createNativeQuery(
+						"select * from usertable where usertable.email = '" + user.getEmail() + "'", UserEntity.class);
+				q2.getSingleResult();
+				throw new InvalidEmailException("Für diese Email wurde bereits ein Benutzer registriert.");
 			} catch (NoResultException e1) {
 			}
 			em.persist(user);
+		} finally {
+			this.closeConnection();
+		}
+	}
+
+	public void loginUser(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
+		this.em = EMService.getEM();
+		this.transaction = EMService.getTransaction();
+		this.transaction.begin();
+		try {
+			Query q = this.em.createNativeQuery("select * from usertable where usertable.username = '" + username + "'",
+					UserEntity.class);
+			UserEntity entity = (UserEntity) q.getSingleResult();
+			if(!entity.getPassword().equals(password)) {
+				throw new InvalidPasswordException("Das Passwort ist nicht korrekt.");
+			}			
+		} catch (NoResultException e) {
+			throw new InvalidUsernameException("Benutzername existiert nicht.");
 		} finally {
 			this.closeConnection();
 		}
@@ -48,5 +68,4 @@ public class UserModel {
 		this.em.flush();
 		this.transaction.commit();
 	}
-
 }

@@ -34,7 +34,7 @@ public class EMService {
 				EMSingleton.instance = new EMSingleton();
 				EMSingleton.em = Persistence.createEntityManagerFactory(EMSingleton.PERSISTENCE_UNIT_NAME)
 						.createEntityManager();
-				}
+			}
 			return EMSingleton.em.getTransaction();
 		}
 
@@ -43,7 +43,6 @@ public class EMService {
 				EMSingleton.instance = new EMSingleton();
 				EMSingleton.em = Persistence.createEntityManagerFactory(EMSingleton.PERSISTENCE_UNIT_NAME)
 						.createEntityManager();
-				System.out.println("Singleton created");
 			}
 			return EMSingleton.em;
 		}

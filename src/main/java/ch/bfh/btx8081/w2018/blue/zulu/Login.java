@@ -1,13 +1,18 @@
 package ch.bfh.btx8081.w2018.blue.zulu;
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
+import exception.InvalidPasswordException;
+import exception.InvalidUsernameException;
+import presenter.LoginPresenter;
 import service.EMService;
+
 /**
  * Login for the Application
  * 
@@ -15,45 +20,64 @@ import service.EMService;
  *
  */
 
-
 @Route("")
 public class Login extends VerticalLayout {
 
-	
-	//TODO Authentifikationslogik muss noch implementiert werden.
-	public Login() {
+	private LoginPresenter presenter;
+	private TextField username;
+	private PasswordField password;
+	private Label info;
 
-		
+	// TODO Authentifikationslogik muss noch implementiert werden.
+	public Login() {
+		this.presenter = new LoginPresenter();
+		this.initUI();
+
+	}
+
+	private void initUI() {
 		this.setAlignItems(Alignment.CENTER);
-		
-		
 		VerticalLayout vl1 = new VerticalLayout();
 		vl1.setAlignItems(Alignment.CENTER);
 		vl1.setWidth("350px");
-		
+
+		this.username = new TextField();
+		this.username.setLabel("Benutzername");
+
+		this.password = new PasswordField();
+		this.password.setLabel("Passwort");
+
 		Button loginButton = new Button("Login");
-		
 		loginButton.addClickListener(e -> {
-			loginButton.getUI().ifPresent(ui -> ui.navigate("Home"));
+			if (this.username.getValue().equals("") || this.password.getValue().equals("")) {
+				this.info.setText("Angaben sind unvollständig");
+			} else {
+				
+					try {
+						this.presenter.loginButtonClicked(e, this.username.getValue(), this.password.getValue());
+					} catch (InvalidPasswordException | InvalidUsernameException e1) {
+						this.info.setText(e1.getMessage());
+						this.username.setValue("");
+						this.password.setValue("");
+						System.out.println(e1.getClass().getName());
+					}
+				
+
+			}
 		});
-		
+
 		Button registerButton = new Button("Registrieren");
 		registerButton.addClickListener(e -> {
-			registerButton.getUI().ifPresent(ui -> ui.navigate("Registration"));
+			this.presenter.registrationButtonClicked(e);
+			;
 		});
-		
+
 		HorizontalLayout hl1 = new HorizontalLayout();
 		hl1.add(registerButton, loginButton);
 
-		TextField username = new TextField();
-		username.setLabel("Benutzername");
-		
-		
-		PasswordField password = new PasswordField();
-		password.setLabel("Passwort");
-		
-		
-		vl1.add(username, password, hl1);
+		this.info = new Label("");
+
+		vl1.add(this.username, this.password, hl1, this.info);
 		this.add(vl1);
 	}
 }
