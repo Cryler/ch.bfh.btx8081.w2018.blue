@@ -61,8 +61,6 @@ public class Login extends VerticalLayout {
 						this.password.setValue("");
 						System.out.println(e1.getClass().getName());
 					}
-				
-
 			}
 		});
 
