@@ -24,7 +24,7 @@ import presenter.PatientPresenter;
  *
  */
 
-@Route("Neuer Patient")
+@Route("Neuer Patient") 
 public class NewPatientView extends VerticalLayout {
 
 	private TextField lastName;
