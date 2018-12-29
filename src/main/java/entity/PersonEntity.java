@@ -2,11 +2,14 @@ package entity;
 
 import java.time.LocalDate;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import service.LocalDateConverter;
 
 
 
@@ -21,7 +24,6 @@ public abstract class PersonEntity {
 		
 		private String lastName;
 		private String firstName;
-		private LocalDate birthdate;
 		private String gender;
 		private String address;
 		private String city;
@@ -29,6 +31,8 @@ public abstract class PersonEntity {
 		private String language;
 		private String phoneNumber;
 		private String email;
+		@Convert(converter = LocalDateConverter.class)
+		private LocalDate birthdate;
 		
 //		@Embedded
 //		private Address address;

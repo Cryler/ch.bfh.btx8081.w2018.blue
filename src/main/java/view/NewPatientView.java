@@ -127,6 +127,7 @@ public class NewPatientView extends VerticalLayout {
 			patient.setPhoneNumber(this.phonenumber.getValue());
 			patient.setAhvNr(this.ahvNr.getValue());
 			patient.setInsurance(this.insurance.getValue());
+			patient.setGender(this.gender.getValue());
 			this.presenter.saveButtonClicked(e, patient);
 			this.getUI().ifPresent(ui -> ui.navigate("Home"));
 		});

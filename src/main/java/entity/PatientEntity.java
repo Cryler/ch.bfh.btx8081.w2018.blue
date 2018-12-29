@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="patient")
+//@Table(name="patient")
 public class PatientEntity extends PersonEntity {
 
 	private String insurance;
