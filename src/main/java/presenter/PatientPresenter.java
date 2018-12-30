@@ -1,5 +1,8 @@
 package presenter;
 
+import java.util.Collection;
+import java.util.List;
+
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 
@@ -27,6 +30,10 @@ public class PatientPresenter {
 	
 	public void cancelButtonClicked(ClickEvent<Button> e) {
 		e.getSource().getUI().ifPresent(ui -> ui.navigate(""));
+	}
+	
+	public Collection<PatientEntity> getPatientData() {
+		return model.getPatient();
 	}
 }
                 
