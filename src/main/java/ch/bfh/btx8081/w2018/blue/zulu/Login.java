@@ -7,6 +7,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.theme.Theme;
+import com.vaadin.flow.theme.lumo.Lumo;
 
 import exception.InvalidPasswordException;
 import exception.InvalidUsernameException;
@@ -21,6 +23,7 @@ import service.EMService;
  */
 
 @Route("")
+
 public class Login extends VerticalLayout {
 
 	private LoginPresenter presenter;

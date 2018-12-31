@@ -6,9 +6,17 @@
  */
 package presenter;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.NoResultException;
+
+import entity.CalendarTileEntity;
+import entity.PatientEntity;
 import model.CalendarModel;
+import model.PatientModel;
 
 public class CalendarTilePresenter {
 
@@ -20,20 +28,15 @@ public class CalendarTilePresenter {
 		this.model = new CalendarModel();
 	}
 
-	public String getKommentar() {
-		return model.getKommentar(this.date);
+	public List<String> getPatientNames() {
+		return this.model.getPatientNames();
 	}
 
-	public void setKommentar(String kommentar) {
-		this.model.setKommentar(kommentar, this.date);
+	public CalendarTileEntity getDataOfEntry() {
+		return this.model.getDataOfEntry(this.date);
 	}
-
-	public void getPatientName() {
-		// TODO
+	
+	public void setDataOfEntry(String patient, String kommentar) {
+		this.model.setDataOfEntry(patient, kommentar, this.date);
 	}
-
-	public void setPatientName(String newName) {
-		// TODO
-	}
-
 }

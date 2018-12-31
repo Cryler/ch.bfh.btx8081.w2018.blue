@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 
 
 import entity.PatientEntity;
+import entity.PersonEntity;
 import presenter.PatientPresenter;
 import service.EMService;
 
@@ -42,8 +43,10 @@ public class PatientModel {
 		return patient;
 	}
 
+
 	private void closeConnection() {
 		this.em.flush();
 		this.transaction.commit();
 	}
+
 }

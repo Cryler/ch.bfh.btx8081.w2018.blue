@@ -130,7 +130,6 @@ public class CalendarView extends VerticalLayout {
 	}
 
 	private List<CalendarWeekTile> createTiles() {
-		System.out.println(this.calendar.getTime().toString());
 		ArrayList<CalendarWeekTile> tiles = new ArrayList<>();
 		for (int i = 0; i < 6; i++) {
 			tiles.add(new CalendarWeekTile(this.calendar.getTime()));

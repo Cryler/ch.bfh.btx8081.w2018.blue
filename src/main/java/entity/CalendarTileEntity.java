@@ -22,8 +22,7 @@ public class CalendarTileEntity {
 	@Id
 	@Temporal(TemporalType.DATE)
 	private Date date;
-	@OneToOne
-	private PatientEntity patient;
+	private String patient;
 	private String kommentar;
 	
 	public CalendarTileEntity() {
@@ -46,11 +45,11 @@ public class CalendarTileEntity {
 		this.kommentar = kommentar;
 	}
 
-	public PatientEntity getPatient() {
+	public String getPatient() {
 		return patient;
 	}
 
-	public void setPatient(PatientEntity patient) {
+	public void setPatient(String patient) {
 		this.patient = patient;
 	}
 
