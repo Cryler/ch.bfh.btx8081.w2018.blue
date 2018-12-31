@@ -7,13 +7,10 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.theme.Theme;
-import com.vaadin.flow.theme.lumo.Lumo;
 
 import exception.InvalidPasswordException;
 import exception.InvalidUsernameException;
 import presenter.LoginPresenter;
-import service.EMService;
 
 /**
  * Login for the Application
@@ -26,12 +23,15 @@ import service.EMService;
 
 public class Login extends VerticalLayout {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private LoginPresenter presenter;
 	private TextField username;
 	private PasswordField password;
 	private Label info;
 
-	// TODO Authentifikationslogik muss noch implementiert werden.
 	public Login() {
 		this.presenter = new LoginPresenter();
 		this.initUI();

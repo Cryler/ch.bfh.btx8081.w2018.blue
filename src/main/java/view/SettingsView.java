@@ -11,12 +11,13 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
 
 import entity.Address;
-import model.InstitutionModel;
-import presenter.InstitutionPresenter;
 import presenter.InstitutionPresenterAdmin;
+import service.UserService;
 
 /**
  * The {@code SettingsView} is part of the UI and is used to change the Data of the {@code InstitutionModel}
@@ -26,7 +27,12 @@ import presenter.InstitutionPresenterAdmin;
  */
 
 @Route("Settings")
-public class SettingsView extends VerticalLayout {
+public class SettingsView extends VerticalLayout implements BeforeEnterObserver{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private InstitutionPresenterAdmin presenter;
 
@@ -35,6 +41,13 @@ public class SettingsView extends VerticalLayout {
 	private TextField actualStreetNrOfInstitution;
 	private TextField actualZipCodeOfInstitution;
 	private TextField actualCityOfInstitution;
+	
+	@Override
+	public void beforeEnter(BeforeEnterEvent event) {
+		if (UserService.getUser() == null) {
+			event.rerouteTo("");
+		}
+	}
 
 	public SettingsView() {
 		this.initView();

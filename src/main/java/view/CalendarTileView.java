@@ -33,6 +33,11 @@ import presenter.CalendarTilePresenter;
 @StyleSheet(value = "styles/style.css", loadMode = LoadMode.INLINE)
 public class CalendarTileView extends Div {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private SimpleDateFormat dateformatter = new SimpleDateFormat("dd.MM");
 
 	private TextArea info;

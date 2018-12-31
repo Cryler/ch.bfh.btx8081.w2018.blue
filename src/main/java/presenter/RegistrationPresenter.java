@@ -13,7 +13,6 @@ import entity.UserEntity;
 import exception.InvalidEmailException;
 import exception.InvalidUsernameException;
 import model.UserModel;
-import view.RegistrationView;
 
 public class RegistrationPresenter {
 

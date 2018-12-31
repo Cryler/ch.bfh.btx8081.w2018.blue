@@ -12,11 +12,14 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.shared.ui.LoadMode;
 
 import entity.Address;
 import presenter.InstitutionPresenterAdmin;
+import service.UserService;
 
 /**
  * this Class represents the Homescreen of our Application. The
@@ -28,7 +31,7 @@ import presenter.InstitutionPresenterAdmin;
 
 @Route("Home")
 @StyleSheet(value = "styles/style.css", loadMode = LoadMode.INLINE)
-public class InstitutionView extends VerticalLayout {
+public class InstitutionView extends VerticalLayout implements BeforeEnterObserver {
 
 	private static final long serialVersionUID = 1L;
 	private InstitutionPresenterAdmin presentorAdmin;
@@ -38,6 +41,13 @@ public class InstitutionView extends VerticalLayout {
 		this.initView();
 		this.addComponents();
 		this.updateView();
+	}
+
+	@Override
+	public void beforeEnter(BeforeEnterEvent event) {
+		if (UserService.getUser() == null) {
+			event.rerouteTo("");
+		}
 	}
 
 	private void initView() {
@@ -55,15 +65,17 @@ public class InstitutionView extends VerticalLayout {
 		Button newPatientButton = this.createButton("Neuer Patient", new Icon(VaadinIcon.USER_CHECK));
 		Button searchPatientButton = this.createButton("Patient suchen", new Icon(VaadinIcon.USERS));
 		Button settingsButton = this.createButton("Settings", new Icon(VaadinIcon.COG));
-		Button logoutButton	= this.createButton("Logout", new Icon(VaadinIcon.POWER_OFF));
+		Button logoutButton = this.createButton("Logout", new Icon(VaadinIcon.POWER_OFF));
 
-		this.add(this.addressField, calendarButton, newPatientButton, searchPatientButton, settingsButton, logoutButton);
+		this.add(this.addressField, calendarButton, newPatientButton, searchPatientButton, settingsButton,
+				logoutButton);
 	}
 
 	private void updateView() {
 		Address add = this.presentorAdmin.getInstitutionAddress();
 		this.addressField.setValue(this.presentorAdmin.getInstitutionName() + "\n" + add.getStreet() + " "
 				+ add.getStreetNr() + "\n" + add.getZipCode() + " " + add.getCity());
+
 	}
 
 	private Button createButton(String value, Icon icon) {
@@ -74,4 +86,5 @@ public class InstitutionView extends VerticalLayout {
 		newButton.setWidth("200px");
 		return newButton;
 	}
+
 }

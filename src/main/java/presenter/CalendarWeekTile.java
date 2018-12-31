@@ -19,6 +19,11 @@ import view.CalendarTileView;
 @Tag("WeekTile")
 public class CalendarWeekTile extends Div {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Calendar cal = new GregorianCalendar();
 
 	private static final int MONTAG = 0;

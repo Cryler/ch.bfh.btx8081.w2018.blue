@@ -6,17 +6,11 @@
  */
 package presenter;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.NoResultException;
-
 import entity.CalendarTileEntity;
-import entity.PatientEntity;
 import model.CalendarModel;
-import model.PatientModel;
 
 public class CalendarTilePresenter {
 

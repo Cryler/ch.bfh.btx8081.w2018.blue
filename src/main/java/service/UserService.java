@@ -8,6 +8,7 @@ package service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import entity.UserEntity;
@@ -21,16 +22,28 @@ public class UserService {
 	public UserService(String user) {
 		UserService.username = user;
 	}
+	
+	public static void logout() {
+		UserService.username = null;
+	}
 
 	public static UserEntity getUser() {
 		UserService.em = EMService.getEM();
 		UserService.transaction = em.getTransaction();
 		UserService.transaction.begin();
-		Query q = UserService.em.createNativeQuery(
-				"select * from usertable where usertable.username = '" + UserService.username + "'", UserEntity.class);
-		UserEntity entity = (UserEntity) q.getSingleResult();
+		try {
+			Query q = UserService.em.createNativeQuery(
+					"select * from usertable where usertable.username = '" + UserService.username + "'", UserEntity.class);
+			UserEntity entity = (UserEntity) q.getSingleResult();
+			return entity;
+		}catch (NoResultException e) {
+			return null;
+		}finally {
+			UserService.closeConnection();
+		}
+	}
+	private static void closeConnection() {
 		UserService.em.flush();
 		UserService.transaction.commit();
-		return entity;
 	}
 }

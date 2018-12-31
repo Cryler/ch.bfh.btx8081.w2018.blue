@@ -21,14 +21,17 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
 
 import presenter.CalendarPresenter;
 import presenter.CalendarWeekTile;
+import service.UserService;
 
 @Route("Kalender")
 
-public class CalendarView extends VerticalLayout {
+public class CalendarView extends VerticalLayout implements BeforeEnterObserver {
 
 	/**
 	 * 
@@ -41,6 +44,13 @@ public class CalendarView extends VerticalLayout {
 
 	private Grid<CalendarWeekTile> grid;
 	private Calendar calendar;
+	
+	@Override
+	public void beforeEnter(BeforeEnterEvent event) {
+		if (UserService.getUser() == null) {
+			event.rerouteTo("");
+		}
+	}
 
 	public CalendarView() {
 		this.initView();
@@ -175,4 +185,6 @@ public class CalendarView extends VerticalLayout {
 	private void theDayBefore() {
 		this.calendar.set(Calendar.DATE, this.calendar.get(Calendar.DATE) - 1);
 	}
+
+	
 }

@@ -11,10 +11,18 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
+import service.UserService;
+
 @Route("Logout")
 public class LogoutView extends VerticalLayout {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public LogoutView() {
+		UserService.logout();
 		this.setAlignItems(Alignment.CENTER);
 		Label info = new Label("Sie wurden erfolgreich abgemeldet.");
 		info.getStyle().set("font-size", "200%");

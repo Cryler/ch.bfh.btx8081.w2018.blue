@@ -90,6 +90,7 @@ public class CalendarModel {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	public List<String> getPatientNames() {
 		this.em = EMService.getEM();
 		this.transaction = EMService.getTransaction();

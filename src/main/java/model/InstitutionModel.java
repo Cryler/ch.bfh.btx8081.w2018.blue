@@ -6,15 +6,8 @@
  */
 package model;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
-
 import entity.Address;
-import entity.InstitutionEntity;
 import entity.UserEntity;
-import service.EMService;
 import service.UserService;
 
 /**
@@ -28,18 +21,16 @@ import service.UserService;
 
 public class InstitutionModel {
 
-	private EntityManager em;
-	private EntityTransaction transaction;
-
 	/**
 	 * The {@value institutionID} is set to 1 because there should only be one
 	 * institution at a given time.
+	 * @throws NoUserLoggedInException 
 	 * 
 	 */
 
-	public String getInstitutionName() {
-		UserEntity currentUser = UserService.getUser();
+	public String getInstitutionName(){		
 		try {
+			UserEntity currentUser = UserService.getUser();
 			return currentUser.getInstitution().getInstitutionName();
 		} catch (NullPointerException e) {
 			return "Default_Name";
