@@ -34,7 +34,7 @@ public class PatientModel {
 		this.transaction = EMService.getTransaction();
 		this.transaction.begin();
 
-		TypedQuery<PatientEntity> q = em.createQuery("select p from Person p", PatientEntity.class);
+		Query q = this.em.createNativeQuery("select * from person", PatientEntity.class);
 		Collection<PatientEntity> patient = q.getResultList();
 
 		this.closeConnection();
