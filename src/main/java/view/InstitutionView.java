@@ -37,17 +37,17 @@ public class InstitutionView extends VerticalLayout implements BeforeEnterObserv
 	private InstitutionPresenterAdmin presentorAdmin;
 	private TextArea addressField;
 
-	public InstitutionView() {
-		this.initView();
-		this.addComponents();
-		this.updateView();
-	}
-
 	@Override
 	public void beforeEnter(BeforeEnterEvent event) {
 		if (UserService.getUser() == null) {
 			event.rerouteTo("");
 		}
+	}
+
+	public InstitutionView() {
+		this.initView();
+		this.addComponents();
+		this.updateView();
 	}
 
 	private void initView() {
