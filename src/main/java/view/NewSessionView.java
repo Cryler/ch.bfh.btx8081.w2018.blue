@@ -7,7 +7,11 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
+
+import service.UserService;
 
 /**
  * View for the new session site. 
@@ -15,10 +19,17 @@ import com.vaadin.flow.router.Route;
  * @author Luca Leuenberger
  *
  */
-@Route("New Session")
-public class NewSessionView extends VerticalLayout {
+@Route("Neue Session")
+public class NewSessionView extends VerticalLayout implements BeforeEnterObserver{
 	
 	HorizontalLayout layout = new HorizontalLayout();
+	
+	@Override
+	public void beforeEnter(BeforeEnterEvent event) {
+		if (UserService.getUser() == null) {
+			event.rerouteTo("");
+		}
+	}
 
 	/**
 	 * Constructor for the new session site. 

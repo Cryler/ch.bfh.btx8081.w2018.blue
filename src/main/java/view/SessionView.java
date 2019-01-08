@@ -13,7 +13,11 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
+
+import service.UserService;
 
 /**
  * View for the new session site.
@@ -23,12 +27,19 @@ import com.vaadin.flow.router.Route;
  */
 
 @Route("Session")
-public class SessionView extends HorizontalLayout {
+public class SessionView extends HorizontalLayout implements BeforeEnterObserver {
 
 	HorizontalLayout layout = new HorizontalLayout();
 	VerticalLayout layoutTabs = new VerticalLayout();
 	VerticalLayout layoutMenu = new VerticalLayout();
 	VerticalLayout layoutPage = new VerticalLayout();
+	
+	@Override
+	public void beforeEnter(BeforeEnterEvent event) {
+		if (UserService.getUser() == null) {
+			event.rerouteTo("");
+		}
+	}
 
 	/**
 	 * Constructor for the session site.
@@ -145,25 +156,25 @@ public class SessionView extends HorizontalLayout {
 		Button patNew = new Button("Neuer Patient erfassen");
 		patNew.setWidth("230px");
 		patNew.addClickListener(e -> {
-			patNew.getUI().ifPresent(ui -> ui.navigate("New Patient"));
+			patNew.getUI().ifPresent(ui -> ui.navigate("Neuer Patient"));
 		});
 
 		Button patList = new Button("Patientenliste");
 		patList.setWidth("230px");
 		patList.addClickListener(e -> {
-			patList.getUI().ifPresent(ui -> ui.navigate("Patientlist"));
+			patList.getUI().ifPresent(ui -> ui.navigate("Patient suchen"));
 		});
 
 		Button calendar = new Button("Kalender");
 		calendar.setWidth("230px");
 		calendar.addClickListener(e -> {
-			calendar.getUI().ifPresent(ui -> ui.navigate("Calendar"));
+			calendar.getUI().ifPresent(ui -> ui.navigate("Kalender"));
 		});
 
 		Button sesNew = new Button("Neue Konsultation");
 		sesNew.setWidth("230px");
 		sesNew.addClickListener(e -> {
-			sesNew.getUI().ifPresent(ui -> ui.navigate("New Session"));
+			sesNew.getUI().ifPresent(ui -> ui.navigate("Neue Session"));
 		});
 		
 		Button logout = new Button("Logout");
