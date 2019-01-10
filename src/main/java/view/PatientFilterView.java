@@ -22,7 +22,7 @@ import entity.PersonEntity;
 import model.PatientModel;
 import presenter.PatientPresenter;
 
-@Route("Patient Filter")
+@Route("Patient suchen")
 
 public class PatientFilterView extends VerticalLayout {
 

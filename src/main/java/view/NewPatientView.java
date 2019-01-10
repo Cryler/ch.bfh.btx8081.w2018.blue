@@ -1,5 +1,7 @@
 package view;
 
+import java.time.LocalDate;
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -7,10 +9,13 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.validator.EmailValidator;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
 
 import entity.PatientEntity;
+import entity.PersonEntity;
 import presenter.PatientPresenter;
 
 /**
@@ -37,6 +42,7 @@ public class NewPatientView extends VerticalLayout {
 	private DatePicker birthdate;
 	private PatientPresenter presenter;
 	private ComboBox<String> gender;
+	
 
 	HorizontalLayout layout = new HorizontalLayout();
 
@@ -103,6 +109,27 @@ public class NewPatientView extends VerticalLayout {
 		newPatientLayout.addFormItem(this.ahvNr, "AHV-Nr.");
 
 		this.layout.add(newPatientLayout);
+		
+		Binder<PersonEntity> binder = new Binder<>();
+		binder.forField(email).withValidator(new EmailValidator("Dies scheint keine email Adresse zu sein!"))
+		.bind(PersonEntity::getEmail, PersonEntity::setEmail);
+		
+		binder.forField(firstName)
+		.withValidator(
+				firstname -> firstname.length() >= 3,
+				"Vorname muss mehr als drei Buchstaben enthalten!").asRequired("Bitte geben Sie einen Vornamen ein!")
+		.bind(PersonEntity::getFirstName, PersonEntity::setFirstName);
+		
+		binder.forField(lastName)
+		.withValidator(
+				lastname -> lastname.length() >= 3,
+				"Nachname muss mehr als drei Buchstaben enthalten!")
+		.bind(PersonEntity::getLastName, PersonEntity::setLastName);
+		
+		binder.forField(birthdate).withValidator(
+				birthdate -> birthdate.isBefore(LocalDate.now()),"kann nicht aelter als heute sein!")
+		.bind(PersonEntity::getBirthdate,PersonEntity::setBirthdate);
+		
 
 	}
 
