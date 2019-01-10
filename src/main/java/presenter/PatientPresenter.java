@@ -23,7 +23,7 @@ public class PatientPresenter {
 	
 	public void saveButtonClicked(ClickEvent<Button> e, PatientEntity patient) {
 		this.model.setPatient(patient);		
-		e.getSource().getUI().ifPresent(ui -> ui.navigate("Home"));
+		e.getSource().getUI().ifPresent(ui -> ui.navigate("Patient"));
 	}
 	
 	

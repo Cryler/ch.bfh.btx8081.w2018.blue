@@ -64,7 +64,9 @@ public abstract class PersonEntity {
 			this.email = email;
 			
 		}
-		
+		public void setAddress(String address) {
+			this.address = address;
+		}
 		public String getAddress() {
 			return this.address;
 		}

@@ -14,6 +14,7 @@ import entity.PatientEntity;
 import entity.PersonEntity;
 import presenter.PatientPresenter;
 import service.EMService;
+import service.PatientService;
 
 public class PatientModel {
 
@@ -26,7 +27,7 @@ public class PatientModel {
 		this.transaction.begin();
 
 		em.persist(patient);
-
+		PatientService.setPatient(patient);
 		this.closeConnection();
 	}
 

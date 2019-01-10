@@ -14,11 +14,16 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.value.ValueChangeMode;
+import com.vaadin.flow.router.AfterNavigationEvent;
+import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
 
+import entity.PatientEntity;
+import entity.PersonEntity;
 import model.PatientModel;
+import service.PatientService;
 import service.UserService;
 
 /**
@@ -29,18 +34,53 @@ import service.UserService;
  */
 
 @Route("Patient")
-public class PatientView extends HorizontalLayout implements BeforeEnterObserver {
+public class PatientView extends HorizontalLayout implements BeforeEnterObserver, AfterNavigationObserver {
 
 	HorizontalLayout layout = new HorizontalLayout();
 	VerticalLayout layoutTabs = new VerticalLayout();
 	VerticalLayout layoutMenu = new VerticalLayout();
 	VerticalLayout layoutPage = new VerticalLayout();
 	
+	private TextField lastName;
+	private TextField firstName;
+	private TextField birthdate;
+	private TextField gender;
+	private TextField address;
+	private TextField city;
+	private TextField nationality;
+	private TextField language;
+	private TextField insurance;
+	private TextField phoneNumber;
+	private TextField email;
+	private TextField ahvNr;
+	
 	@Override
 	public void beforeEnter(BeforeEnterEvent event) {
 		if (UserService.getUser() == null) {
 			event.rerouteTo("");
 		}
+	}
+	
+	@Override
+	public void afterNavigation(AfterNavigationEvent event) {
+		this.initData();
+	}
+
+	private void initData() {
+		PersonEntity patient = PatientService.getPatient();
+		this.lastName.setValue(patient.getLastName());
+		this.firstName.setValue(patient.getFirstName());
+		this.birthdate.setValue(patient.getBirthdate().toString());
+		this.gender.setValue(patient.getGender());
+		this.address.setValue(patient.getAddress());
+		this.city.setValue(patient.getCity());
+		this.nationality.setValue(patient.getNationality());
+		this.language.setValue(patient.getLanguage());
+		this.insurance.setValue("");
+		this.phoneNumber.setValue(patient.getPhoneNumber());
+		this.email.setValue(patient.getEmail());
+		this.ahvNr.setValue("");
+		
 	}
 
 	/**
@@ -60,44 +100,31 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 	 */
 	private void patient() {
 		FormLayout newPatientLayout = new FormLayout();
-		Binder<PatientModel> binder = new Binder<>();
-		
+				
 		// The object that will be edited
 		// PatientModel patientCreate = new PatientModel();
 		
 		//The fields for the Form
 				
-		TextField lastName = new TextField();
-		lastName.setValueChangeMode(ValueChangeMode.EAGER);
-		TextField firstName = new TextField();
-		firstName.setValueChangeMode(ValueChangeMode.EAGER);
-		DatePicker birthDate = new DatePicker();
-		ComboBox<String> gender = new ComboBox();
-		TextField address = new TextField();
-		address.setValueChangeMode(ValueChangeMode.EAGER);
-		TextField city = new TextField();
-		city.setValueChangeMode(ValueChangeMode.EAGER);
-		TextField nationality = new TextField();
-		nationality.setValueChangeMode(ValueChangeMode.EAGER);
-		TextField language = new TextField();
-		language.setValueChangeMode(ValueChangeMode.EAGER);
-		TextField phoneNumber = new TextField();
-		phoneNumber.setValueChangeMode(ValueChangeMode.EAGER);
-		TextField email = new TextField();
-		email.setValueChangeMode(ValueChangeMode.EAGER);
-		TextField insurance = new TextField();
-		insurance.setValueChangeMode(ValueChangeMode.EAGER);
-		TextField ahvNr = new TextField();
-		ahvNr.setValueChangeMode(ValueChangeMode.EAGER);
+		this.lastName = new TextField();		
+		this.firstName = new TextField();		
+		this.birthdate = new TextField();
+		this.gender = new TextField();
+		this.address = new TextField();		
+		this.city = new TextField();		
+		this.nationality = new TextField();		
+		this.language = new TextField();		
+		this.phoneNumber = new TextField();		
+		this.email = new TextField();	
+		this.insurance = new TextField();		
+		this.ahvNr = new TextField();
+	
 		
-		
-		//Combobox for gender
-		gender.setItems("weiblich","männlich");
-		gender.setPlaceholder("Geschlecht auswählen");
+	
 		
 		newPatientLayout.addFormItem(lastName, "Nachname");
 		newPatientLayout.addFormItem(firstName, "Vorname");
-		newPatientLayout.addFormItem(birthDate, "Geburtsdatum");
+		newPatientLayout.addFormItem(birthdate, "Geburtsdatum");
 		newPatientLayout.addFormItem(gender, "Geschlecht");
 		newPatientLayout.addFormItem(address, "Adresse");
 		newPatientLayout.addFormItem(city, "Wohnort");
@@ -217,4 +244,6 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		this.layoutMenu.setWidth("250px");
 		this.layoutMenu.add(layout);
 	}
+
+	
 }

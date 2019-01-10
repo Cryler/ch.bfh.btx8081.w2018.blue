@@ -150,6 +150,7 @@ public class NewPatientView extends VerticalLayout implements BeforeEnterObserve
 			patient.setFirstName(this.firstName.getValue());
 			patient.setLastName(this.lastName.getValue());
 			patient.setBirthdate(this.birthdate.getValue());
+			patient.setAddress(this.address.getValue());
 			patient.setCity(this.city.getValue());
 			patient.setEmail(this.email.getValue());
 			patient.setLanguage(this.language.getValue());
