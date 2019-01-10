@@ -6,17 +6,18 @@
  */
 package service;
 
+import entity.PatientEntity;
 import entity.PersonEntity;
 
 public  class PatientService {
 
-	private static PersonEntity patient;
+	private static PatientEntity patient;
 	
-	public static PersonEntity getPatient() {
+	public static PatientEntity getPatient() {
 		return PatientService.patient;
 	}
 	
-	public static void setPatient(PersonEntity tempPatient) {
+	public static void setPatient(PatientEntity tempPatient) {
 		PatientService.patient = tempPatient;
 	}
 }
