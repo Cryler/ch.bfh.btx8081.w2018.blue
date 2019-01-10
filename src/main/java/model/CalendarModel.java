@@ -22,7 +22,9 @@ import entity.CalendarTileEntity;
 import entity.InstitutionEntity;
 import entity.PatientEntity;
 import entity.PersonEntity;
+import entity.UserEntity;
 import service.EMService;
+import service.UserService;
 
 public class CalendarModel {
 
@@ -35,20 +37,16 @@ public class CalendarModel {
 	}
 
 	public String getInstitutionData() {
-		this.em = EMService.getEM();
-		this.transaction = EMService.getTransaction();
-		this.transaction.begin();
+		UserEntity currentUser = UserService.getUser();
 		try {
-			Query q = this.em.createNativeQuery("select * from institution where institutionid = 1",
-					InstitutionEntity.class);
-			InstitutionEntity model = (InstitutionEntity) q.getSingleResult();
-			return model.getInstitutionName() + "\n" + model.getInstitutionAddress().toString();
-		} catch (NoResultException e) {
-			return "Default_Institution\n" + this.createDefaultAddress().toString();
-		} finally {
-			this.closeConnection();
-		}
+			String address = currentUser.getInstitution().getInstitutionName()+"\n"+currentUser.getInstitution().getInstitutionAddress().toString();
+			return address;
+		} catch (NullPointerException e) {
+			return "Default_Name\n"+this.createDefaultAddress().toString();
+		} 
 	}
+	
+	
 
 	public CalendarTileEntity getDataOfEntry(Date date) {
 		this.em = EMService.getEM();
@@ -66,6 +64,8 @@ public class CalendarModel {
 			this.closeConnection();
 		}
 	}
+	
+	
 	public void setDataOfEntry(String patient, String kommentar, Date date) {
 		this.em = EMService.getEM();
 		this.transaction = em.getTransaction();

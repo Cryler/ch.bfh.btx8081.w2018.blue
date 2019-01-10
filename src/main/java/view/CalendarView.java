@@ -25,6 +25,7 @@ import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
 
+import net.bytebuddy.asm.Advice.This;
 import presenter.CalendarPresenter;
 import presenter.CalendarWeekTile;
 import service.UserService;
@@ -177,6 +178,7 @@ public class CalendarView extends VerticalLayout implements BeforeEnterObserver 
 	private void updateLabelOfInstitution() {
 		this.area.setValue(this.presenter.getInstitutionData());
 	}
+	
 	private String parseMonth(int i) {
 		String[] months = {"Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"};
 		return months[i];

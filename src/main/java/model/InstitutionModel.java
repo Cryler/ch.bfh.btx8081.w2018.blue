@@ -29,8 +29,8 @@ public class InstitutionModel {
 	 */
 
 	public String getInstitutionName(){		
+		UserEntity currentUser = UserService.getUser();
 		try {
-			UserEntity currentUser = UserService.getUser();
 			return currentUser.getInstitution().getInstitutionName();
 		} catch (NullPointerException e) {
 			return "Default_Name";
@@ -46,7 +46,6 @@ public class InstitutionModel {
 		} catch (NullPointerException e) {
 			return this.createDefaultAddress();
 		}
-
 	}
 
 

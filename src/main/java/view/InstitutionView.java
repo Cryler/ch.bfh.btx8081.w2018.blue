@@ -35,7 +35,7 @@ public class InstitutionView extends VerticalLayout implements BeforeEnterObserv
 
 	private static final long serialVersionUID = 1L;
 	private InstitutionPresenterAdmin presentorAdmin;
-	private TextArea addressField;
+	private TextArea infoArea;
 
 	@Override
 	public void beforeEnter(BeforeEnterEvent event) {
@@ -56,10 +56,10 @@ public class InstitutionView extends VerticalLayout implements BeforeEnterObserv
 	}
 
 	private void addComponents() {
-		this.addressField = new TextArea();
-		this.addressField = new TextArea();
-		this.addressField.setWidth("200px");
-		this.addressField.setEnabled(false);
+		this.infoArea = new TextArea();
+		this.infoArea = new TextArea();
+		this.infoArea.setWidth("200px");
+		this.infoArea.setEnabled(false);
 
 		Button calendarButton = this.createButton("Kalender", new Icon(VaadinIcon.CALENDAR));
 		Button newPatientButton = this.createButton("Neuer Patient", new Icon(VaadinIcon.USER_CHECK));
@@ -67,15 +67,14 @@ public class InstitutionView extends VerticalLayout implements BeforeEnterObserv
 		Button settingsButton = this.createButton("Settings", new Icon(VaadinIcon.COG));
 		Button logoutButton = this.createButton("Logout", new Icon(VaadinIcon.POWER_OFF));
 
-		this.add(this.addressField, calendarButton, newPatientButton, searchPatientButton, settingsButton,
-				logoutButton);
+		this.add(this.infoArea, calendarButton, newPatientButton, searchPatientButton, settingsButton, logoutButton);
 	}
 
 	private void updateView() {
-		Address add = this.presentorAdmin.getInstitutionAddress();
-		this.addressField.setValue(this.presentorAdmin.getInstitutionName() + "\n" + add.getStreet() + " "
-				+ add.getStreetNr() + "\n" + add.getZipCode() + " " + add.getCity());
-
+		if (UserService.getUser() != null) {
+			this.infoArea.setValue(
+					this.presentorAdmin.getInstitutionName() + "\nBenutzer: " + UserService.getUser().getUsername());
+		}
 	}
 
 	private Button createButton(String value, Icon icon) {
