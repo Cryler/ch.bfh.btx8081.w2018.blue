@@ -12,11 +12,14 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.validator.EmailValidator;
 import com.vaadin.flow.data.value.ValueChangeMode;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
 
 import entity.PatientEntity;
 import entity.PersonEntity;
 import presenter.PatientPresenter;
+import service.UserService;
 
 /**
  * View for the new patient site.
@@ -27,7 +30,7 @@ import presenter.PatientPresenter;
  */
 
 @Route("Neuer Patient")
-public class NewPatientView extends VerticalLayout {
+public class NewPatientView extends VerticalLayout implements BeforeEnterObserver{
 
 	private TextField lastName;
 	private TextField firstName;
@@ -170,5 +173,12 @@ public class NewPatientView extends VerticalLayout {
 		this.layout.add(layoutAction);
 		this.layout.setAlignSelf(Alignment.END, layoutAction);
 
+	}
+	
+	@Override
+	public void beforeEnter(BeforeEnterEvent event) {
+		if (UserService.getUser() == null) {
+			event.rerouteTo("");
+		}
 	}
 }
