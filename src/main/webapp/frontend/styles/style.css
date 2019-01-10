@@ -12,4 +12,7 @@ vaadin-text-area{
 	--lumo-disabled-text-color: grb(60,60,60);
 	
 }
+vaadin-text-field{
+	--lumo-disabled-text-color: rgb(40, 80, 180);
+}
 

@@ -1,4 +1,4 @@
- package view;
+package view;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +33,7 @@ public class SessionView extends HorizontalLayout implements BeforeEnterObserver
 	VerticalLayout layoutTabs = new VerticalLayout();
 	VerticalLayout layoutMenu = new VerticalLayout();
 	VerticalLayout layoutPage = new VerticalLayout();
-	
+
 	@Override
 	public void beforeEnter(BeforeEnterEvent event) {
 		if (UserService.getUser() == null) {
@@ -124,7 +124,7 @@ public class SessionView extends HorizontalLayout implements BeforeEnterObserver
 		Tabs tabs = newTabs();
 		HorizontalLayout layoutTabs = new HorizontalLayout();
 		tabs.addSelectedChangeListener(event -> {
-
+			
 		});
 
 		layoutTabs.add(tabs);
@@ -176,13 +176,13 @@ public class SessionView extends HorizontalLayout implements BeforeEnterObserver
 		sesNew.addClickListener(e -> {
 			sesNew.getUI().ifPresent(ui -> ui.navigate("Neue Session"));
 		});
-		
+
 		Button logout = new Button("Logout");
 		logout.setWidth("230px");
 		logout.addClickListener(e -> {
 			logout.getUI().ifPresent(ui -> ui.navigate("Logout"));
 		});
-		
+
 		VerticalLayout layout = new VerticalLayout(home, patNew, patList, calendar, sesNew, logout);
 		layout.setSizeFull();
 		this.layoutMenu.setWidth("250px");

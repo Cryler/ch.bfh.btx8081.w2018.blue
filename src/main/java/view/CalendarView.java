@@ -9,15 +9,20 @@ package view;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.EventListener;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
+import com.vaadin.flow.component.grid.GridSelectionModel;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
@@ -75,6 +80,9 @@ public class CalendarView extends VerticalLayout implements BeforeEnterObserver 
 		this.grid.addComponentColumn(CalendarWeekTile::getSameday).setHeader("Samstag");
 		this.grid.addComponentColumn(CalendarWeekTile::getSunday).setHeader("Sonntag");
 
+
+		
+		
 		HorizontalLayout hl2 = new HorizontalLayout();
 		hl2.setWidth("100%");		
 		hl2.add(this.createCalendarNavigationButton(false, new Icon(VaadinIcon.ARROW_CIRCLE_LEFT_O)));

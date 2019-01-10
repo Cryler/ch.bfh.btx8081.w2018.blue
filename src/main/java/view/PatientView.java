@@ -1,28 +1,29 @@
- package view;
+package view;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.combobox.ComboBox;
-import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.shared.ui.LoadMode;
 
 import entity.PatientEntity;
-import entity.PersonEntity;
-import model.PatientModel;
 import service.PatientService;
 import service.UserService;
 
@@ -34,13 +35,14 @@ import service.UserService;
  */
 
 @Route("Patient")
+@StyleSheet(value = "styles/style.css", loadMode = LoadMode.INLINE)
 public class PatientView extends HorizontalLayout implements BeforeEnterObserver, AfterNavigationObserver {
 
-	HorizontalLayout layout = new HorizontalLayout();
+	VerticalLayout layout = new VerticalLayout();
 	VerticalLayout layoutTabs = new VerticalLayout();
 	VerticalLayout layoutMenu = new VerticalLayout();
 	VerticalLayout layoutPage = new VerticalLayout();
-	
+
 	private TextField lastName;
 	private TextField firstName;
 	private TextField birthdate;
@@ -53,34 +55,41 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 	private TextField phoneNumber;
 	private TextField email;
 	private TextField ahvNr;
+
+	private Collection<TextField> patientDataFields;
 	
+	private PatientEntity currentShowedPatient;
+
 	@Override
 	public void beforeEnter(BeforeEnterEvent event) {
 		if (UserService.getUser() == null) {
 			event.rerouteTo("");
 		}
 	}
-	
+
 	@Override
 	public void afterNavigation(AfterNavigationEvent event) {
 		this.initData();
 	}
 
 	private void initData() {
-		PersonEntity patient = PatientService.getPatient();
-		this.lastName.setValue(patient.getLastName());
-		this.firstName.setValue(patient.getFirstName());
-		this.birthdate.setValue(patient.getBirthdate().toString());
-		this.gender.setValue(patient.getGender());
-		this.address.setValue(patient.getAddress());
-		this.city.setValue(patient.getCity());
-		this.nationality.setValue(patient.getNationality());
-		this.language.setValue(patient.getLanguage());
-		this.insurance.setValue("");
-		this.phoneNumber.setValue(patient.getPhoneNumber());
-		this.email.setValue(patient.getEmail());
-		this.ahvNr.setValue("");
-		
+			this.currentShowedPatient = PatientService.getPatient();
+		try {
+			this.lastName.setValue(currentShowedPatient.getLastName());
+			this.firstName.setValue(currentShowedPatient.getFirstName());
+			this.birthdate.setValue(currentShowedPatient.getBirthdate().toString());
+			this.gender.setValue(currentShowedPatient.getGender());
+			this.address.setValue(currentShowedPatient.getAddress());
+			this.city.setValue(currentShowedPatient.getCity());
+			this.nationality.setValue(currentShowedPatient.getNationality());
+			this.language.setValue(currentShowedPatient.getLanguage());
+			this.insurance.setValue(currentShowedPatient.getInsurance());
+			this.phoneNumber.setValue(currentShowedPatient.getPhoneNumber());
+			this.email.setValue(currentShowedPatient.getEmail());
+			this.ahvNr.setValue(currentShowedPatient.getAhvNr());
+		} catch (NullPointerException e) {
+
+		}
 	}
 
 	/**
@@ -100,28 +109,39 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 	 */
 	private void patient() {
 		FormLayout newPatientLayout = new FormLayout();
-				
+
 		// The object that will be edited
 		// PatientModel patientCreate = new PatientModel();
-		
-		//The fields for the Form
-				
-		this.lastName = new TextField();		
-		this.firstName = new TextField();		
-		this.birthdate = new TextField();
-		this.gender = new TextField();
-		this.address = new TextField();		
-		this.city = new TextField();		
-		this.nationality = new TextField();		
-		this.language = new TextField();		
-		this.phoneNumber = new TextField();		
-		this.email = new TextField();	
-		this.insurance = new TextField();		
-		this.ahvNr = new TextField();
-	
-		
-	
-		
+
+		// The fields for the Form
+
+		this.patientDataFields = new ArrayList<>();
+
+		this.lastName = this.createTextField();
+		this.patientDataFields.add(this.lastName);
+		this.firstName = this.createTextField();
+		this.patientDataFields.add(this.firstName);
+		this.birthdate = this.createTextField();
+		this.patientDataFields.add(this.birthdate);
+		this.gender = this.createTextField();
+		this.patientDataFields.add(this.gender);
+		this.address = this.createTextField();
+		this.patientDataFields.add(this.address);
+		this.city = this.createTextField();
+		this.patientDataFields.add(this.city);
+		this.nationality = this.createTextField();
+		this.patientDataFields.add(this.nationality);
+		this.language = this.createTextField();
+		this.patientDataFields.add(this.language);
+		this.phoneNumber = this.createTextField();
+		this.patientDataFields.add(this.phoneNumber);
+		this.email = this.createTextField();
+		this.patientDataFields.add(this.email);
+		this.insurance = this.createTextField();
+		this.patientDataFields.add(this.insurance);
+		this.ahvNr = this.createTextField();
+		this.patientDataFields.add(this.ahvNr);
+
 		newPatientLayout.addFormItem(lastName, "Nachname");
 		newPatientLayout.addFormItem(firstName, "Vorname");
 		newPatientLayout.addFormItem(birthdate, "Geburtsdatum");
@@ -134,8 +154,17 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		newPatientLayout.addFormItem(email, "Email");
 		newPatientLayout.addFormItem(insurance, "Krankenkasse");
 		newPatientLayout.addFormItem(ahvNr, "AHV-Nr.");
-		
-		this.layout.add(newPatientLayout);
+
+		Button editButton = new Button("Bearbeiten", new Icon(VaadinIcon.EDIT));
+		editButton.addClickListener(event -> {
+			for (TextField field : this.patientDataFields) {
+				field.setEnabled(true);
+			}
+			this.layout.add(new Button("speichern", e -> {
+				Notification.show("works");
+			}));
+		});
+		this.layout.add(newPatientLayout, editButton);
 	}
 
 	/**
@@ -232,18 +261,23 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		sesNew.addClickListener(e -> {
 			sesNew.getUI().ifPresent(ui -> ui.navigate("New Session"));
 		});
-		
+
 		Button logout = new Button("Logout");
 		logout.setWidth("230px");
 		logout.addClickListener(e -> {
 			logout.getUI().ifPresent(ui -> ui.navigate("Logout"));
 		});
-		
+
 		VerticalLayout layout = new VerticalLayout(home, patNew, patList, calendar, sesNew, logout);
 		layout.setSizeFull();
 		this.layoutMenu.setWidth("250px");
 		this.layoutMenu.add(layout);
 	}
 
-	
+	private TextField createTextField() {
+		TextField field = new TextField();
+		field.setEnabled(false);
+		return field;
+	}
+
 }
