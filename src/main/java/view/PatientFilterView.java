@@ -73,7 +73,7 @@ public class PatientFilterView extends HorizontalLayout implements BeforeEnterOb
 
 		grid.setDataProvider(dataProvider);
 
-		List<ValueProvider<PersonEntity, String>> valueProviders = new ArrayList<>();
+		List<ValueProvider<PatientEntity, String>> valueProviders = new ArrayList<>();
 //		valueProviders.add(PersonEntity::getFirstName);
 //		valueProviders.add(PersonEntity::getLastName);
 //		valueProviders.add(PersonEntity::getFirstName);
@@ -102,11 +102,11 @@ public class PatientFilterView extends HorizontalLayout implements BeforeEnterOb
 //		
 		HeaderRow filterRow = grid.appendHeaderRow();
 
-		Iterator<ValueProvider<PersonEntity, String>> iterator2 = valueProviders.iterator();
+		Iterator<ValueProvider<PatientEntity, String>> iterator2 = valueProviders.iterator();
 
 		grid.getColumns().forEach(column -> {
 			TextField field = new TextField();
-			ValueProvider<PersonEntity, String> valueProvider = iterator2.next();
+			ValueProvider<PatientEntity, String> valueProvider = iterator2.next();
 
 			field.addValueChangeListener(event -> dataProvider.addFilter(
 					patient -> StringUtils.containsIgnoreCase(valueProvider.apply(patient), field.getValue())));
@@ -122,7 +122,7 @@ public class PatientFilterView extends HorizontalLayout implements BeforeEnterOb
 		grid.addSelectionListener(event -> {
 			try {
 
-				PersonEntity selectedPerson = event.getFirstSelectedItem().get();
+				PatientEntity selectedPerson = event.getFirstSelectedItem().get();
 				PatientService.setPatient(selectedPerson);
 				grid.getUI().ifPresent(ui -> ui.navigate("Patient"));
 				
