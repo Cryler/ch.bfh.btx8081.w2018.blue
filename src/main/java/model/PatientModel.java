@@ -21,11 +21,12 @@ public class PatientModel {
 	private EntityManager em;
 	private EntityTransaction transaction;
 
+	
+	
 	public void setPatient(PatientEntity patient) {
 		this.em = EMService.getEM();
 		this.transaction = EMService.getTransaction();
 		this.transaction.begin();
-
 		em.persist(patient);
 		PatientService.setPatient(patient);
 		this.closeConnection();
@@ -35,14 +36,20 @@ public class PatientModel {
 		this.em = EMService.getEM();
 		this.transaction = EMService.getTransaction();
 		this.transaction.begin();
-
 		Query q = this.em.createNativeQuery("select * from person", PatientEntity.class);
 		Collection<PatientEntity> patient = q.getResultList();
-
 		this.closeConnection();
-
 		return patient;
 	}
+	
+//	public void updatePatient(PatientEntity patient) {
+//		this.em = EMService.getEM();
+//		this.transaction = EMService.getTransaction();
+//		this.transaction.begin();
+//		em.persist(dbPatient);
+//		
+//		this.closeConnection();		
+//	}
 
 
 	private void closeConnection() {

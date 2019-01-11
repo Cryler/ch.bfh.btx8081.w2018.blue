@@ -1,5 +1,7 @@
 package view;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -24,6 +26,8 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.shared.ui.LoadMode;
 
 import entity.PatientEntity;
+import presenter.PatientPresenter;
+import service.LocalDateConverter;
 import service.PatientService;
 import service.UserService;
 
@@ -55,10 +59,14 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 	private TextField phoneNumber;
 	private TextField email;
 	private TextField ahvNr;
+	private Button editButton;
+	private Button saveButton;
 
 	private Collection<TextField> patientDataFields;
-	
+
 	private PatientEntity currentShowedPatient;
+
+	private PatientPresenter presenter;
 
 	@Override
 	public void beforeEnter(BeforeEnterEvent event) {
@@ -72,30 +80,11 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		this.initData();
 	}
 
-	private void initData() {
-			this.currentShowedPatient = PatientService.getPatient();
-		try {
-			this.lastName.setValue(currentShowedPatient.getLastName());
-			this.firstName.setValue(currentShowedPatient.getFirstName());
-			this.birthdate.setValue(currentShowedPatient.getBirthdate().toString());
-			this.gender.setValue(currentShowedPatient.getGender());
-			this.address.setValue(currentShowedPatient.getAddress());
-			this.city.setValue(currentShowedPatient.getCity());
-			this.nationality.setValue(currentShowedPatient.getNationality());
-			this.language.setValue(currentShowedPatient.getLanguage());
-			this.insurance.setValue(currentShowedPatient.getInsurance());
-			this.phoneNumber.setValue(currentShowedPatient.getPhoneNumber());
-			this.email.setValue(currentShowedPatient.getEmail());
-			this.ahvNr.setValue(currentShowedPatient.getAhvNr());
-		} catch (NullPointerException e) {
-
-		}
-	}
-
 	/**
 	 * Constructor for the session site.
 	 */
 	public PatientView() {
+		this.presenter = new PatientPresenter();
 		menu();
 		patient();
 		tabsNavigation();
@@ -154,17 +143,33 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		newPatientLayout.addFormItem(email, "Email");
 		newPatientLayout.addFormItem(insurance, "Krankenkasse");
 		newPatientLayout.addFormItem(ahvNr, "AHV-Nr.");
+		
+		this.editButton = this.createEditButton();
+		this.saveButton = this.createSaveButton();
 
-		Button editButton = new Button("Bearbeiten", new Icon(VaadinIcon.EDIT));
-		editButton.addClickListener(event -> {
-			for (TextField field : this.patientDataFields) {
-				field.setEnabled(true);
-			}
-			this.layout.add(new Button("speichern", e -> {
-				Notification.show("works");
-			}));
-		});
-		this.layout.add(newPatientLayout, editButton);
+		HorizontalLayout hl1 = new HorizontalLayout();
+		hl1.add(this.editButton, this.saveButton);
+		this.layout.add(newPatientLayout, hl1);
+	}
+
+	private void initData() {
+		this.currentShowedPatient = PatientService.getPatient();
+		try {
+			this.lastName.setValue(currentShowedPatient.getLastName());
+			this.firstName.setValue(currentShowedPatient.getFirstName());
+			this.birthdate.setValue(currentShowedPatient.getBirthdate().toString());
+			this.gender.setValue(currentShowedPatient.getGender());
+			this.address.setValue(currentShowedPatient.getAddress());
+			this.city.setValue(currentShowedPatient.getCity());
+			this.nationality.setValue(currentShowedPatient.getNationality());
+			this.language.setValue(currentShowedPatient.getLanguage());
+			this.insurance.setValue(currentShowedPatient.getInsurance());
+			this.phoneNumber.setValue(currentShowedPatient.getPhoneNumber());
+			this.email.setValue(currentShowedPatient.getEmail());
+			this.ahvNr.setValue(currentShowedPatient.getAhvNr());
+		} catch (NullPointerException e) {
+
+		}
 	}
 
 	/**
@@ -278,6 +283,52 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		TextField field = new TextField();
 		field.setEnabled(false);
 		return field;
+	}
+
+	private Button createEditButton() {
+		Button editButton = new Button("Bearbeiten", new Icon(VaadinIcon.EDIT));
+		editButton.addClickListener(event -> {
+			for (TextField field : this.patientDataFields) {
+				field.setEnabled(true);
+			}
+			this.editButton.setEnabled(false);
+			this.saveButton.setEnabled(true);
+		});
+		return editButton;
+	}
+
+	private Button createSaveButton() {
+		Button saveButton = new Button("speichern");
+		saveButton.addClickListener(event -> {
+			this.updateCurrentPatient();
+			this.presenter.editSaveButtonClicked(this.currentShowedPatient);
+			for (TextField field : this.patientDataFields) {
+				field.setEnabled(false);
+			}
+			this.saveButton.setEnabled(false);
+			this.editButton.setEnabled(true);
+		});
+		saveButton.setEnabled(false);
+		return saveButton;
+	}
+
+	private void updateCurrentPatient() {
+		try {
+			this.currentShowedPatient.setFirstName(this.firstName.getValue());
+			this.currentShowedPatient.setLastName(this.lastName.getValue());
+			this.currentShowedPatient.setBirthdate(LocalDate.parse(this.birthdate.getValue()));
+			this.currentShowedPatient.setAddress(this.address.getValue());
+			this.currentShowedPatient.setCity(this.city.getValue());
+			this.currentShowedPatient.setGender(this.gender.getValue());
+			this.currentShowedPatient.setLanguage(this.language.getValue());
+			this.currentShowedPatient.setNationality(this.nationality.getValue());
+			this.currentShowedPatient.setInsurance(this.insurance.getValue());
+			this.currentShowedPatient.setEmail(this.email.getValue());
+			this.currentShowedPatient.setAhvNr(this.ahvNr.getValue());
+			this.currentShowedPatient.setPhoneNumber(this.phoneNumber.getValue());
+		} catch (NullPointerException e) {
+
+		}
 	}
 
 }

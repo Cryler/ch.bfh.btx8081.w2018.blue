@@ -38,10 +38,11 @@ public abstract class PersonEntity {
 		
 		
 		public PersonEntity() {
-			super();
-			
+			super();			
 		}
-		
+		public int getPK() {
+			return this.id;
+		}
 		
 		public String getFirstName() {
 			return this.firstName;
