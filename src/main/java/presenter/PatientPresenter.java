@@ -20,6 +20,11 @@ public class PatientPresenter {
 		this.model = new PatientModel();
 	}
 	
+	public void menuButtonClicked(ClickEvent<Button> e) {
+		e.getSource().getUI().ifPresent(ui -> ui.navigate(e.getSource().getText()));
+	}
+
+	
 	public void editSaveButtonClicked(PatientEntity patient) {
 		this.model.setPatient(patient);
 	}

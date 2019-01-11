@@ -6,6 +6,9 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -18,7 +21,6 @@ import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
 
 import entity.PatientEntity;
-import entity.PersonEntity;
 import presenter.PatientPresenter;
 import service.UserService;
 
@@ -31,7 +33,7 @@ import service.UserService;
  */
 
 @Route("Neuer Patient")
-public class NewPatientView extends VerticalLayout implements BeforeEnterObserver{
+public class NewPatientView extends HorizontalLayout implements BeforeEnterObserver {
 
 	private TextField lastName;
 	private TextField firstName;
@@ -46,9 +48,13 @@ public class NewPatientView extends VerticalLayout implements BeforeEnterObserve
 	private DatePicker birthdate;
 	private PatientPresenter presenter;
 	private ComboBox<String> gender;
-	
 
-	HorizontalLayout layout = new HorizontalLayout();
+	@Override
+	public void beforeEnter(BeforeEnterEvent event) {
+		if (UserService.getUser() == null) {
+			event.rerouteTo("");
+		}
+	}
 
 	/**
 	 * Cosntructor for the new patient site..
@@ -56,22 +62,22 @@ public class NewPatientView extends VerticalLayout implements BeforeEnterObserve
 
 	public NewPatientView() {
 		this.presenter = new PatientPresenter();
-		patientData();
 
-		action();
+		VerticalLayout vlMenu = this.createMenu();
+		VerticalLayout vlBody = this.patientData();
+
+		this.add(vlMenu, vlBody);
 		this.setAlignItems(Alignment.CENTER);
-		this.add(this.layout);
 	}
 
 	/**
 	 * Vertical layout with label and textfield for patientdata.
 	 */
-	public void patientData() {
+	public VerticalLayout patientData() {
 
 		FormLayout newPatientLayout = new FormLayout();
 
 		// The fields for the Form
-
 		this.lastName = new TextField();
 		lastName.setValueChangeMode(ValueChangeMode.EAGER);
 		this.firstName = new TextField();
@@ -112,40 +118,44 @@ public class NewPatientView extends VerticalLayout implements BeforeEnterObserve
 		newPatientLayout.addFormItem(this.insurance, "Krankenkasse");
 		newPatientLayout.addFormItem(this.ahvNr, "AHV-Nr.");
 
-		this.layout.add(newPatientLayout);
-		
 		Binder<PatientEntity> binder = new Binder<>();
 		binder.forField(email).withValidator(new EmailValidator("Dies scheint keine email Adresse zu sein!"))
-		.bind(PatientEntity::getEmail, PatientEntity::setEmail);
-		
+				.bind(PatientEntity::getEmail, PatientEntity::setEmail);
+
 		binder.forField(firstName)
-		.withValidator(
-				firstname -> firstname.length() >= 2,
-				"Vorname muss mehr als zwei Buchstaben enthalten!").asRequired("Bitte geben Sie einen Vornamen ein!")
-		.bind(PatientEntity::getFirstName, PatientEntity::setFirstName);
-		
+				.withValidator(firstname -> firstname.length() >= 2, "Vorname muss mehr als zwei Buchstaben enthalten!")
+				.asRequired("Bitte geben Sie einen Vornamen ein!")
+				.bind(PatientEntity::getFirstName, PatientEntity::setFirstName);
+
 		binder.forField(lastName)
-		.withValidator(
-				lastname -> lastname.length() >= 2,
-				"Nachname muss mehr als zwei Buchstaben enthalten!").asRequired("Bitte geben Sie einen Nachnamen ein!")
-		.bind(PatientEntity::getLastName, PatientEntity::setLastName);
-		
-		binder.forField(birthdate).withValidator(
-				birthdate -> birthdate.isBefore(LocalDate.now()),"kann nicht aelter als heute sein!")
-		.bind(PatientEntity::getBirthdate,PatientEntity::setBirthdate);
-		
-		binder.forField(phonenumber).withValidator(new RegexpValidator("Falsche telnr.", "^(\\+?)(\\d{2,4})(\\s?)(\\-?)((\\(0\\))?)(\\s?)(\\d{2})(\\s?)(\\-?)(\\d{3})(\\s?)(\\-?)(\\d{2})(\\s?)(\\-?)(\\d{2})"))
-		.bind(PatientEntity::getPhoneNumber,PatientEntity::setPhoneNumber);
-		
+				.withValidator(lastname -> lastname.length() >= 2, "Nachname muss mehr als zwei Buchstaben enthalten!")
+				.asRequired("Bitte geben Sie einen Nachnamen ein!")
+				.bind(PatientEntity::getLastName, PatientEntity::setLastName);
+
+		binder.forField(birthdate)
+				.withValidator(birthdate -> birthdate.isBefore(LocalDate.now()), "kann nicht aelter als heute sein!")
+				.bind(PatientEntity::getBirthdate, PatientEntity::setBirthdate);
+
+		binder.forField(phonenumber).withValidator(new RegexpValidator("Falsche telnr.",
+				"^(\\+?)(\\d{2,4})(\\s?)(\\-?)((\\(0\\))?)(\\s?)(\\d{2})(\\s?)(\\-?)(\\d{3})(\\s?)(\\-?)(\\d{2})(\\s?)(\\-?)(\\d{2})"))
+				.bind(PatientEntity::getPhoneNumber, PatientEntity::setPhoneNumber);
+
+		Label info = new Label("Neuer Patient erfassen:");
+		info.getStyle().set("font-size", "200%");
+
+		VerticalLayout vlBody = new VerticalLayout();
+		vlBody.getStyle().set("magrin-top", "50px");
+		vlBody.add(info, newPatientLayout, this.createButtons());
+
+		return vlBody;
 	}
 
 	/**
 	 * Horizontal layout with 2 buttons to save or cancel the session.
 	 */
 
-	public void action() {
+	public HorizontalLayout createButtons() {
 
-		VerticalLayout layoutAction = new VerticalLayout();
 		HorizontalLayout layoutButtons = new HorizontalLayout();
 		Button save = new Button("Speichern");
 		save.addClickListener(e -> {
@@ -171,18 +181,26 @@ public class NewPatientView extends VerticalLayout implements BeforeEnterObserve
 			cancel.getUI().ifPresent(ui -> ui.navigate("Home"));
 		});
 		layoutButtons.add(cancel, save);
-
-		layoutAction.add(layoutButtons);
-		layoutAction.setAlignItems(Alignment.START);
-		this.layout.add(layoutAction);
-		this.layout.setAlignSelf(Alignment.END, layoutAction);
-
+		return layoutButtons;
 	}
-	
-	@Override
-	public void beforeEnter(BeforeEnterEvent event) {
-		if (UserService.getUser() == null) {
-			event.rerouteTo("");
-		}
+
+	public VerticalLayout createMenu() {
+		VerticalLayout vlMenu = new VerticalLayout();
+		vlMenu.setWidth("250px");
+		vlMenu.add(this.createMenuButton("Home", new Icon(VaadinIcon.HOME)));
+		vlMenu.add(this.createMenuButton("Kalender", new Icon(VaadinIcon.CALENDAR)));
+		vlMenu.add(this.createMenuButton("Patient suchen", new Icon(VaadinIcon.USERS)));
+		vlMenu.add(this.createMenuButton("Logout", new Icon(VaadinIcon.POWER_OFF)));
+		return vlMenu;
 	}
+
+	private Button createMenuButton(String value, Icon icon) {
+		Button newButton = new Button(value, icon);
+		newButton.addClickListener(e -> {
+			this.presenter.menuButtonClicked(e);
+		});
+		newButton.setWidth("200px");
+		return newButton;
+	}
+
 }
