@@ -66,7 +66,9 @@ public class SettingsView extends VerticalLayout implements BeforeEnterObserver{
 
 	private void addVisualComponents() {
 
-		HorizontalLayout bottomSection = new HorizontalLayout();
+		this.getStyle().set("margin-top", "100px");
+		Label info = new Label("Informationen ihrer Institution: ");
+		info.getStyle().set("font-size", "150%");
 
 		Label nameOfInstitution = this.createLabel("Name of Institution: ");
 		this.actualNameOfInstitution = this.createTextfield();
@@ -97,6 +99,8 @@ public class SettingsView extends VerticalLayout implements BeforeEnterObserver{
 		/**
 		 * This creates a button that calls the setters of the {@code InstiutionPresenter} and navigates back to {@code InstitutionView}.
 		 */
+
+		HorizontalLayout bottomSection = new HorizontalLayout();
 		Button saveButton = this.createButton("Speichern");
 		saveButton.addClickListener(e -> {
 			Address newAddress = new Address();
@@ -119,7 +123,7 @@ public class SettingsView extends VerticalLayout implements BeforeEnterObserver{
 		bottomSection.add(cancelButton, saveButton);
 		bottomSection.setWidth(nameLayout.getWidth());
 	
-		this.add(nameLayout, streetLayout, streetNrLayout, zipLayout, cityLayout, bottomSection);
+		this.add(info, nameLayout, streetLayout, streetNrLayout, zipLayout, cityLayout, bottomSection);
 		
 	}
 

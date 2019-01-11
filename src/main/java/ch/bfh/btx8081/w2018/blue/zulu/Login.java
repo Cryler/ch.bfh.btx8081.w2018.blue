@@ -40,6 +40,7 @@ public class Login extends VerticalLayout {
 
 	private void initUI() {
 		this.setAlignItems(Alignment.CENTER);
+		this.getStyle().set("margin-top", "100px");
 		VerticalLayout vl1 = new VerticalLayout();
 		vl1.setAlignItems(Alignment.CENTER);
 		vl1.setWidth("350px");

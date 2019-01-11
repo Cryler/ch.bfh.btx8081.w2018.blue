@@ -52,6 +52,7 @@ public class InstitutionView extends VerticalLayout implements BeforeEnterObserv
 
 	private void initView() {
 		this.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+		this.getStyle().set("margin-top", "100px");
 		this.presentorAdmin = new InstitutionPresenterAdmin();
 	}
 

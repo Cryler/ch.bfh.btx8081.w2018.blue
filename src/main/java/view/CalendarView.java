@@ -98,6 +98,7 @@ public class CalendarView extends VerticalLayout implements BeforeEnterObserver 
 		vl1.add(this.createMenuButton("Home", new Icon(VaadinIcon.HOME)));
 		vl1.add(this.createMenuButton("Neuer Patient", new Icon(VaadinIcon.USER_CHECK)));
 		vl1.add(this.createMenuButton("Patient suchen", new Icon(VaadinIcon.USERS)));
+		vl1.add(this.createMenuButton("Logout", new Icon(VaadinIcon.POWER_OFF)));
 		vl1.add(hl2);
 
 		HorizontalLayout hl1 = new HorizontalLayout();

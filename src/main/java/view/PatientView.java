@@ -237,43 +237,43 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 	}
 
 	private void menu() {
-		Button home = new Button("Zurück zum Hautpmenü");
-		home.setWidth("230px");
+		Button home = new Button("Home",new Icon(VaadinIcon.HOME));
+		home.setWidth("200px");
 		home.addClickListener(e -> {
 			home.getUI().ifPresent(ui -> ui.navigate("Home"));
 		});
 
-		Button patNew = new Button("Neuer Patient erfassen");
-		patNew.setWidth("230px");
+		Button patNew = new Button("Neuer Patient", new Icon(VaadinIcon.USER_CHECK));
+		patNew.setWidth("200px");
 		patNew.addClickListener(e -> {
-			patNew.getUI().ifPresent(ui -> ui.navigate("New Patient"));
+			patNew.getUI().ifPresent(ui -> ui.navigate("Neuer Patient"));
 		});
 
-		Button patList = new Button("Patientenliste");
-		patList.setWidth("230px");
+		Button patList = new Button("Patient suchen",new Icon(VaadinIcon.USERS));
+		patList.setWidth("200px");
 		patList.addClickListener(e -> {
-			patList.getUI().ifPresent(ui -> ui.navigate("Patientlist"));
+			patList.getUI().ifPresent(ui -> ui.navigate("Patient suchen"));
 		});
 
-		Button calendar = new Button("Kalender");
-		calendar.setWidth("230px");
+		Button calendar = new Button("Kalender",new Icon(VaadinIcon.CALENDAR));
+		calendar.setWidth("200px");
 		calendar.addClickListener(e -> {
-			calendar.getUI().ifPresent(ui -> ui.navigate("Calendar"));
+			calendar.getUI().ifPresent(ui -> ui.navigate("Kalender"));
 		});
 
-		Button sesNew = new Button("Neue Konsultation");
-		sesNew.setWidth("230px");
-		sesNew.addClickListener(e -> {
-			sesNew.getUI().ifPresent(ui -> ui.navigate("New Session"));
-		});
+//		Button sesNew = new Button("Neue Konsultation");
+//		sesNew.setWidth("230px");
+//		sesNew.addClickListener(e -> {
+//			sesNew.getUI().ifPresent(ui -> ui.navigate("New Session"));
+//		});
 
-		Button logout = new Button("Logout");
-		logout.setWidth("230px");
+		Button logout = new Button("Logout",new Icon(VaadinIcon.POWER_OFF));
+		logout.setWidth("200px");
 		logout.addClickListener(e -> {
 			logout.getUI().ifPresent(ui -> ui.navigate("Logout"));
 		});
 
-		VerticalLayout layout = new VerticalLayout(home, patNew, patList, calendar, sesNew, logout);
+		VerticalLayout layout = new VerticalLayout(home, patNew, patList, calendar, logout);
 		layout.setSizeFull();
 		this.layoutMenu.setWidth("250px");
 		this.layoutMenu.add(layout);
