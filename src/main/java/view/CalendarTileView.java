@@ -27,6 +27,7 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.shared.ui.LoadMode;
 
 import entity.CalendarTileEntity;
+import entity.PatientEntity;
 import presenter.CalendarTilePresenter;
 
 @Tag("Tile")
@@ -83,7 +84,11 @@ public class CalendarTileView extends Div {
 	private void initValues(Date date) {
 		this.presenter = new CalendarTilePresenter(date);
 		CalendarTileEntity data = this.presenter.getDataOfEntry();
-		this.info.setValue(data.getPatient());
+		try {
+			this.info.setValue(data.getPatient().getLastName()+" "+data.getPatient().getFirstName());
+		} catch (NullPointerException e) {
+			this.info.setValue("");
+		}		
 		this.dateLabel.setText(this.dateformatter.format(date));
 	}
 
@@ -91,12 +96,14 @@ public class CalendarTileView extends Div {
 		Dialog dialog = new Dialog();	
 		CalendarTileEntity data = this.presenter.getDataOfEntry();
 		
-		ComboBox<String> patientField = new ComboBox<>("Patient");
+		ComboBox<PatientEntity> patientField = new ComboBox<>("Patient");
 		try {
 			patientField.setItems(this.presenter.getPatientNames());
-			if(!data.getPatient().equals("")) {
+			try {
 				patientField.setValue(data.getPatient());
-			}			
+			} catch (NullPointerException e) {
+				patientField.setPlaceholder("Keine Patienten erfasst.");
+			}
 		}catch (NoResultException e) {
 			patientField.setPlaceholder("Keine Patienten erfasst.");
 		}	

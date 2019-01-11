@@ -66,7 +66,7 @@ public class CalendarModel {
 	}
 	
 	
-	public void setDataOfEntry(String patient, String kommentar, Date date) {
+	public void setDataOfEntry(PatientEntity patient, String kommentar, Date date) {
 		this.em = EMService.getEM();
 		this.transaction = em.getTransaction();
 		this.transaction.begin();
@@ -91,18 +91,18 @@ public class CalendarModel {
 
 
 	@SuppressWarnings("unchecked")
-	public List<String> getPatientNames() {
+	public List<PatientEntity> getPatientNames() {
 		this.em = EMService.getEM();
 		this.transaction = EMService.getTransaction();
 		this.transaction.begin();
 		Query q = em.createNativeQuery("select * from person", PersonEntity.class);
 		Collection<PatientEntity> persons = q.getResultList();
 		this.closeConnection();
-		List<String> names = new ArrayList<>();
-		for (PatientEntity pers : persons) {
-			names.add(pers.getLastName() + " " + pers.getFirstName());
+		List<PatientEntity> data = new ArrayList<>();
+		for(PatientEntity pat : persons) {
+			data.add(pat);
 		}
-		return names;
+		return data;
 	}
 
 	private void closeConnection() {
@@ -114,7 +114,7 @@ public class CalendarModel {
 		CalendarTileEntity entity = new CalendarTileEntity();
 		entity.setDate(date);
 		entity.setKommentar("");
-		entity.setPatient("");
+		entity.setPatient(null);
 		return entity;
 	}
 
@@ -126,4 +126,6 @@ public class CalendarModel {
 		defaultAddress.setZipCode(1234);
 		return defaultAddress;
 	}
+
+	
 }

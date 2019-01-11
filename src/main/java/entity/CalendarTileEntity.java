@@ -10,6 +10,8 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,7 +23,8 @@ public class CalendarTileEntity {
 	@Id
 	@Temporal(TemporalType.DATE)
 	private Date date;
-	private String patient;
+	@ManyToOne
+	private PatientEntity patient;
 	private String kommentar;
 	
 	public CalendarTileEntity() {
@@ -44,11 +47,11 @@ public class CalendarTileEntity {
 		this.kommentar = kommentar;
 	}
 
-	public String getPatient() {
+	public PatientEntity getPatient() {
 		return patient;
 	}
 
-	public void setPatient(String patient) {
+	public void setPatient(PatientEntity patient) {
 		this.patient = patient;
 	}
 

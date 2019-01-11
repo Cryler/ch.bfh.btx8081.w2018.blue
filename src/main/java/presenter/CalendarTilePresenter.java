@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import entity.CalendarTileEntity;
+import entity.PatientEntity;
 import model.CalendarModel;
 
 public class CalendarTilePresenter {
@@ -22,7 +23,7 @@ public class CalendarTilePresenter {
 		this.model = new CalendarModel();
 	}
 
-	public List<String> getPatientNames() {
+	public List<PatientEntity> getPatientNames() {
 		return this.model.getPatientNames();
 	}
 
@@ -30,7 +31,7 @@ public class CalendarTilePresenter {
 		return this.model.getDataOfEntry(this.date);
 	}
 	
-	public void setDataOfEntry(String patient, String kommentar) {
+	public void setDataOfEntry(PatientEntity patient, String kommentar) {
 		this.model.setDataOfEntry(patient, kommentar, this.date);
 	}
 }
