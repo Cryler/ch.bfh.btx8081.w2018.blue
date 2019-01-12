@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 
 import entity.PatientEntity;
 import entity.PersonEntity;
+import entity.SessionEntity;
 import presenter.PatientPresenter;
 import service.EMService;
 import service.PatientService;
@@ -41,15 +42,6 @@ public class PatientModel {
 		this.closeConnection();
 		return patient;
 	}
-	
-//	public void updatePatient(PatientEntity patient) {
-//		this.em = EMService.getEM();
-//		this.transaction = EMService.getTransaction();
-//		this.transaction.begin();
-//		em.persist(dbPatient);
-//		
-//		this.closeConnection();		
-//	}
 
 
 	private void closeConnection() {

@@ -7,9 +7,11 @@ import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 
 import entity.PatientEntity;
+import entity.SessionEntity;
 import exception.InvalidEmailException;
 import exception.InvalidUsernameException;
 import model.PatientModel;
+import model.SessionModel;
 
 
 public class PatientPresenter {
@@ -23,7 +25,6 @@ public class PatientPresenter {
 	public void menuButtonClicked(ClickEvent<Button> e) {
 		e.getSource().getUI().ifPresent(ui -> ui.navigate(e.getSource().getText()));
 	}
-
 	
 	public void editSaveButtonClicked(PatientEntity patient) {
 		this.model.setPatient(patient);
@@ -40,6 +41,10 @@ public class PatientPresenter {
 	
 	public Collection<PatientEntity> getPatientData() {
 		return model.getPatient();
+	}
+	
+	public Collection<SessionEntity> getSessionsOfPatient(PatientEntity patient){
+		return new SessionModel().getAllSessionsFromPatient(patient);
 	}
 }
                 
