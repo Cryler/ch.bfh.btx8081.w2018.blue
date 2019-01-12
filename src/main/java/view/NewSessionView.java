@@ -31,7 +31,7 @@ import service.UserService;
  * @author Luca Leuenberger
  *
  */
-@Route("Neue Session")
+@Route("Neue Konsultation")
 public class NewSessionView extends VerticalLayout implements BeforeEnterObserver, AfterNavigationObserver {
 
 	private SessionPresenter presenter;

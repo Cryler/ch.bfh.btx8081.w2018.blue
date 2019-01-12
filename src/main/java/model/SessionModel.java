@@ -24,6 +24,9 @@ public class SessionModel {
 			this.transaction.begin();
 			Query q = em.createNativeQuery("select * from session where session.patient_id = "+patient.getPK(), SessionEntity.class);
 			Collection<SessionEntity> result = q.getResultList();
+			if(result.size() == 0) {
+				throw new NoResultException();
+			}
 			return result;
 		} finally {
 			this.closeConnection();

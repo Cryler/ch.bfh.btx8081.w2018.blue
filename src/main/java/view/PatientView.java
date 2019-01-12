@@ -10,6 +10,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.persistence.NoResultException;
+
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.StyleSheet;
@@ -20,7 +22,6 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextArea;
@@ -128,7 +129,7 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 
 		Tab tab3 = new Tab("Diagramme");
 		Div diagrammInformationPage = new Div();
-		diagrammInformationPage.setText("Hier werden die Diagramme angezeigt");
+		diagrammInformationPage.setText("Hier werden die Diagramme angezeigt - Dieser Bereich ist noch nicht implementiert.");
 		diagrammInformationPage.setVisible(false);
 
 		Map<Tab, Component> tabsToPages = new HashMap<>();
@@ -152,6 +153,8 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 	}
 
 	private VerticalLayout createPatientInformationForm() {
+
+		Label header = new Label("Stammdaten des Patienten: ");
 
 		FormLayout newPatientLayout = new FormLayout();
 		this.patientDataFields = new ArrayList<>();
@@ -200,43 +203,49 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		hl1.add(this.editButton, this.saveButton);
 
 		VerticalLayout vl1 = new VerticalLayout();
-		vl1.add(newPatientLayout, hl1);
+		vl1.add(header, newPatientLayout, hl1);
 		return vl1;
 	}
 
 	private VerticalLayout createTabsWithDatesOfSessions() {
-		Tabs tabs = new Tabs();
-		Div pages = new Div();
-		Map<Tab, Component> tabsToPages = new HashMap<>();
-		for (SessionEntity session : this.presenter.getSessionsOfPatient(this.currentShowedPatient)) {
-			Tab tempTab = new Tab(session.getDate().toString());
-			tabs.add(tempTab);
-			Div tempPage = new Div(this.createSessionOverview(session));
-			tempPage.setVisible(false);
-			pages.add(tempPage);
-			tabsToPages.put(tempTab, tempPage);
-		}
-		
-		
-		Collection<Component> pagesShown = new LinkedList<>();
-		for(Tab tab : tabsToPages.keySet()) {
-			pagesShown.add(tabsToPages.get(tab));
-		}
-		tabs.setSelectedIndex(0);
-		tabsToPages.get(tabs.getComponentAt(0)).setVisible(true);
-		
-		tabs.addSelectedChangeListener(event -> {
-			pagesShown.forEach(page -> page.setVisible(false));
-			pagesShown.clear();
-			Component selectedPage = tabsToPages.get(tabs.getSelectedTab());
-			selectedPage.setVisible(true);
-			pagesShown.add(selectedPage);
-		});
-		
+		try {
+			Tabs tabs = new Tabs();
+			Div pages = new Div();
+			Map<Tab, Component> tabsToPages = new HashMap<>();
+			for (SessionEntity session : this.presenter.getSessionsOfPatient(this.currentShowedPatient)) {
+				Tab tempTab = new Tab(session.getDate().toString());
+				tabs.add(tempTab);
+				Div tempPage = new Div(this.createSessionOverview(session));
+				tempPage.setVisible(false);
+				pages.add(tempPage);
+				tabsToPages.put(tempTab, tempPage);
+			}
 
-		VerticalLayout vl1 = new VerticalLayout();
-		vl1.add(tabs, pages);
-		return vl1;
+			Collection<Component> pagesShown = new LinkedList<>();
+			for (Tab tab : tabsToPages.keySet()) {
+				pagesShown.add(tabsToPages.get(tab));
+			}
+			tabs.setSelectedIndex(0);
+			tabsToPages.get(tabs.getComponentAt(0)).setVisible(true);
+
+			tabs.addSelectedChangeListener(event -> {
+				pagesShown.forEach(page -> page.setVisible(false));
+				pagesShown.clear();
+				Component selectedPage = tabsToPages.get(tabs.getSelectedTab());
+				selectedPage.setVisible(true);
+				pagesShown.add(selectedPage);
+			});
+
+			VerticalLayout vl1 = new VerticalLayout();
+			vl1.add(tabs, pages);
+			return vl1;
+
+		} catch (NoResultException e) {
+			VerticalLayout vl1 = new VerticalLayout();
+			vl1.add(new Label("Zu diesem Patienten wurden noch keine Einträge gemacht."));
+			return vl1;
+		}
+
 	}
 
 	private Component createSessionOverview(SessionEntity session) {
@@ -246,7 +255,7 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		condition.setEnabled(false);
 		condition.setWidth("600px");
 		condition.setHeight("300px");
-		Label lblCraving = new Label("Craving Value: "+session.getCraving());
+		Label lblCraving = new Label("Craving Value: " + session.getCraving());
 		layoutSession.add(condition, lblCraving);
 		return layoutSession;
 	}
