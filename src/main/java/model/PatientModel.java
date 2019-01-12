@@ -27,7 +27,7 @@ public class PatientModel {
 		this.em = EMService.getEM();
 		this.transaction = EMService.getTransaction();
 		this.transaction.begin();
-		em.persist(patient);
+		this.em.persist(patient);
 		PatientService.setPatient(patient);
 		this.closeConnection();
 	}

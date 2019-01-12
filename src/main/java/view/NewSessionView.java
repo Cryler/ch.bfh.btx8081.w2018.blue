@@ -1,29 +1,48 @@
 package view;
 
+import java.time.LocalDate;
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.AfterNavigationEvent;
+import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
 
+import entity.PatientEntity;
+import entity.SessionEntity;
+import presenter.SessionPresenter;
+import service.PatientService;
 import service.UserService;
 
 /**
- * View for the new session site. 
+ * View for the new session site.
  * 
  * @author Luca Leuenberger
  *
  */
 @Route("Neue Session")
-public class NewSessionView extends VerticalLayout implements BeforeEnterObserver{
-	
-	HorizontalLayout layout = new HorizontalLayout();
-	
+public class NewSessionView extends VerticalLayout implements BeforeEnterObserver, AfterNavigationObserver {
+
+	private SessionPresenter presenter;
+	private PatientEntity patient;
+
+	private TextField patientInfo;
+	private TextArea condition;
+	private RadioButtonGroup<Integer>  craving;
+
+	private HorizontalLayout layout = new HorizontalLayout();
+
 	@Override
 	public void beforeEnter(BeforeEnterEvent event) {
 		if (UserService.getUser() == null) {
@@ -31,67 +50,94 @@ public class NewSessionView extends VerticalLayout implements BeforeEnterObserve
 		}
 	}
 
+	@Override
+	public void afterNavigation(AfterNavigationEvent event) {
+		this.patient = PatientService.getPatient();
+		this.patientInfo.setValue(this.patient.getLastName() + " " + this.patient.getFirstName());
+	}
+
 	/**
-	 * Constructor for the new session site. 
+	 * Constructor for the new session site.
 	 */
 	public NewSessionView() {
-		session();
-		patient();
-		action();
+		this.presenter = new SessionPresenter();
+		this.initGraphicalContent();
+	}
+
+	private void initGraphicalContent() {
+		this.menu();
+		this.session();
+		this.action();
 		this.add(layout);
 	}
 
-	/**
-	 * Vertical layout with a combobox to select whose patient session it is. 
-	 */
-	private void patient() {
-		VerticalLayout layoutPatient = new VerticalLayout();
-		ComboBox<String> combobox = new ComboBox<String>("Patient auswählen:");
-		combobox.setItems("Leuenberger, Luca", "Gund, Yann", "Gehri, Yannick"); // TODO Connect with patientlist
-		combobox.setPlaceholder("Auswählen");
-		layoutPatient.add(combobox);
-		layoutPatient.setAlignItems(Alignment.START);
-		this.layout.add(layoutPatient);
+	private void menu() {
+		VerticalLayout vl1 = new VerticalLayout();
+		vl1.setWidth("250px");
+		vl1.add(this.createMenuButton("Home", new Icon(VaadinIcon.HOME)));
+		vl1.add(this.createMenuButton("Kalender", new Icon(VaadinIcon.CALENDAR)));
+		vl1.add(this.createMenuButton("Neuer Patient", new Icon(VaadinIcon.USER_CHECK)));
+		vl1.add(this.createMenuButton("Patient suchen", new Icon(VaadinIcon.USERS)));
+		vl1.add(this.createMenuButton("Logout", new Icon(VaadinIcon.POWER_OFF)));
+		this.layout.add(vl1);
 	}
 
 	/**
-	 * Vertical layout with text areas and scales for various information asked during the session. 
+	 * Vertical layout with text areas and scales for various information asked
+	 * during the session.
 	 */
 	private void session() {
 		VerticalLayout layoutSession = new VerticalLayout();
-		TextArea condition = new TextArea("Zustand des Patienten/Informationen der Session:");
-		condition.setWidth("600px");
-		condition.setHeight("300px");
+		this.condition = new TextArea("Zustand des Patienten/Informationen der Session:");
+		this.condition.setWidth("600px");
+		this.condition.setHeight("300px");
 		Label lblCraving = new Label("Craving Skala");
-		RadioButtonGroup<Integer> craving = new RadioButtonGroup<>();
-		craving.setItems(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-//		craving.addValueChangeListener(e -> {
-//			  e.getValue();
-//		});
-		layoutSession.add(condition, lblCraving, craving);
+		this.craving = new RadioButtonGroup<>();
+		this.craving.setItems(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+		layoutSession.add(this.condition, lblCraving, this.craving);
 		this.layout.add(layoutSession);
-		this.layout.setAlignSelf(Alignment.CENTER, layoutSession);
 	}
 
 	/**
 	 * Horizontal layout with 2 buttons to save or cancel the session.
 	 */
 	private void action() {
-		VerticalLayout layoutAction = new VerticalLayout();
-		HorizontalLayout layoutButtons = new HorizontalLayout();
+
+		VerticalLayout vl1 = new VerticalLayout();
+		this.patientInfo = new TextField();
+		this.patientInfo.setEnabled(false);
+		this.patientInfo.setLabel("Patient:");
+
+		DatePicker datepicker = new DatePicker(LocalDate.now());
+
+		HorizontalLayout hl1 = new HorizontalLayout();
 		Button save = new Button("Speichern");
 		save.addClickListener(e -> {
-			save.getUI().ifPresent(ui -> ui.navigate("Sessions")); // put in right route
+			SessionEntity entity = new SessionEntity();
+			entity.setDescription(this.condition.getValue());
+			entity.setCraving(this.craving.getValue());
+			entity.setDate(datepicker.getValue());
+			entity.setPatient(this.patient);
+			this.presenter.saveButtonClicked(entity, e);
 		});
 		Button cancel = new Button("Abbrechen");
 		cancel.addClickListener(e -> {
 			cancel.getUI().ifPresent(ui -> ui.navigate("Home")); // put in right route
 		});
-		layoutButtons.add(cancel, save);
+		hl1.add(cancel, save);
+		hl1.getStyle().set("padding-top", "200px");
+		vl1.add(this.patientInfo, datepicker, hl1);
+		this.layout.add(vl1);
 
-		layoutAction.add(layoutButtons);
-		layoutAction.setAlignItems(Alignment.START);
-		this.layout.add(layoutAction);
-		this.layout.setAlignSelf(Alignment.END, layoutAction);
 	}
+
+	private Button createMenuButton(String value, Icon icon) {
+		Button newButton = new Button(value, icon);
+		newButton.addClickListener(e -> {
+			this.presenter.menuButtonClicked(e);
+		});
+		newButton.setWidth("200px");
+		return newButton;
+	}
+
 }

@@ -1,34 +1,34 @@
 package entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
+@Entity
 @Table(name = "session")
 public class SessionEntity {
+	
 	@Id
+	@GeneratedValue
 	private String sessionId;
 	private String description;
-	private Date date;
+	private LocalDate date;
 	private int craving;
+	@ManyToOne
+	private PatientEntity patient;
 
 	
-	public SessionEntity(String sessionId, String description, Date date, int craving) {
-		this.sessionId = sessionId;
-		this.description = description;
-		this.date = date;
-		this.craving = craving;
+	public SessionEntity() {
+		
 	}
 
 	public String getSessionId() {
 		return sessionId;
-	}
-
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
 	}
 	
 	public String getDescription() {
@@ -39,11 +39,11 @@ public class SessionEntity {
 		this.description = description;
 	}
 	
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 	
@@ -53,5 +53,12 @@ public class SessionEntity {
 
 	public void setCraving(int craving) {
 		this.craving = craving;
+	}
+	public PatientEntity getPatient() {
+		return this.patient;
+	}
+	
+	public void setPatient(PatientEntity patient) {
+		this.patient = patient;
 	}
 }

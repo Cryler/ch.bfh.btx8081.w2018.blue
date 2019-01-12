@@ -168,7 +168,6 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 			this.email.setValue(currentShowedPatient.getEmail());
 			this.ahvNr.setValue(currentShowedPatient.getAhvNr());
 		} catch (NullPointerException e) {
-
 		}
 	}
 
@@ -261,11 +260,11 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 			calendar.getUI().ifPresent(ui -> ui.navigate("Kalender"));
 		});
 
-//		Button sesNew = new Button("Neue Konsultation");
-//		sesNew.setWidth("230px");
-//		sesNew.addClickListener(e -> {
-//			sesNew.getUI().ifPresent(ui -> ui.navigate("New Session"));
-//		});
+		Button sesNew = new Button("Neue Konsultation", new Icon(VaadinIcon.CALENDAR_USER));
+		sesNew.setWidth("200px");
+		sesNew.addClickListener(e -> {
+			sesNew.getUI().ifPresent(ui -> ui.navigate("Neue Session"));
+		});
 
 		Button logout = new Button("Logout",new Icon(VaadinIcon.POWER_OFF));
 		logout.setWidth("200px");
@@ -273,7 +272,7 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 			logout.getUI().ifPresent(ui -> ui.navigate("Logout"));
 		});
 
-		VerticalLayout layout = new VerticalLayout(home, patNew, patList, calendar, logout);
+		VerticalLayout layout = new VerticalLayout(home, patNew, patList, calendar, sesNew, logout);
 		layout.setSizeFull();
 		this.layoutMenu.setWidth("250px");
 		this.layoutMenu.add(layout);
@@ -330,5 +329,4 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 
 		}
 	}
-
 }
