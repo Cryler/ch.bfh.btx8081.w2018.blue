@@ -137,8 +137,11 @@ public class NewPatientView extends HorizontalLayout implements BeforeEnterObser
 				.bind(PatientEntity::getBirthdate, PatientEntity::setBirthdate);
 
 		binder.forField(phonenumber).withValidator(new RegexpValidator("Falsche telnr.",
-				"^(\\+?)(\\d{2,4})(\\s?)(\\-?)((\\(0\\))?)(\\s?)(\\d{2})(\\s?)(\\-?)(\\d{3})(\\s?)(\\-?)(\\d{2})(\\s?)(\\-?)(\\d{2})"))
+				"(\\+41)\\s(\\d{2})\\s(\\d{3})\\s(\\d{2})\\s(\\d{2})"))
 				.bind(PatientEntity::getPhoneNumber, PatientEntity::setPhoneNumber);
+		
+		binder.forField(ahvNr).withValidator(new RegexpValidator("AHV Nummer ist nicht korrekt!", "((\\b756)\\.(\\d{4})\\.(\\d{4})\\.(\\d{2}))"))
+				.bind(PatientEntity::getAhvNr, PatientEntity::setAhvNr);
 
 		Label info = new Label("Neuer Patient erfassen:");
 		info.getStyle().set("font-size", "200%");
