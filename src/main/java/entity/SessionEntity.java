@@ -3,6 +3,7 @@ package entity;
 import java.time.LocalDate;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,7 +20,7 @@ public class SessionEntity {
 	private String description;
 	private LocalDate date;
 	private int craving;
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.REMOVE)
 	private PatientEntity patient;
 
 	

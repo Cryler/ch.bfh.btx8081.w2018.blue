@@ -30,6 +30,10 @@ public class PatientPresenter {
 		this.model.setPatient(patient);
 	}
 	
+	public void deleteButtonClicked(PatientEntity patient) {
+		this.model.deletePatient(patient);
+	}
+	
 	public void saveButtonClicked(ClickEvent<Button> e, PatientEntity patient) {
 		this.model.setPatient(patient);		
 		e.getSource().getUI().ifPresent(ui -> ui.navigate("Patient"));

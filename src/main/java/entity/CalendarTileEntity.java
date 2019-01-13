@@ -8,6 +8,7 @@ package entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -23,7 +24,7 @@ public class CalendarTileEntity {
 	@Id
 	@Temporal(TemporalType.DATE)
 	private Date date;
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.REMOVE)
 	private PatientEntity patient;
 	private String kommentar;
 	

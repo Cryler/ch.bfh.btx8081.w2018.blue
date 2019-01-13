@@ -15,9 +15,11 @@ import javax.persistence.NoResultException;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.StyleSheet;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -70,6 +72,8 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 	private TextField ahvNr;
 	private Button editButton;
 	private Button saveButton;
+	private Button deleteButton;
+	private Dialog dialog;
 
 	private Collection<TextField> patientDataFields;
 
@@ -129,7 +133,8 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 
 		Tab tab3 = new Tab("Diagramme");
 		Div diagrammInformationPage = new Div();
-		diagrammInformationPage.setText("Hier werden die Diagramme angezeigt - Dieser Bereich ist noch nicht implementiert.");
+		diagrammInformationPage
+				.setText("Hier werden die Diagramme angezeigt - Dieser Bereich ist noch nicht implementiert.");
 		diagrammInformationPage.setVisible(false);
 
 		Map<Tab, Component> tabsToPages = new HashMap<>();
@@ -200,7 +205,9 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		HorizontalLayout hl1 = new HorizontalLayout();
 		this.editButton = this.createEditButton();
 		this.saveButton = this.createSaveButton();
-		hl1.add(this.editButton, this.saveButton);
+		this.deleteButton = this.createDeleteButton();
+		this.dialog = this.createDialog();
+		hl1.add(this.editButton, this.saveButton, this.deleteButton, this.dialog);
 
 		VerticalLayout vl1 = new VerticalLayout();
 		vl1.add(header, newPatientLayout, hl1);
@@ -323,6 +330,54 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		saveButton.setEnabled(false);
 		return saveButton;
 	}
+	
+	private Dialog createDialog() {
+		Dialog dialog = new Dialog();
+		VerticalLayout vdialog = new VerticalLayout();
+		HorizontalLayout hddialog = new HorizontalLayout();
+		
+		dialog.add(new Label("Möcheten Sie den ausgewählten Patienten wirklich löschen?" ));
+		dialog.setCloseOnEsc(false);
+		dialog.setCloseOnOutsideClick(false);
+		
+		Button confimrButton = new Button("Bestätigen",event -> {
+			this.presenter.deleteButtonClicked(this.currentShowedPatient);
+			this.getUI().ifPresent(ui -> ui.navigate("Patient suchen"));
+			dialog.close();
+		}); 
+		
+		Button cancelButton = new Button("Abbruch", event -> {
+			dialog.close();
+		});
+		hddialog.add(confimrButton,cancelButton);
+		vdialog.add(hddialog);
+		dialog.add(vdialog,vdialog);
+		
+		
+		
+		return dialog;
+	}
+
+	private Button createDeleteButton() {
+		Button deleteButton = new Button("Entfernen", new Icon(VaadinIcon.TRASH));
+		
+		deleteButton.addClickListener(event -> { 
+			dialog.open();
+			
+		});
+		return deleteButton;
+	}
+	
+	
+//	private Button createDeleteButton() {
+//		Button deleteButton = new Button("entfernen", new Icon(VaadinIcon.TRASH));
+//		
+//		deleteButton.addClickListener(event -> {
+//			this.presenter.deleteButtonClicked(this.currentShowedPatient);
+//			this.getUI().ifPresent(ui -> ui.navigate("Patient suchen"));
+//		});
+//		return deleteButton;
+//	}
 
 	private void updateCurrentPatient() {
 		try {

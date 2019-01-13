@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Id;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -41,6 +42,20 @@ public class PatientModel {
 		Collection<PatientEntity> patient = q.getResultList();
 		this.closeConnection();
 		return patient;
+	}
+	
+	public void deletePatient(PatientEntity patient) {
+		this.em = EMService.getEM();
+		this.transaction = EMService.getTransaction();
+		this.transaction.begin();
+		Query q = this.em.createNativeQuery("select * from person where id = " + patient.getPK(), PatientEntity.class);
+		this.em.remove(patient);
+		
+		
+		
+//		this.em.persist(patient);
+//		PatientService.setPatient(patient);
+		this.closeConnection();
 	}
 
 
