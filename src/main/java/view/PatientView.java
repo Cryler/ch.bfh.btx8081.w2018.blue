@@ -188,6 +188,7 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		this.patientDataFields.add(this.insurance);
 		this.ahvNr = this.createTextField();
 		this.patientDataFields.add(this.ahvNr);
+		
 
 		newPatientLayout.addFormItem(lastName, "Nachname");
 		newPatientLayout.addFormItem(firstName, "Vorname");
@@ -317,7 +318,7 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 	}
 
 	private Button createSaveButton() {
-		Button saveButton = new Button("speichern");
+		Button saveButton = new Button("Speichern", new Icon(VaadinIcon.SAFE));
 		saveButton.addClickListener(event -> {
 			this.updateCurrentPatient();
 			this.presenter.editSaveButtonClicked(this.currentShowedPatient);

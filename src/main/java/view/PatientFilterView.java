@@ -52,7 +52,7 @@ public class PatientFilterView extends HorizontalLayout implements BeforeEnterOb
 		patientFilter();
 		this.layoutPage.add(layout);
 		this.add(vlMenu,vlBody, layoutMenu, layoutPage);
-		this.setAlignItems(Alignment.CENTER);
+//		this.setAlignItems(Alignment.CENTER);
 		
 
 	}

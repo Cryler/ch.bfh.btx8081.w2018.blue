@@ -48,13 +48,7 @@ public class PatientModel {
 		this.em = EMService.getEM();
 		this.transaction = EMService.getTransaction();
 		this.transaction.begin();
-		Query q = this.em.createNativeQuery("select * from person where id = " + patient.getPK(), PatientEntity.class);
 		this.em.remove(patient);
-		
-		
-		
-//		this.em.persist(patient);
-//		PatientService.setPatient(patient);
 		this.closeConnection();
 	}
 
