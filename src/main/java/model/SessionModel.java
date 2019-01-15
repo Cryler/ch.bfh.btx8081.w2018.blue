@@ -12,11 +12,24 @@ import entity.PatientEntity;
 import entity.SessionEntity;
 import service.EMService;
 
+/**
+ * Model class for the sessions. 
+ * 
+ * @author leuel3
+ * @author gundy1
+ *
+ */
 public class SessionModel {
 
 	private EntityManager em;
 	private EntityTransaction transaction;
 	
+	/**
+	 * Gets all sessions of a specific patient that are stored in the db. Always closes the db connection in the end.
+	 * 
+	 * @param patient the patient you want to see all sessions of.
+	 * @return the sessions.
+	 */
 	public Collection<SessionEntity> getAllSessionsFromPatient(PatientEntity patient){
 		try {
 			this.em = EMService.getEM();
@@ -33,6 +46,11 @@ public class SessionModel {
 		}
 	}
 	
+	/**
+	 * Sets the session. Always closes the db connection in the end.
+	 * 
+	 * @param entity the session.
+	 */
 	public void setSession(SessionEntity entity) {
 		this.em = EMService.getEM();
 		this.transaction = EMService.getTransaction();
@@ -41,6 +59,9 @@ public class SessionModel {
 		this.closeConnection();
 	}
 	
+	/**
+	 * Closes the current connection to the db.
+	 */
 	private void closeConnection() {
 		this.em.flush();
 		this.transaction.commit();

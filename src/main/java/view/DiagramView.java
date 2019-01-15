@@ -11,25 +11,38 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
+
+import service.UserService;
 
 
 
 /**
- * View for the new session site.
+ * View class for the diagram site.
  * 
- * @author Luca Leuenberger
+ * @author leuel3
  *
  */
-
 @Route("Diagram")
-public class DiagramView extends HorizontalLayout {
+public class DiagramView extends HorizontalLayout implements BeforeEnterObserver {
 
 	HorizontalLayout layout = new HorizontalLayout();
 	VerticalLayout layoutTabs = new VerticalLayout();
 	VerticalLayout layoutMenu = new VerticalLayout();
 	VerticalLayout layoutPage = new VerticalLayout();
 
+	/**
+	 * Verifier to check if the user is properly logged in. If not, he will be redirected to the login screen. 
+	 */
+	@Override
+	public void beforeEnter(BeforeEnterEvent event) {
+		if (UserService.getUser() == null) {
+			event.rerouteTo("");
+		}
+	}
+	
 	/**
 	 * Constructor for the session site.
 	 */
@@ -57,8 +70,7 @@ public class DiagramView extends HorizontalLayout {
 	}
 
 	/**
-	 * Vertical layout with text areas and scales for various information asked
-	 * during the session.
+	 * Vertical layout with the specific diagram. Not implemented, placeholder is an image of a diagram. 
 	 */
 	private void session() {
 		VerticalLayout layoutSession = new VerticalLayout();
@@ -100,7 +112,7 @@ public class DiagramView extends HorizontalLayout {
 	}
 
 	/**
-	 * Tabs to navigate between the different session dates.
+	 * Tabs to navigate between the different diagrams.
 	 */
 	private void tabsDate() {
 		Tabs tabs = newTabs();
@@ -114,7 +126,7 @@ public class DiagramView extends HorizontalLayout {
 	}
 
 	/**
-	 * Creates tabs for each date of all sessions.
+	 * Creates tabs for each date of all diagrams.
 	 * 
 	 * @return all tabs in form of a Vaadin Tabs object.
 	 */
@@ -128,6 +140,9 @@ public class DiagramView extends HorizontalLayout {
 		return tabs;
 	}
 
+	/**
+	 * Menu bar on the left side of the screen, to quickly navigate to other sites of our application.
+	 */
 	private void menu() {
 		Button home = new Button("Zurück zum Hautpmenü");
 		home.setWidth("230px");

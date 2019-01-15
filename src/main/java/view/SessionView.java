@@ -20,12 +20,11 @@ import com.vaadin.flow.router.Route;
 import service.UserService;
 
 /**
- * View for the new session site.
+ * View class for the session site.
  * 
- * @author Luca Leuenberger
+ * @author leuel3
  *
  */
-
 @Route("Session")
 public class SessionView extends HorizontalLayout implements BeforeEnterObserver {
 
@@ -34,6 +33,9 @@ public class SessionView extends HorizontalLayout implements BeforeEnterObserver
 	VerticalLayout layoutMenu = new VerticalLayout();
 	VerticalLayout layoutPage = new VerticalLayout();
 
+	/**
+	 * Verifier to check if the user is properly logged in. If not, he will be redirected to the login screen. 
+	 */
 	@Override
 	public void beforeEnter(BeforeEnterEvent event) {
 		if (UserService.getUser() == null) {
@@ -79,9 +81,6 @@ public class SessionView extends HorizontalLayout implements BeforeEnterObserver
 		Label lblCraving = new Label("Craving Skala");
 		RadioButtonGroup<Integer> craving = new RadioButtonGroup<>();
 		craving.setItems(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-//		craving.addValueChangeListener(e -> {
-//			  e.getValue();
-//		});
 		layoutSession.add(condition, lblCraving, craving);
 		this.layout.add(layoutSession);
 		this.layout.setAlignSelf(Alignment.CENTER, layoutSession);
@@ -111,10 +110,9 @@ public class SessionView extends HorizontalLayout implements BeforeEnterObserver
 			String selectedPage = tabsAndPages.get(tabs.getSelectedTab());
 			tabs.getUI().ifPresent(ui -> ui.navigate(selectedPage));
 		});
-
+		
 		layoutTabs.add(tabs);
 		this.layoutTabs.add(layoutTabs);
-
 	}
 
 	/**
@@ -123,9 +121,9 @@ public class SessionView extends HorizontalLayout implements BeforeEnterObserver
 	private void tabsDate() {
 		Tabs tabs = newTabs();
 		HorizontalLayout layoutTabs = new HorizontalLayout();
-		tabs.addSelectedChangeListener(event -> {
-			
-		});
+//		tabs.addSelectedChangeListener(event -> {
+//			
+//		});
 
 		layoutTabs.add(tabs);
 		this.layoutTabs.add(layoutTabs);
@@ -146,6 +144,9 @@ public class SessionView extends HorizontalLayout implements BeforeEnterObserver
 		return tabs;
 	}
 
+	/**
+	 * Menu bar on the left side of the screen, to quickly navigate to other sites of our application.
+	 */
 	private void menu() {
 		Button home = new Button("Zurück zum Hautpmenü");
 		home.setWidth("230px");

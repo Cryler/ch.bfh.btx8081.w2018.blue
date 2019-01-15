@@ -26,9 +26,10 @@ import service.PatientService;
 import service.UserService;
 
 /**
- * View for the new session site.
+ * View class for the new session site.
  * 
- * @author Luca Leuenberger
+ * @author leuel3
+ * @author gundy1
  *
  */
 @Route("Neue Konsultation")
@@ -43,6 +44,9 @@ public class NewSessionView extends VerticalLayout implements BeforeEnterObserve
 
 	private HorizontalLayout layout = new HorizontalLayout();
 
+	/**
+	 * Verifier to check if the user is properly logged in. If not, he will be redirected to the login screen. 
+	 */
 	@Override
 	public void beforeEnter(BeforeEnterEvent event) {
 		if (UserService.getUser() == null) {
@@ -71,6 +75,9 @@ public class NewSessionView extends VerticalLayout implements BeforeEnterObserve
 		this.add(layout);
 	}
 
+	/**
+	 * Menu bar on the left side of the screen, to quickly navigate to other sites of our application.
+	 */
 	private void menu() {
 		VerticalLayout vl1 = new VerticalLayout();
 		vl1.setWidth("250px");
@@ -139,5 +146,4 @@ public class NewSessionView extends VerticalLayout implements BeforeEnterObserve
 		newButton.setWidth("200px");
 		return newButton;
 	}
-
 }
