@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
-
+import com.vaadin.flow.component.notification.Notification;
 import entity.PatientEntity;
 import entity.SessionEntity;
 import exception.InvalidEmailException;
@@ -17,6 +17,7 @@ import model.SessionModel;
 public class PatientPresenter {
 
 	private PatientModel model;
+	private Notification notification;
 	
 	public PatientPresenter() {		
 		this.model = new PatientModel();
@@ -32,10 +33,15 @@ public class PatientPresenter {
 	
 	public void deleteButtonClicked(PatientEntity patient) {
 		this.model.deletePatient(patient);
+		this.notification = new Notification("Patient wurde gelöscht", 10000);
+		notification.show("Patient wurde gelöscht");
+		
 	}
 	
 	public void saveButtonClicked(ClickEvent<Button> e, PatientEntity patient) {
-		this.model.setPatient(patient);		
+		this.model.setPatient(patient);	
+		this.notification = new Notification("Patient wurde gespeichert", 10000);
+		notification.show("Patient wurde gespeichert");
 		e.getSource().getUI().ifPresent(ui -> ui.navigate("Patient"));
 	}	
 	
