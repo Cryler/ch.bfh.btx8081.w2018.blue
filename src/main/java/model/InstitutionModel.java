@@ -11,24 +11,19 @@ import entity.UserEntity;
 import service.UserService;
 
 /**
- * This class stores and represents the {@code Institution} in the DB. It
- * contains a name and a {@code Address}.
+ * The Class InstitutionModel.
  * 
- * 
- * @author yanng
- *
+ * @author gundy1.
  */
-
 public class InstitutionModel {
 
 	/**
-	 * The {@value institutionID} is set to 1 because there should only be one
-	 * institution at a given time.
-	 * @throws NoUserLoggedInException 
-	 * 
+	 * Gets the institution name. If there is a {@code NullPointerException} no
+	 * institution has been Initiated. In this case a default Name is created.
+	 *
+	 * @return the institution name
 	 */
-
-	public String getInstitutionName(){		
+	public String getInstitutionName() {
 		UserEntity currentUser = UserService.getUser();
 		try {
 			return currentUser.getInstitution().getInstitutionName();
@@ -36,9 +31,13 @@ public class InstitutionModel {
 			return "Default_Name";
 		}
 	}
-	
-	
 
+	/**
+	 * Gets the institution address.If there is a {@code NullPointerException} no
+	 * institution has been Initiated. In this case a default Address is created.
+	 *
+	 * @return the institution address
+	 */
 	public Address getInstitutionAddress() {
 		UserEntity currentUser = UserService.getUser();
 		try {
@@ -48,7 +47,11 @@ public class InstitutionModel {
 		}
 	}
 
-
+	/**
+	 * Creates the default address.
+	 *
+	 * @return the address
+	 */
 	private Address createDefaultAddress() {
 		Address defaultAddress = new Address();
 		defaultAddress.setStreet("Default_Street");

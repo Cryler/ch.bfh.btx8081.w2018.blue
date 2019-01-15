@@ -19,11 +19,25 @@ import exception.InvalidUsernameException;
 import service.EMService;
 import service.UserService;
 
+/**
+ * The Class UserModel.
+ * 
+ * @author gundy1.
+ */
 public class UserModel {
 
 	private EntityManager em;
+
 	private EntityTransaction transaction;
 
+	/**
+	 * Sets a new User. If there is already an other user with the same E-Mail or the same username an exception will be thrown.
+	 * 
+	 *
+	 * @param user the new user
+	 * @throws InvalidUsernameException the invalid username exception
+	 * @throws InvalidEmailException    the invalid email exception
+	 */
 	public void setUser(UserEntity user) throws InvalidUsernameException, InvalidEmailException {
 		this.em = EMService.getEM();
 		this.transaction = EMService.getTransaction();
@@ -55,6 +69,14 @@ public class UserModel {
 		}
 	}
 
+	/**
+	 * Login for the user. If the password is incorrect or the username doesn't exist in the database an exception is thrown.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @throws InvalidUsernameException the invalid username exception
+	 * @throws InvalidPasswordException the invalid password exception
+	 */
 	public void loginUser(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
 		this.em = EMService.getEM();
 		this.transaction = EMService.getTransaction();
@@ -74,6 +96,9 @@ public class UserModel {
 		}
 	}
 
+	/**
+	 * Closes the current connection to the db.
+	 */
 	private void closeConnection() {
 		this.em.flush();
 		this.transaction.commit();

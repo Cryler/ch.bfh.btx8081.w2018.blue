@@ -12,35 +12,45 @@ import exception.InvalidPasswordException;
 import exception.InvalidUsernameException;
 import presenter.LoginPresenter;
 
+
 /**
- * Login for the Application
- * 
- * @author yanng
+ * Login and Root-Screen for the Application Zulu.
  *
+ * @author gundy1
  */
 
 @Route("")
-
 public class Login extends VerticalLayout {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The presenter that handles the user inputs of this view. */
 	private LoginPresenter presenter;
-	private TextField username;
-	private PasswordField password;
+	
+	
+	/** The UI Components that let the user fill in his autorification data.*/
+	private TextField username;	
+	private PasswordField password;	
 	private Label info;
 
+	/**
+	 * Instantiates a new Presenter for this view.
+	 * Instantiates a new login UI.
+	 */
 	public Login() {
 		this.presenter = new LoginPresenter();
 		this.initUI();
-
 	}
 
+	/**
+	 * Instantiates the UI with all graphic components.
+	 */
 	private void initUI() {
+		
 		this.setAlignItems(Alignment.CENTER);
 		this.getStyle().set("margin-top", "100px");
+		
 		VerticalLayout vl1 = new VerticalLayout();
 		vl1.setAlignItems(Alignment.CENTER);
 		vl1.setWidth("350px");
@@ -56,14 +66,14 @@ public class Login extends VerticalLayout {
 			if (this.username.getValue().equals("") || this.password.getValue().equals("")) {
 				this.info.setText("Angaben sind unvollständig");
 			} else {
-				
-					try {
-						this.presenter.loginButtonClicked(e, this.username.getValue(), this.password.getValue());
-					} catch (InvalidPasswordException | InvalidUsernameException e1) {
-						this.info.setText(e1.getMessage());
-						this.username.setValue("");
-						this.password.setValue("");
-					}
+
+				try {
+					this.presenter.loginButtonClicked(e, this.username.getValue(), this.password.getValue());
+				} catch (InvalidPasswordException | InvalidUsernameException e1) {
+					this.info.setText(e1.getMessage());
+					this.username.setValue("");
+					this.password.setValue("");
+				}
 			}
 		});
 

@@ -7,10 +7,12 @@
 package exception;
 
 public class InvalidUsernameException extends Exception {
-
-	 /**
-	 * 
+	
+	/**
+	 * @author gundy1
 	 */
+
+
 	private static final long serialVersionUID = 1L;
 
 	public InvalidUsernameException(String msg) {

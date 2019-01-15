@@ -17,11 +17,23 @@ import entity.UserEntity;
 import service.EMService;
 import service.UserService;
 
+
+/**
+ * The Class InstitutionModelAdmin.
+ * 
+ * @author gundy1.
+ */
 public class InstitutionModelAdmin {
 
 	private EntityManager em;
+	
 	private EntityTransaction transaction;
 
+	/**
+	 * Sets the institution name. If there is a {@code NoResultException} a new Institution Entity is created. 
+	 *
+	 * @param institutionName the new institution name
+	 */
 	public void setInstitutionName(String institutionName) {
 		UserEntity currentUser = UserService.getUser();
 		this.em = EMService.getEM();
@@ -48,6 +60,11 @@ public class InstitutionModelAdmin {
 		}
 	}
 
+	/**
+	 * Sets the institution address.
+	 *
+	 * @param address the new institution address
+	 */
 	public void setInstitutionAddress(Address address) {
 		UserEntity currentUser = UserService.getUser();
 		this.em = EMService.getEM();
@@ -59,6 +76,9 @@ public class InstitutionModelAdmin {
 		this.closeConnection();
 	}
 
+	/**
+	 * Closes the current connection to the db.
+	 */
 	private void closeConnection() {
 		this.em.flush();
 		this.transaction.commit();

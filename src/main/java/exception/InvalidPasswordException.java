@@ -9,8 +9,10 @@ package exception;
 public class InvalidPasswordException extends Exception{
 	
 	/**
-	 * 
+	 * @author gundy1
 	 */
+
+	
 	private static final long serialVersionUID = 1L;
 
 	public InvalidPasswordException(String msg) {
