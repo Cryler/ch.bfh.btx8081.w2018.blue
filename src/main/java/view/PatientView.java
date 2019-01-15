@@ -18,6 +18,7 @@ import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.icon.Icon;
@@ -133,8 +134,7 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 
 		Tab tab3 = new Tab("Diagramme");
 		Div diagrammInformationPage = new Div();
-		diagrammInformationPage
-				.setText("Hier werden die Diagramme angezeigt - Dieser Bereich ist noch nicht implementiert.");
+		diagrammInformationPage.add(this.createTabWithDiagram());				
 		diagrammInformationPage.setVisible(false);
 
 		Map<Tab, Component> tabsToPages = new HashMap<>();
@@ -267,7 +267,21 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		layoutSession.add(condition, lblCraving);
 		return layoutSession;
 	}
-
+	private VerticalLayout createTabWithDiagram() {
+		VerticalLayout vl1 = new VerticalLayout();
+		Label info = new Label();
+		info.setText("Hier werden die Diagramme angezeigt - Dieser Bereich ist noch nicht implementiert.");
+		HorizontalLayout hl1 = new HorizontalLayout();
+		Image image = new Image();
+		image.setSrc("https://www.benlcollins.com/wp-content/uploads/2017/05/basic_line_chart.png");
+		TextField patient = new TextField();
+		patient.setEnabled(false);
+		patient.setValue(PatientService.getPatient().getLastName()+" "+PatientService.getPatient().getFirstName());
+		hl1.add(image, patient);
+		vl1.add(info, hl1);
+		return vl1;
+		
+	}
 	private void initData() {
 		this.currentShowedPatient = PatientService.getPatient();
 

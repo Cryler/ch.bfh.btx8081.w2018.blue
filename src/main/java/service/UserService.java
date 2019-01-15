@@ -13,20 +13,43 @@ import javax.persistence.Query;
 
 import entity.UserEntity;
 
+/**
+ * The Class UserService.
+ * 
+ * @author gundy1.
+ */
 public class UserService {
 
+	//TODO Diese klasse noch in ein schönes Singleton umbauen!
+	
+	
 	private static String username;
+	
 	private static EntityManager em;
+
 	private static EntityTransaction transaction;
 
+	/**
+	 * Instantiates a new user service and stores the username of the currently logged user in the {@value username}.
+	 *
+	 * @param user the user
+	 */
 	public UserService(String user) {
 		UserService.username = user;
 	}
 	
+	/**
+	 * Clears the {@value username}.
+	 */
 	public static void logout() {
 		UserService.username = null;
 	}
 
+	/**
+	 * Gets the user.
+	 *
+	 * @return the user
+	 */
 	public static UserEntity getUser() {
 		UserService.em = EMService.getEM();
 		UserService.transaction = em.getTransaction();
@@ -42,6 +65,10 @@ public class UserService {
 			UserService.closeConnection();
 		}
 	}
+	
+	/**
+	 * Closes the current connection to the db.
+	 */
 	private static void closeConnection() {
 		UserService.em.flush();
 		UserService.transaction.commit();

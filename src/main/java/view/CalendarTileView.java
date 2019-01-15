@@ -30,26 +30,46 @@ import entity.CalendarTileEntity;
 import entity.PatientEntity;
 import presenter.CalendarTilePresenter;
 
+/**
+ * The Class CalendarTileView.
+ * 
+ * @author gundy1
+ */
 @Tag("Tile")
 @StyleSheet(value = "styles/style.css", loadMode = LoadMode.INLINE)
 public class CalendarTileView extends Div {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** The presenter that handles all user inputs. */
+	private CalendarTilePresenter presenter;
+
+	/** The dateformatter. */
 	private SimpleDateFormat dateformatter = new SimpleDateFormat("dd.MM");
 
 	private TextArea info;
-	private Label dateLabel;
-	private CalendarTilePresenter presenter;
 
-		
-	public CalendarTileView(Date date) {		
+	private Label dateLabel;
+
+	/**
+	 * Instantiates a new calendar tile view. First the {@code initView} creates the
+	 * graphic components then they are initialized by calling the
+	 * {@code initVlaues} method.
+	 *
+	 * @param date the date
+	 */
+	public CalendarTileView(Date date) {
 		this.initView(date);
 		this.initValues(date);
 	}
+
+	/**
+	 * Initializes the view. Creates all graphic components for the single Calendar
+	 * Tile.
+	 *
+	 * @param date the date
+	 */
 	private void initView(Date date) {
 		HorizontalLayout hl1 = new HorizontalLayout();
 		hl1.setAlignItems(Alignment.CENTER);
@@ -76,26 +96,44 @@ public class CalendarTileView extends Div {
 		this.add(vl1);
 	}
 
+	/**
+	 * Creates the label.
+	 *
+	 * @return the label
+	 */
 	private Label createLabel() {
 		this.dateLabel = new Label();
 		return this.dateLabel;
 	}
-	
+
+	/**
+	 * Initializes the values of the CalendarTile of the given {@value date}.
+	 *
+	 * @param date the date
+	 */
 	private void initValues(Date date) {
 		this.presenter = new CalendarTilePresenter(date);
 		CalendarTileEntity data = this.presenter.getDataOfEntry();
 		try {
-			this.info.setValue(data.getPatient().getLastName()+" "+data.getPatient().getFirstName());
+			this.info.setValue(data.getPatient().getLastName() + " " + data.getPatient().getFirstName());
 		} catch (NullPointerException e) {
 			this.info.setValue("");
-		}		
+		}
 		this.dateLabel.setText(this.dateformatter.format(date));
 	}
 
+	/**
+	 * Creates the dialog that is shown when the user clicks the + Button on the
+	 * Tile. The Dialog lets you choose from all Patients and lets you add a short
+	 * comment to the planned consultation
+	 *
+	 * @param date the date of the Consultation
+	 * @return the dialog
+	 */
 	private Dialog createDialog(Date date) {
-		Dialog dialog = new Dialog();	
+		Dialog dialog = new Dialog();
 		CalendarTileEntity data = this.presenter.getDataOfEntry();
-		
+
 		ComboBox<PatientEntity> patientField = new ComboBox<>("Patient");
 		try {
 			patientField.setItems(this.presenter.getPatientNames());
@@ -104,9 +142,9 @@ public class CalendarTileView extends Div {
 			} catch (NullPointerException e) {
 				patientField.setPlaceholder("Keine Patienten erfasst.");
 			}
-		}catch (NoResultException e) {
+		} catch (NoResultException e) {
 			patientField.setPlaceholder("Keine Patienten erfasst.");
-		}	
+		}
 
 		TextArea commentField = new TextArea();
 		commentField.setValue(data.getKommentar());
