@@ -16,7 +16,6 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.NativeButtonRenderer;
@@ -110,9 +109,11 @@ public class PatientFilterView extends HorizontalLayout implements BeforeEnterOb
 			}
 
 		});
+		
 
-		grid.setWidth("800px");
-		grid.setHeight("800px");
+		grid.setWidth("850px");
+		//grid.setHeight("800px");
+		grid.setHeightByRows(true);
 //		this.layout.add(grid);
 		
 		Label info = new Label("Alle erfassten Patienten: ");
