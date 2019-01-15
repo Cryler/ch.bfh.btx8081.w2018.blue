@@ -93,12 +93,14 @@ public class NewPatientView extends HorizontalLayout implements BeforeEnterObser
 		this.language = new TextField();
 		language.setValueChangeMode(ValueChangeMode.EAGER);
 		this.phonenumber = new TextField();
+		phonenumber.setPlaceholder("+41 xx xxx xx xx");
 		phonenumber.setValueChangeMode(ValueChangeMode.EAGER);
 		this.email = new TextField();
 		email.setValueChangeMode(ValueChangeMode.EAGER);
 		this.insurance = new TextField();
 		insurance.setValueChangeMode(ValueChangeMode.EAGER);
 		this.ahvNr = new TextField();
+		ahvNr.setPlaceholder("756.xxxx.xxxx.xx");
 		ahvNr.setValueChangeMode(ValueChangeMode.EAGER);
 
 		// Combobox for gender
