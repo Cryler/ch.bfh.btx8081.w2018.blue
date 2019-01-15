@@ -17,7 +17,6 @@ import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.shared.ui.LoadMode;
 
-import entity.Address;
 import presenter.InstitutionPresenterAdmin;
 import service.UserService;
 
@@ -25,7 +24,7 @@ import service.UserService;
  * this Class represents the Homescreen of our Application. The
  * {@code InstitutionView} connects all parts of the UI with Navigaton Buttons.
  * 
- * @author yanng
+ * @author gundy1
  *
  */
 
@@ -33,10 +32,17 @@ import service.UserService;
 @StyleSheet(value = "styles/style.css", loadMode = LoadMode.INLINE)
 public class InstitutionView extends VerticalLayout implements BeforeEnterObserver {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	
 	private InstitutionPresenterAdmin presentorAdmin;
+	
 	private TextArea infoArea;
 
+	/* (non-Javadoc)
+	 * @see com.vaadin.flow.router.internal.BeforeEnterHandler#beforeEnter(com.vaadin.flow.router.BeforeEnterEvent)
+	 */
 	@Override
 	public void beforeEnter(BeforeEnterEvent event) {
 		if (UserService.getUser() == null) {
@@ -44,18 +50,27 @@ public class InstitutionView extends VerticalLayout implements BeforeEnterObserv
 		}
 	}
 
+	/**
+	 * Instantiates a new institution view. First all graphical components are created, then all Data is initialized.
+	 */
 	public InstitutionView() {
 		this.initView();
 		this.addComponents();
 		this.updateView();
 	}
 
+	/**
+	 * Inits the view.
+	 */
 	private void initView() {
 		this.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 		this.getStyle().set("margin-top", "100px");
 		this.presentorAdmin = new InstitutionPresenterAdmin();
 	}
 
+	/**
+	 * Adds the graphical components.
+	 */
 	private void addComponents() {
 		this.infoArea = new TextArea();
 		this.infoArea = new TextArea();
@@ -71,6 +86,9 @@ public class InstitutionView extends VerticalLayout implements BeforeEnterObserv
 		this.add(this.infoArea, calendarButton, newPatientButton, searchPatientButton, settingsButton, logoutButton);
 	}
 
+	/**
+	 * Updates the view with the current Data of the institution.
+	 */
 	private void updateView() {
 		if (UserService.getUser() != null) {
 			this.infoArea.setValue(
@@ -78,6 +96,13 @@ public class InstitutionView extends VerticalLayout implements BeforeEnterObserv
 		}
 	}
 
+	/**
+	 * Creates the button.
+	 *
+	 * @param value the value
+	 * @param icon the icon
+	 * @return the button
+	 */
 	private Button createButton(String value, Icon icon) {
 		Button newButton = new Button(value, icon);
 		newButton.addClickListener(e -> {

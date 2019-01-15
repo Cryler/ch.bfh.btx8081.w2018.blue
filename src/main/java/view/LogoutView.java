@@ -13,14 +13,20 @@ import com.vaadin.flow.router.Route;
 
 import service.UserService;
 
+/**
+ * The Class LogoutView.
+ * 
+ * @author gundy1.
+ */
 @Route("Logout")
 public class LogoutView extends VerticalLayout {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Instantiates a new logout view.
+	 */
 	public LogoutView() {
 		UserService.logout();
 		this.setAlignItems(Alignment.CENTER);

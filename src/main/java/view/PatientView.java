@@ -1,5 +1,7 @@
 package view;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +22,6 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -45,7 +46,7 @@ import service.UserService;
 /**
  * View for the new session site.
  * 
- * @author Luca Leuenberger
+ * @author Luca Leuenberger, gundy1
  *
  */
 
@@ -53,35 +54,85 @@ import service.UserService;
 @StyleSheet(value = "styles/style.css", loadMode = LoadMode.INLINE)
 public class PatientView extends HorizontalLayout implements BeforeEnterObserver, AfterNavigationObserver {
 
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1L;
+
+	/** The layout tabs. */
 	VerticalLayout layoutTabs = new VerticalLayout();
 
+	/** The layout page. */
 	VerticalLayout layoutPage = new VerticalLayout();
 
+	/** The session information page. */
 	private Div sessionInformationPage;
 
+	/** The diagramm information page. */
+	private Div diagrammInformationPage;
+
+	/** The last name. */
 	private TextField lastName;
+
+	/** The first name. */
 	private TextField firstName;
+
+	/** The birthdate. */
 	private TextField birthdate;
+
+	/** The gender. */
 	private TextField gender;
+
+	/** The address. */
 	private TextField address;
+
+	/** The city. */
 	private TextField city;
+
+	/** The nationality. */
 	private TextField nationality;
+
+	/** The language. */
 	private TextField language;
+
+	/** The insurance. */
 	private TextField insurance;
+
+	/** The phone number. */
 	private TextField phoneNumber;
+
+	/** The email. */
 	private TextField email;
+
+	/** The ahv nr. */
 	private TextField ahvNr;
+
+	/** The edit button. */
 	private Button editButton;
+
+	/** The save button. */
 	private Button saveButton;
+
+	/** The delete button. */
 	private Button deleteButton;
+
+	/** The dialog. */
 	private Dialog dialog;
 
+	/** The patient data fields. */
 	private Collection<TextField> patientDataFields;
 
+	/** The current showed patient. */
 	private PatientEntity currentShowedPatient;
 
+	/** The presenter. */
 	private PatientPresenter presenter;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.vaadin.flow.router.internal.BeforeEnterHandler#beforeEnter(com.vaadin.
+	 * flow.router.BeforeEnterEvent)
+	 */
 	@Override
 	public void beforeEnter(BeforeEnterEvent event) {
 		if (UserService.getUser() == null) {
@@ -89,6 +140,13 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.vaadin.flow.router.internal.AfterNavigationHandler#afterNavigation(com.
+	 * vaadin.flow.router.AfterNavigationEvent)
+	 */
 	@Override
 	public void afterNavigation(AfterNavigationEvent event) {
 		this.initData();
@@ -102,12 +160,18 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		this.initGraphicalContent();
 	}
 
+	/**
+	 * Inits the graphical content.
+	 */
 	private void initGraphicalContent() {
 		createMenuComponents();
 		createMainTabNavigation();
 
 	}
 
+	/**
+	 * Creates the menu components.
+	 */
 	private void createMenuComponents() {
 		Button home = this.createMenuButton("Home", new Icon(VaadinIcon.HOME));
 		Button patNew = this.createMenuButton("Neuer Patient", new Icon(VaadinIcon.USER_CHECK));
@@ -121,6 +185,9 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		this.add(layoutMenu);
 	}
 
+	/**
+	 * Creates the tabs that control the navigation between the {@code PatientEntity} and {@code SessionEntity} view.
+	 */
 	private void createMainTabNavigation() {
 
 		Tab tab1 = new Tab("Stammdaten");
@@ -133,8 +200,7 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		sessionInformationPage.setVisible(false);
 
 		Tab tab3 = new Tab("Diagramme");
-		Div diagrammInformationPage = new Div();
-		diagrammInformationPage.add(this.createTabWithDiagram());				
+		this.diagrammInformationPage = new Div();
 		diagrammInformationPage.setVisible(false);
 
 		Map<Tab, Component> tabsToPages = new HashMap<>();
@@ -157,6 +223,11 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		this.add(this.layoutTabs);
 	}
 
+	/**
+	 * Creates the patient information form.
+	 *
+	 * @return the vertical layout
+	 */
 	private VerticalLayout createPatientInformationForm() {
 
 		Label header = new Label("Stammdaten des Patienten: ");
@@ -188,7 +259,6 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		this.patientDataFields.add(this.insurance);
 		this.ahvNr = this.createTextField();
 		this.patientDataFields.add(this.ahvNr);
-		
 
 		newPatientLayout.addFormItem(lastName, "Nachname");
 		newPatientLayout.addFormItem(firstName, "Vorname");
@@ -215,13 +285,20 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		return vl1;
 	}
 
+	/**
+	 * Creates for all {@code SessionEntity} that are mapped to the
+	 * {@code PatientEntity} from {@code PatientService} a Tab that contains the
+	 * detailled Informations about the Session.
+	 *
+	 * @return the vertical layout
+	 */
 	private VerticalLayout createTabsWithDatesOfSessions() {
 		try {
 			Tabs tabs = new Tabs();
 			Div pages = new Div();
 			Map<Tab, Component> tabsToPages = new HashMap<>();
 			for (SessionEntity session : this.presenter.getSessionsOfPatient(this.currentShowedPatient)) {
-				Tab tempTab = new Tab(session.getDate().toString());
+				Tab tempTab = new Tab(new SimpleDateFormat("dd.MM.yy").format(Date.valueOf(session.getDate())));
 				tabs.add(tempTab);
 				Div tempPage = new Div(this.createSessionOverview(session));
 				tempPage.setVisible(false);
@@ -256,6 +333,12 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 
 	}
 
+	/**
+	 * Creates a view that displays all details of a single {@code SessionEntity}
+	 *
+	 * @param session the session
+	 * @return the component
+	 */
 	private Component createSessionOverview(SessionEntity session) {
 		VerticalLayout layoutSession = new VerticalLayout();
 		TextArea condition = new TextArea("Zustand des Patienten/Informationen der Session:");
@@ -267,6 +350,13 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		layoutSession.add(condition, lblCraving);
 		return layoutSession;
 	}
+
+	/**
+	 * Creates a default tab with a diagram. The functionality hasn't been
+	 * implemented yet.
+	 *
+	 * @return the vertical layout
+	 */
 	private VerticalLayout createTabWithDiagram() {
 		VerticalLayout vl1 = new VerticalLayout();
 		Label info = new Label();
@@ -276,12 +366,17 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		image.setSrc("https://www.benlcollins.com/wp-content/uploads/2017/05/basic_line_chart.png");
 		TextField patient = new TextField();
 		patient.setEnabled(false);
-		patient.setValue(PatientService.getPatient().getLastName()+" "+PatientService.getPatient().getFirstName());
+		patient.setValue(PatientService.getPatient().getLastName() + " " + PatientService.getPatient().getFirstName());
 		hl1.add(image, patient);
 		vl1.add(info, hl1);
 		return vl1;
-		
+
 	}
+
+	/**
+	 * Initializes all the graphical components with the data from the
+	 * {@code PatientEntity} from the {@code PatientService}.
+	 */
 	private void initData() {
 		this.currentShowedPatient = PatientService.getPatient();
 
@@ -302,6 +397,7 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 
 		}
 		this.sessionInformationPage.add(this.createTabsWithDatesOfSessions());
+		this.diagrammInformationPage.add(this.createTabWithDiagram());
 	}
 
 	private TextField createTextField() {
@@ -310,6 +406,13 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		return field;
 	}
 
+	/**
+	 * Creates the menu button.
+	 *
+	 * @param value the value
+	 * @param icon  the icon
+	 * @return the button
+	 */
 	private Button createMenuButton(String value, Icon icon) {
 		Button newButton = new Button(value, icon);
 		newButton.addClickListener(e -> {
@@ -319,6 +422,11 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		return newButton;
 	}
 
+	/**
+	 * Creates the edit button.
+	 *
+	 * @return the button
+	 */
 	private Button createEditButton() {
 		Button editButton = new Button("Bearbeiten", new Icon(VaadinIcon.EDIT));
 		editButton.addClickListener(event -> {
@@ -331,6 +439,11 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		return editButton;
 	}
 
+	/**
+	 * Creates the save button.
+	 *
+	 * @return the button
+	 */
 	private Button createSaveButton() {
 		Button saveButton = new Button("Speichern", new Icon(VaadinIcon.SAFE));
 		saveButton.addClickListener(event -> {
@@ -345,55 +458,57 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		saveButton.setEnabled(false);
 		return saveButton;
 	}
-	
+
+	/**
+	 * Creates the delete button.
+	 *
+	 * @return the button
+	 */
+	private Button createDeleteButton() {
+		Button deleteButton = new Button("Entfernen", new Icon(VaadinIcon.TRASH));
+
+		deleteButton.addClickListener(event -> {
+			dialog.open();
+
+		});
+		return deleteButton;
+	}
+
+	/**
+	 * Creates the dialog to confirm if the selected Patient really should be
+	 * deleted.
+	 *
+	 * @return the dialog
+	 */
 	private Dialog createDialog() {
 		Dialog dialog = new Dialog();
 		VerticalLayout vdialog = new VerticalLayout();
 		HorizontalLayout hddialog = new HorizontalLayout();
-		
-		dialog.add(new Label("Möcheten Sie den ausgewählten Patienten wirklich löschen?" ));
+
+		dialog.add(new Label("Möcheten Sie den ausgewählten Patienten wirklich löschen?"));
 		dialog.setCloseOnEsc(false);
 		dialog.setCloseOnOutsideClick(false);
-		
-		Button confimrButton = new Button("Bestätigen",event -> {
+
+		Button confimrButton = new Button("Bestätigen", event -> {
 			this.presenter.deleteButtonClicked(this.currentShowedPatient);
 			this.getUI().ifPresent(ui -> ui.navigate("Patient suchen"));
 			dialog.close();
-		}); 
-		
+		});
+
 		Button cancelButton = new Button("Abbruch", event -> {
 			dialog.close();
 		});
-		hddialog.add(confimrButton,cancelButton);
+		hddialog.add(confimrButton, cancelButton);
 		vdialog.add(hddialog);
-		dialog.add(vdialog,vdialog);
-		
-		
-		
+		dialog.add(vdialog, vdialog);
+
 		return dialog;
 	}
 
-	private Button createDeleteButton() {
-		Button deleteButton = new Button("Entfernen", new Icon(VaadinIcon.TRASH));
-		
-		deleteButton.addClickListener(event -> { 
-			dialog.open();
-			
-		});
-		return deleteButton;
-	}
-	
-	
-//	private Button createDeleteButton() {
-//		Button deleteButton = new Button("entfernen", new Icon(VaadinIcon.TRASH));
-//		
-//		deleteButton.addClickListener(event -> {
-//			this.presenter.deleteButtonClicked(this.currentShowedPatient);
-//			this.getUI().ifPresent(ui -> ui.navigate("Patient suchen"));
-//		});
-//		return deleteButton;
-//	}
-
+	/**
+	 * Updates the current patient with all the Information from the
+	 * {@code PatientEntity}.
+	 */
 	private void updateCurrentPatient() {
 		try {
 			this.currentShowedPatient.setFirstName(this.firstName.getValue());

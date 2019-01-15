@@ -19,29 +19,36 @@ import entity.Address;
 import presenter.InstitutionPresenterAdmin;
 import service.UserService;
 
+
 /**
  * The {@code SettingsView} is part of the UI and is used to change the Data of the {@code InstitutionModel}
  * It also uses the {@code InstitutionPresenter} to get the initial Data.
- * @author yanng
+ * @author gundy1
  *
  */
 
 @Route("Settings")
 public class SettingsView extends VerticalLayout implements BeforeEnterObserver{
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** The presenter that handles the user inputs in the UI. */
 	private InstitutionPresenterAdmin presenter;
 
 	private TextField actualNameOfInstitution;
+	
 	private TextField actualStreetOfInstitution;
+
 	private TextField actualStreetNrOfInstitution;
+
 	private TextField actualZipCodeOfInstitution;
+
 	private TextField actualCityOfInstitution;
 	
+	/* (non-Javadoc)
+	 * @see com.vaadin.flow.router.internal.BeforeEnterHandler#beforeEnter(com.vaadin.flow.router.BeforeEnterEvent)
+	 */
 	@Override
 	public void beforeEnter(BeforeEnterEvent event) {
 		if (UserService.getUser() == null) {
@@ -49,6 +56,9 @@ public class SettingsView extends VerticalLayout implements BeforeEnterObserver{
 		}
 	}
 
+	/**
+	 * Instantiates a new settings view.
+	 */
 	public SettingsView() {
 		this.initView();
 		this.addVisualComponents();
@@ -64,6 +74,9 @@ public class SettingsView extends VerticalLayout implements BeforeEnterObserver{
 		this.presenter = new InstitutionPresenterAdmin();
 	}
 
+	/**
+	 * Adds the visual components.
+	 */
 	private void addVisualComponents() {
 
 		this.getStyle().set("margin-top", "100px");
@@ -144,18 +157,35 @@ public class SettingsView extends VerticalLayout implements BeforeEnterObserver{
 
 	// Below are all methods that create specific types of visual Components.
 
+	/**
+	 * Creates the textfield.
+	 *
+	 * @return the text field
+	 */
 	private TextField createTextfield() {
 		TextField newTextfield = new TextField();
 		new TextField().setWidth("100px");
 		return newTextfield;
 	}
 
+	/**
+	 * Creates the label.
+	 *
+	 * @param value the value
+	 * @return the label
+	 */
 	private Label createLabel(String value) {
 		Label newLabel = new Label(value);
 		newLabel.setWidth("100px");
 		return newLabel;
 	}
 
+	/**
+	 * Creates the button.
+	 *
+	 * @param value the value
+	 * @return the button
+	 */
 	private Button createButton(String value) {
 		Button newButton = new Button(value);
 		newButton.setWidth("150px");
