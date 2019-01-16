@@ -34,29 +34,47 @@ import presenter.PatientPresenter;
 import service.PatientService;
 import service.UserService;
 
+
+/**
+ * The Class PatientFilterView.
+ * 
+ * @author gehry1
+ * 
+ */
 @Route("Patient suchen")
 
 public class PatientFilterView extends HorizontalLayout implements BeforeEnterObserver {
 
+	/** The presenter that handles all inputs from the user in the view. */
 	private PatientPresenter presenter;
 
+	/** The layout. */
 	HorizontalLayout layout = new HorizontalLayout();
+	
+	/** The layout menu. */
 	VerticalLayout layoutMenu = new VerticalLayout();
+	
+	/** The layout page. */
 	VerticalLayout layoutPage = new VerticalLayout();
 
+	/**
+	 * Instantiates a new patient filter view.
+	 */
 	public PatientFilterView() {
 		this.presenter = new PatientPresenter();
 		VerticalLayout vlMenu = this.createMenu();
 		VerticalLayout vlBody = this.patientFilter();
 		patientFilter();
 		this.layoutPage.add(layout);
-		this.add(vlMenu,vlBody, layoutMenu, layoutPage);
-//		this.setAlignItems(Alignment.CENTER);
-		
+		this.add(vlMenu, vlBody, layoutMenu, layoutPage);
 
 	}
-	
 
+	/**
+	 * Patient filter creates the grid for the patients into which the patient data is loaded.
+	 *
+	 * @return the vertical layout
+	 */
 	public VerticalLayout patientFilter() {
 
 		Grid<PatientEntity> grid = new Grid<>();
@@ -65,21 +83,21 @@ public class PatientFilterView extends HorizontalLayout implements BeforeEnterOb
 		grid.setDataProvider(dataProvider);
 
 		List<ValueProvider<PatientEntity, String>> valueProviders = new ArrayList<>();
-		
+
 		valueProviders.add(patient -> patient.getLastName());
 		valueProviders.add(patient -> patient.getFirstName());
 		valueProviders.add(patient -> String.valueOf(patient.getBirthdate()));
 		valueProviders.add(patient -> patient.getAddress());
 		valueProviders.add(patient -> patient.getCity());
-		
+		// create the grid
 		grid.addColumn(PatientEntity::getLastName).setHeader("Nachname");
 		grid.addColumn(PatientEntity::getFirstName).setHeader("Vorname");
 		grid.addColumn(PatientEntity::getBirthdate).setHeader("Geburtsdatum");
 		grid.addColumn(PatientEntity::getAddress).setHeader("Adresse");
 		grid.addColumn(PatientEntity::getCity).setHeader("Wohnort");
-
+		//HeaderRow for the grid
 		HeaderRow filterRow = grid.appendHeaderRow();
-
+		//Load the data in the grid
 		Iterator<ValueProvider<PatientEntity, String>> iterator2 = valueProviders.iterator();
 
 		grid.getColumns().forEach(column -> {
@@ -95,7 +113,7 @@ public class PatientFilterView extends HorizontalLayout implements BeforeEnterOb
 			field.setSizeFull();
 			field.setPlaceholder("Filter");
 		});
-
+		//SelectionListener for the selected patient. 
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.addSelectionListener(event -> {
 			try {
@@ -109,26 +127,27 @@ public class PatientFilterView extends HorizontalLayout implements BeforeEnterOb
 			}
 
 		});
-		
 
 		grid.setWidth("850px");
-		//grid.setHeight("800px");
+
 		grid.setHeightByRows(true);
-//		this.layout.add(grid);
-		
+
 		Label info = new Label("Alle erfassten Patienten: ");
 		info.getStyle().set("font-size", "200%");
-		
+
 		VerticalLayout vlBody = new VerticalLayout();
 		vlBody.getStyle().set("magrin-top", "50px");
-		vlBody.add(info,grid);
-		
+		vlBody.add(info, grid);
+
 		return vlBody;
 
 	}
-	
-	
-	
+
+	/**
+	 * Creates the navigationmenu on the left side.
+	 *
+	 * @return the vertical layout
+	 */
 	public VerticalLayout createMenu() {
 		VerticalLayout vlMenu = new VerticalLayout();
 		vlMenu.setWidth("250px");
@@ -138,7 +157,14 @@ public class PatientFilterView extends HorizontalLayout implements BeforeEnterOb
 		vlMenu.add(this.createMenuButton("Logout", new Icon(VaadinIcon.POWER_OFF)));
 		return vlMenu;
 	}
-	
+
+	/**
+	 * Creates the menu buttons.
+	 *
+	 * @param value the value
+	 * @param icon the icon
+	 * @return the button
+	 */
 	private Button createMenuButton(String value, Icon icon) {
 		Button newButton = new Button(value, icon);
 		newButton.addClickListener(e -> {
@@ -148,37 +174,9 @@ public class PatientFilterView extends HorizontalLayout implements BeforeEnterOb
 		return newButton;
 	}
 
-//	private void menu() {
-//		Button home = new Button("Zurück zum Hautpmenü");
-//		home.setWidth("230px");
-//		home.addClickListener(e -> {
-//			home.getUI().ifPresent(ui -> ui.navigate("Home"));
-//		});
-//
-//		Button patNew = new Button("Neuer Patient erfassen");
-//		patNew.setWidth("230px");
-//		patNew.addClickListener(e -> {
-//			patNew.getUI().ifPresent(ui -> ui.navigate("New Patient"));
-//		});
-//
-//		Button calendar = new Button("Kalender");
-//		calendar.setWidth("230px");
-//		calendar.addClickListener(e -> {
-//			calendar.getUI().ifPresent(ui -> ui.navigate("Calendar"));
-//		});
-//
-//		Button logout = new Button("Logout");
-//		logout.setWidth("230px");
-//		logout.addClickListener(e -> {
-//			logout.getUI().ifPresent(ui -> ui.navigate("Logout"));
-//		});
-//
-//		VerticalLayout layout = new VerticalLayout(home, patNew, calendar, logout);
-//		layout.setSizeFull();
-//		this.layoutMenu.setWidth("250px");
-//		this.layoutMenu.add(layout);
-//	}
-
+	/* (non-Javadoc)
+	 * @see com.vaadin.flow.router.internal.BeforeEnterHandler#beforeEnter(com.vaadin.flow.router.BeforeEnterEvent)
+	 */
 	@Override
 	public void beforeEnter(BeforeEnterEvent event) {
 		if (UserService.getUser() == null) {
@@ -187,4 +185,3 @@ public class PatientFilterView extends HorizontalLayout implements BeforeEnterOb
 	}
 
 }
-//
