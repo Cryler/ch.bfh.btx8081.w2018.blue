@@ -28,6 +28,7 @@ import com.vaadin.flow.router.Route;
 import entity.PatientEntity;
 import presenter.PatientPresenter;
 import service.UserService;
+import service.CountriesService;
 import service.PatientService;
 
 /**
@@ -123,8 +124,8 @@ public class NewPatientView extends HorizontalLayout implements BeforeEnterObser
 		gender.setItems("weiblich", "männlich");
 		gender.setPlaceholder("Geschlecht auswählen");
 		
-		nationality.setItems(PatientService.getAllCountries());
-		language.setItems(PatientService.getAllLanguges());
+		nationality.setItems(CountriesService.getAllCountries());
+		language.setItems(CountriesService.getAllLanguges());
 
 		newPatientLayout.addFormItem(this.lastName, "Nachname*");
 		newPatientLayout.addFormItem(this.firstName, "Vorname*");
