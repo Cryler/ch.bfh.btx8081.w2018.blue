@@ -46,7 +46,7 @@ import service.UserService;
 /**
  * View for the new session site.
  * 
- * @author Luca Leuenberger, gundy1
+ * @author leuel3, gundy1
  *
  */
 
@@ -66,7 +66,7 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 	/** The session information page. */
 	private Div sessionInformationPage;
 
-	/** The diagramm information page. */
+	/** The diagram information page. */
 	private Div diagrammInformationPage;
 
 	/** The last name. */

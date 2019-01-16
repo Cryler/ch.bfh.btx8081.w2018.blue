@@ -129,7 +129,7 @@ public class NewSessionView extends VerticalLayout implements BeforeEnterObserve
 		});
 		Button cancel = new Button("Abbrechen");
 		cancel.addClickListener(e -> {
-			cancel.getUI().ifPresent(ui -> ui.navigate("Home")); // put in right route
+			cancel.getUI().ifPresent(ui -> ui.navigate("Patient")); 
 		});
 		hl1.add(cancel, save);
 		hl1.getStyle().set("padding-top", "200px");
