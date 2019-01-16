@@ -13,7 +13,7 @@ import javax.persistence.Table;
 /**
  * Entity class for the sessions.
  * 
- * @author Luca Leuenberger
+ * @author leuel3
  *
  */
 @Entity

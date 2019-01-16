@@ -46,7 +46,8 @@ import service.UserService;
 /**
  * View for the new session site.
  * 
- * @author leuel3, gundy1
+ * @author leuel3
+ * @author gundy1
  *
  */
 
