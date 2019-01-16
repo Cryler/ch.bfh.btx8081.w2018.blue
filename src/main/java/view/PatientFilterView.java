@@ -65,15 +65,15 @@ public class PatientFilterView extends HorizontalLayout implements BeforeEnterOb
 		grid.setDataProvider(dataProvider);
 
 		List<ValueProvider<PatientEntity, String>> valueProviders = new ArrayList<>();
-
-		valueProviders.add(patient -> patient.getFirstName());
+		
 		valueProviders.add(patient -> patient.getLastName());
+		valueProviders.add(patient -> patient.getFirstName());
 		valueProviders.add(patient -> String.valueOf(patient.getBirthdate()));
 		valueProviders.add(patient -> patient.getAddress());
 		valueProviders.add(patient -> patient.getCity());
-
-		grid.addColumn(PatientEntity::getFirstName).setHeader("Vorname");
+		
 		grid.addColumn(PatientEntity::getLastName).setHeader("Nachname");
+		grid.addColumn(PatientEntity::getFirstName).setHeader("Vorname");
 		grid.addColumn(PatientEntity::getBirthdate).setHeader("Geburtsdatum");
 		grid.addColumn(PatientEntity::getAddress).setHeader("Adresse");
 		grid.addColumn(PatientEntity::getCity).setHeader("Wohnort");
