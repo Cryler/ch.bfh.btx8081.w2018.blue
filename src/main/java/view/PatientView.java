@@ -30,6 +30,9 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.validator.EmailValidator;
+import com.vaadin.flow.data.validator.RegexpValidator;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.BeforeEnterEvent;
@@ -48,6 +51,7 @@ import service.UserService;
  * 
  * @author leuel3
  * @author gundy1
+ * @author gehry1
  *
  */
 
@@ -272,6 +276,18 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 		newPatientLayout.addFormItem(email, "Email");
 		newPatientLayout.addFormItem(insurance, "Krankenkasse");
 		newPatientLayout.addFormItem(ahvNr, "AHV-Nr.");
+		
+		
+		Binder<PatientEntity> binder = new Binder<>();
+		binder.forField(email).withValidator(new EmailValidator("Dies scheint keine email Adresse zu sein!"))
+				.bind(PatientEntity::getEmail, PatientEntity::setEmail);
+		
+		binder.forField(phoneNumber).withValidator(new RegexpValidator("Falsche telnr.",
+				"(\\d{4})\\s?(\\d{2})\\s?(\\d{3})\\s?(\\d{2})\\s?(\\d{2})"))
+				.bind(PatientEntity::getPhoneNumber, PatientEntity::setPhoneNumber);
+		
+		binder.forField(ahvNr).withValidator(new RegexpValidator("AHV Nummer ist nicht korrekt!", "((\\b756)\\.(\\d{4})\\.(\\d{4})\\.(\\d{2}))"))
+				.bind(PatientEntity::getAhvNr, PatientEntity::setAhvNr);
 
 		HorizontalLayout hl1 = new HorizontalLayout();
 		this.editButton = this.createEditButton();
