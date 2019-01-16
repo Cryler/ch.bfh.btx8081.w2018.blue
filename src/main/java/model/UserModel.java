@@ -63,7 +63,7 @@ public class UserModel {
 			} catch (NoResultException e1) {
 			}
 			em.persist(user);
-			new UserService(user.getUsername());
+			new UserService(user);
 		} finally {
 			this.closeConnection();
 		}
@@ -88,7 +88,7 @@ public class UserModel {
 			if (!entity.getPassword().equals(password)) {
 				throw new InvalidPasswordException("Das Passwort ist nicht korrekt.");
 			}
-			new UserService(username);
+			new UserService(entity);
 		} catch (NoResultException e) {
 			throw new InvalidUsernameException("Benutzername existiert nicht.");
 		} finally {

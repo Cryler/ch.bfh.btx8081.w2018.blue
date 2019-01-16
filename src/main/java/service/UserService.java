@@ -6,11 +6,6 @@
  */
 package service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
-
 import entity.UserEntity;
 
 /**
@@ -20,57 +15,79 @@ import entity.UserEntity;
  */
 public class UserService {
 
-	//TODO Diese klasse noch in ein schönes Singleton umbauen!
-	
-	
-	private static String username;
-	
-	private static EntityManager em;
-
-	private static EntityTransaction transaction;
+	/** The user. */
+	private static UserEntity user;
 
 	/**
 	 * Instantiates a new user service and stores the username of the currently logged user in the {@value username}.
 	 *
-	 * @param user the user
+	 * @param entity the entity
 	 */
-	public UserService(String user) {
-		UserService.username = user;
+	public UserService(UserEntity entity) {
+		if(UserService.user == null) {
+			UserService.user = entity;
+		}	
 	}
 	
 	/**
-	 * Clears the {@value username}.
-	 */
-	public static void logout() {
-		UserService.username = null;
-	}
-
-	/**
-	 * Gets the user.
+	 * Gets the current user.
 	 *
 	 * @return the user
 	 */
 	public static UserEntity getUser() {
-		UserService.em = EMService.getEM();
-		UserService.transaction = em.getTransaction();
-		UserService.transaction.begin();
-		try {
-			Query q = UserService.em.createNativeQuery(
-					"select * from usertable where usertable.username = '" + UserService.username + "'", UserEntity.class);
-			UserEntity entity = (UserEntity) q.getSingleResult();
-			return entity;
-		}catch (NoResultException e) {
-			return null;
-		}finally {
-			UserService.closeConnection();
-		}
+		return UserSingleton.getUser();
 	}
 	
 	/**
-	 * Closes the current connection to the db.
+	 * Clears the value of the singleton.
 	 */
-	private static void closeConnection() {
-		UserService.em.flush();
-		UserService.transaction.commit();
+	public static void logout() {
+		UserSingleton.logout();
+		UserService.user = null;
+	}	
+	
+	/**
+	 * Gets the user for singleton.
+	 *
+	 * @return the user for singleton
+	 */
+	private static UserEntity getUserForSingleton() {
+		return UserService.user;
+	}
+	
+	
+
+	
+	/**
+	 * The Class UserSingleton that holds the reference on the current logged in user.
+	 */
+	private static class UserSingleton{
+		
+		/** The instance. */
+		private static UserSingleton instance;
+		
+		/** The user that is logged in. */
+		private static UserEntity user;
+		
+		/**
+		 * Gets the current user.
+		 *
+		 * @return the user
+		 */
+		private static UserEntity getUser() {
+			if(UserSingleton.instance == null) {
+				UserSingleton.instance = new UserSingleton();
+				UserSingleton.user = UserService.getUserForSingleton();
+			}
+			return UserSingleton.user;
+		}
+		
+		/**
+		 * Logout, clears the reference on the current logged in user.
+		 */
+		private static void logout() {
+			UserSingleton.user = null;
+			UserSingleton.instance = null;
+		}
 	}
 }

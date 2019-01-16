@@ -66,7 +66,6 @@ public class Login extends VerticalLayout {
 			if (this.username.getValue().equals("") || this.password.getValue().equals("")) {
 				this.info.setText("Angaben sind unvollständig");
 			} else {
-
 				try {
 					this.presenter.loginButtonClicked(e, this.username.getValue(), this.password.getValue());
 				} catch (InvalidPasswordException | InvalidUsernameException e1) {

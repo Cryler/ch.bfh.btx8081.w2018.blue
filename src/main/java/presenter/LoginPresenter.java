@@ -32,8 +32,7 @@ public class LoginPresenter {
 	 * @throws InvalidUsernameException the invalid username exception
 	 */
 	public void loginButtonClicked(ClickEvent<Button> e, String username, String password) throws InvalidPasswordException, InvalidUsernameException{
-		UserModel model = new UserModel();
-		model.loginUser(username, password);
+		new UserModel().loginUser(username, password);
 		e.getSource().getUI().ifPresent(ui -> ui.navigate("Home"));		
 	}
 	
