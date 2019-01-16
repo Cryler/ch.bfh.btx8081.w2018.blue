@@ -29,37 +29,71 @@ import entity.PatientEntity;
 import presenter.PatientPresenter;
 import service.UserService;
 import service.CountriesService;
-import service.PatientService;
+
 
 /**
  * View for the new patient site.
  * 
  *
- * @author Yannick Gehri
+ * @author gehry1
  *
  */
 
 @Route("Neuer Patient")
 public class NewPatientView extends HorizontalLayout implements BeforeEnterObserver {
 
+	/** The last name. */
 	private TextField lastName;
+	
+	/** The first name. */
 	private TextField firstName;
+	
+	/** The address. */
 	private TextField address;
+	
+	/** The nationality. */
 	private ComboBox<String> nationality;
+	
+	/** The city. */
 	private TextField city;
+	
+	/** The language. */
 	private ComboBox<String> language;
+	
+	/** The phonenumber. */
 	private TextField phonenumber;
+	
+	/** The email. */
 	private TextField email;
+	
+	/** The insurance. */
 	private TextField insurance;
+	
+	/** The ahv nr. */
 	private TextField ahvNr;
+	
+	/** The birthdate. */
 	private DatePicker birthdate;
+	
+	/** The presenter. */
 	private PatientPresenter presenter;
+	
+	/** The gender. */
 	private ComboBox<String> gender;
+	
+	/** The binder. */
 	private Binder<PatientEntity> binder;
+	
+	/** The info label. */
 	private Label infoLabel;
+	
+	/** The hint label. */
 	private Label hintLabel;
-	//private ComboBox<String> countries;
+	
 
+	/* (non-Javadoc)
+	 * @see com.vaadin.flow.router.internal.BeforeEnterHandler#beforeEnter(com.vaadin.flow.router.BeforeEnterEvent)
+	 */
 	@Override
 	public void beforeEnter(BeforeEnterEvent event) {
 		if (UserService.getUser() == null) {
@@ -83,6 +117,8 @@ public class NewPatientView extends HorizontalLayout implements BeforeEnterObser
 
 	/**
 	 * Vertical layout with label and textfield for patientdata.
+	 *
+	 * @return the vertical layout
 	 */
 	public VerticalLayout patientData() {
 
@@ -101,9 +137,7 @@ public class NewPatientView extends HorizontalLayout implements BeforeEnterObser
 		this.city = new TextField();
 		city.setValueChangeMode(ValueChangeMode.EAGER);
 		this.nationality = new ComboBox<String>();
-		//nationality.setValueChangeMode(ValueChangeMode.EAGER);
 		this.language = new ComboBox<String>();
-		//language.setValueChangeMode(ValueChangeMode.EAGER);
 		this.phonenumber = new TextField();
 		phonenumber.setPlaceholder("0041 xx xxx xx xx");
 		phonenumber.setValueChangeMode(ValueChangeMode.EAGER);
@@ -117,16 +151,17 @@ public class NewPatientView extends HorizontalLayout implements BeforeEnterObser
 		this.infoLabel = new Label();
 		this.hintLabel = new Label("*Pflichtfelder");
 		
-		//this.countries = new ComboBox<>();
+		
 		
 
-		// Combobox for gender
+		// Combobox for gender, nationality, language
 		gender.setItems("weiblich", "männlich");
 		gender.setPlaceholder("Geschlecht auswählen");
 		
 		nationality.setItems(CountriesService.getAllCountries());
 		language.setItems(CountriesService.getAllLanguges());
 
+		// add the fields to the form
 		newPatientLayout.addFormItem(this.lastName, "Nachname*");
 		newPatientLayout.addFormItem(this.firstName, "Vorname*");
 		newPatientLayout.addFormItem(this.birthdate, "Geburtsdatum*");
@@ -139,10 +174,10 @@ public class NewPatientView extends HorizontalLayout implements BeforeEnterObser
 		newPatientLayout.addFormItem(this.email, "Email*");
 		newPatientLayout.addFormItem(this.insurance, "Krankenkasse*");
 		newPatientLayout.addFormItem(this.ahvNr, "AHV-Nr.*");
-		//newPatientLayout.addFormItem(this.countries, "Land");
+		
 
 		
-		
+		//binder for the formfields
 		this.binder = new Binder<>();
 		binder.forField(email).withValidator(new EmailValidator("ungültige E-Mail-Adresse!"))
 				.bind(PatientEntity::getEmail, PatientEntity::setEmail);
@@ -152,11 +187,6 @@ public class NewPatientView extends HorizontalLayout implements BeforeEnterObser
 
 		binder.forField(lastName).withValidator(new StringLengthValidator("Es wurde kein Nachname eingegeben!", 1, null))
 				.bind(PatientEntity::getLastName, PatientEntity::setLastName);
-
-//		binder.forField(lastName)
-//				.withValidator(lastname -> lastname.length() >= 2, "Nachname muss mehr als zwei Buchstaben enthalten!")
-//				.asRequired("Bitte geben Sie einen Nachnamen ein!")
-//				.bind(PatientEntity::getLastName, PatientEntity::setLastName);
 
 		binder.forField(birthdate)
 				.withValidator(birthdate -> birthdate.isBefore(LocalDate.now()), "Ungültiges Geburtsdatum!")
@@ -187,6 +217,7 @@ public class NewPatientView extends HorizontalLayout implements BeforeEnterObser
 		ahvNr.setRequiredIndicatorVisible(true);
 		gender.setRequiredIndicatorVisible(true);
 
+		//Title label
 		Label info = new Label("Neuer Patient erfassen:");
 		info.getStyle().set("font-size", "200%");
 
@@ -199,6 +230,8 @@ public class NewPatientView extends HorizontalLayout implements BeforeEnterObser
 
 	/**
 	 * Horizontal layout with 2 buttons to save or cancel the session.
+	 *
+	 * @return the horizontal layout
 	 */
 
 	public HorizontalLayout createButtons() {
@@ -222,7 +255,7 @@ public class NewPatientView extends HorizontalLayout implements BeforeEnterObser
 				patient.setInsurance(this.insurance.getValue());
 				patient.setGender(this.gender.getValue());
 				this.presenter.saveButtonClicked(e, patient);
-				//this.getUI().ifPresent(ui -> ui.navigate("Home"));
+				
 
 			} else {
 				BinderValidationStatus<PatientEntity> validate = binder.validate();
@@ -242,6 +275,11 @@ public class NewPatientView extends HorizontalLayout implements BeforeEnterObser
 		return layoutButtons;
 	}
 
+	/**
+	 * Creates the menu.
+	 *
+	 * @return the vertical layout
+	 */
 	public VerticalLayout createMenu() {
 		VerticalLayout vlMenu = new VerticalLayout();
 		vlMenu.setWidth("250px");
@@ -252,6 +290,13 @@ public class NewPatientView extends HorizontalLayout implements BeforeEnterObser
 		return vlMenu;
 	}
 
+	/**
+	 * Creates the menu button.
+	 *
+	 * @param value the value
+	 * @param icon the icon
+	 * @return the button
+	 */
 	private Button createMenuButton(String value, Icon icon) {
 		Button newButton = new Button(value, icon);
 		newButton.addClickListener(e -> {
