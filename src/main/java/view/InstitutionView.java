@@ -54,6 +54,7 @@ public class InstitutionView extends VerticalLayout implements BeforeEnterObserv
 	 * Instantiates a new institution view. First all graphical components are created, then all Data is initialized.
 	 */
 	public InstitutionView() {
+		
 		this.initView();
 		this.addComponents();
 		this.updateView();
@@ -72,6 +73,11 @@ public class InstitutionView extends VerticalLayout implements BeforeEnterObserv
 	 * Adds the graphical components.
 	 */
 	private void addComponents() {
+		VerticalLayout vl1 = new VerticalLayout();
+		vl1.setWidth("230px");
+		vl1.getStyle().set("background-color",	"rgb(245, 245, 245)");
+		vl1.getStyle().set("border-radius", "10px");		
+		
 		this.infoArea = new TextArea();
 		this.infoArea = new TextArea();
 		this.infoArea.setWidth("200px");
@@ -83,7 +89,8 @@ public class InstitutionView extends VerticalLayout implements BeforeEnterObserv
 		Button settingsButton = this.createButton("Settings", new Icon(VaadinIcon.COG));
 		Button logoutButton = this.createButton("Logout", new Icon(VaadinIcon.POWER_OFF));
 
-		this.add(this.infoArea, calendarButton, newPatientButton, searchPatientButton, settingsButton, logoutButton);
+		vl1.add(this.infoArea, calendarButton, newPatientButton, searchPatientButton, settingsButton, logoutButton);
+		this.add(vl1);
 	}
 
 	/**

@@ -167,7 +167,6 @@ public class PatientView extends HorizontalLayout implements BeforeEnterObserver
 	private void initGraphicalContent() {
 		createMenuComponents();
 		createMainTabNavigation();
-
 	}
 
 	/**

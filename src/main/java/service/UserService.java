@@ -23,10 +23,11 @@ public class UserService {
 	 *
 	 * @param entity the entity
 	 */
-	public UserService(UserEntity entity) {
+	public UserService(UserEntity entity) {	
 		if(UserService.user == null) {
+			UserSingleton.logout();
 			UserService.user = entity;
-		}	
+		}
 	}
 	
 	/**
@@ -66,7 +67,7 @@ public class UserService {
 		/** The instance. */
 		private static UserSingleton instance;
 		
-		/** The user that is logged in. */
+		/** The user that is logged 	in. */
 		private static UserEntity user;
 		
 		/**

@@ -49,11 +49,16 @@ public class Login extends VerticalLayout {
 	private void initUI() {
 		
 		this.setAlignItems(Alignment.CENTER);
-		this.getStyle().set("margin-top", "100px");
+		this.setSizeFull();
+		
+		
 		
 		VerticalLayout vl1 = new VerticalLayout();
 		vl1.setAlignItems(Alignment.CENTER);
+		vl1.getStyle().set("margin-top", "100px");
 		vl1.setWidth("350px");
+		vl1.getStyle().set("background-color",	"rgb(245, 245, 245)");
+		vl1.getStyle().set("border-radius", "10px");
 
 		this.username = new TextField();
 		this.username.setLabel("Benutzername");
