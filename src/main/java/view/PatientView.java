@@ -47,7 +47,7 @@ import service.PatientService;
 import service.UserService;
 
 /**
- * View for the new session site.
+ * View for the Patient site.
  * 
  * @author leuel3
  * @author gundy1

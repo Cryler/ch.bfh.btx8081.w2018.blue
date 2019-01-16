@@ -172,7 +172,7 @@ public class NewPatientView extends HorizontalLayout implements BeforeEnterObser
 		newPatientLayout.addFormItem(this.language, "Sprache*");
 		newPatientLayout.addFormItem(this.phonenumber, "Telefonnummer*");
 		newPatientLayout.addFormItem(this.email, "Email*");
-		newPatientLayout.addFormItem(this.insurance, "Krankenkasse*");
+		newPatientLayout.addFormItem(this.insurance, "Krankenkasse");
 		newPatientLayout.addFormItem(this.ahvNr, "AHV-Nr.*");
 		
 

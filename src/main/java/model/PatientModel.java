@@ -18,13 +18,28 @@ import presenter.PatientPresenter;
 import service.EMService;
 import service.PatientService;
 
+
+/**
+ * The Class PatientModel.
+ * 
+ * @author gehry1
+ * 
+ */
 public class PatientModel {
 
+	/** The em. */
 	private EntityManager em;
+	
+	/** The transaction. */
 	private EntityTransaction transaction;
 
 	
 	
+	/**
+	 * Set a new patient.
+	 *
+	 * @param patient the new patient
+	 */
 	public void setPatient(PatientEntity patient) {
 		this.em = EMService.getEM();
 		this.transaction = EMService.getTransaction();
@@ -34,6 +49,11 @@ public class PatientModel {
 		this.closeConnection();
 	}
 
+	/**
+	 * Gets the patient sorted by lastname ascending.
+	 *
+	 * @return the patient
+	 */
 	public Collection<PatientEntity> getPatient() {
 		this.em = EMService.getEM();
 		this.transaction = EMService.getTransaction();
@@ -44,6 +64,11 @@ public class PatientModel {
 		return patient;
 	}
 	
+	/**
+	 * Delete the patient.
+	 *
+	 * @param patient the patient
+	 */
 	public void deletePatient(PatientEntity patient) {
 		this.em = EMService.getEM();
 		this.transaction = EMService.getTransaction();
@@ -53,6 +78,9 @@ public class PatientModel {
 	}
 
 
+	/**
+	 * Close connection.
+	 */
 	private void closeConnection() {
 		this.em.flush();
 		this.transaction.commit();
