@@ -54,6 +54,9 @@ public class NewSessionView extends VerticalLayout implements BeforeEnterObserve
 		}
 	}
 
+	/**
+	 * Initializes the patient. 
+	 */
 	@Override
 	public void afterNavigation(AfterNavigationEvent event) {
 		this.patient = PatientService.getPatient();
@@ -68,6 +71,9 @@ public class NewSessionView extends VerticalLayout implements BeforeEnterObserve
 		this.initGraphicalContent();
 	}
 
+	/**
+	 * Initializes the graphical content.
+	 */
 	private void initGraphicalContent() {
 		this.menu();
 		this.session();
@@ -138,6 +144,13 @@ public class NewSessionView extends VerticalLayout implements BeforeEnterObserve
 
 	}
 
+	/**
+	 * Creates a button in the menu that navigates to the next view.
+	 *
+	 * @param value the value
+	 * @param icon  the icon
+	 * @return the button
+	 */
 	private Button createMenuButton(String value, Icon icon) {
 		Button newButton = new Button(value, icon);
 		newButton.addClickListener(e -> {
