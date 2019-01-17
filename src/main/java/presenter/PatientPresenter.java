@@ -1,15 +1,13 @@
 package presenter;
 
 import java.util.Collection;
-import java.util.List;
 
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.notification.Notification;
+
 import entity.PatientEntity;
 import entity.SessionEntity;
-import exception.InvalidEmailException;
-import exception.InvalidUsernameException;
 import model.PatientModel;
 import model.SessionModel;
 
@@ -59,6 +57,7 @@ public class PatientPresenter {
 	 *
 	 * @param patient the patient
 	 */
+	@SuppressWarnings("static-access")
 	public void deleteButtonClicked(PatientEntity patient) {
 		this.model.deletePatient(patient);
 		this.notification = new Notification("Patient wurde gelöscht", 10000);
@@ -72,6 +71,7 @@ public class PatientPresenter {
 	 * @param e the ClickEvent
 	 * @param patient the patientEntity
 	 */
+	@SuppressWarnings("static-access")
 	public void saveButtonClicked(ClickEvent<Button> e, PatientEntity patient) {
 		this.model.setPatient(patient);	
 		this.notification = new Notification("Patient wurde gespeichert", 10000);
