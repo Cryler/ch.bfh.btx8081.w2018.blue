@@ -3,7 +3,6 @@ package view;
 import java.time.LocalDate;
 
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
@@ -35,6 +34,10 @@ import service.UserService;
 @Route("Neue Konsultation")
 public class NewSessionView extends VerticalLayout implements BeforeEnterObserver, AfterNavigationObserver {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private SessionPresenter presenter;
 	private PatientEntity patient;
 

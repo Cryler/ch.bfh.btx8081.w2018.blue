@@ -18,9 +18,6 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.ListDataProvider;
-import com.vaadin.flow.data.renderer.NativeButtonRenderer;
-import com.vaadin.flow.data.renderer.Renderer;
-import com.vaadin.flow.data.renderer.TemplateRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.function.ValueProvider;
 import com.vaadin.flow.router.BeforeEnterEvent;
@@ -28,8 +25,6 @@ import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
 
 import entity.PatientEntity;
-import entity.PersonEntity;
-import model.PatientModel;
 import presenter.PatientPresenter;
 import service.PatientService;
 import service.UserService;
@@ -44,6 +39,11 @@ import service.UserService;
 @Route("Patient suchen")
 
 public class PatientFilterView extends HorizontalLayout implements BeforeEnterObserver {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/** The presenter that handles all inputs from the user in the view. */
 	private PatientPresenter presenter;

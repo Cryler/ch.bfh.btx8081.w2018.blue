@@ -39,6 +39,7 @@ import service.CountriesService;
  *
  */
 
+@SuppressWarnings("serial")
 @Route("Neuer Patient")
 public class NewPatientView extends HorizontalLayout implements BeforeEnterObserver {
 
