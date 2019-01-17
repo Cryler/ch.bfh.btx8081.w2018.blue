@@ -1,7 +1,6 @@
 package model;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -36,6 +35,7 @@ public class SessionModel {
 			this.transaction = EMService.getTransaction();
 			this.transaction.begin();
 			Query q = em.createNativeQuery("select * from session where session.patient_id = "+patient.getPK(), SessionEntity.class);
+			@SuppressWarnings("unchecked")
 			Collection<SessionEntity> result = q.getResultList();
 			if(result.size() == 0) {
 				throw new NoResultException();

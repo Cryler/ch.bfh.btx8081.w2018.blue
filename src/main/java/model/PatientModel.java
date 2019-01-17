@@ -1,20 +1,12 @@
 package model;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Id;
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-
 
 import entity.PatientEntity;
-import entity.PersonEntity;
-import entity.SessionEntity;
-import presenter.PatientPresenter;
 import service.EMService;
 import service.PatientService;
 
@@ -59,6 +51,7 @@ public class PatientModel {
 		this.transaction = EMService.getTransaction();
 		this.transaction.begin();
 		Query q = this.em.createNativeQuery("select * from person order by lastname ASC", PatientEntity.class);
+		@SuppressWarnings("unchecked")
 		Collection<PatientEntity> patient = q.getResultList();
 		this.closeConnection();
 		return patient;

@@ -36,4 +36,6 @@ public  class PatientService {
 	public static void setPatient(PatientEntity tempPatient) {
 		PatientService.patient = tempPatient;
 	}
+	
+	
 }
