@@ -112,7 +112,7 @@ public class NewPatientView extends HorizontalLayout implements BeforeEnterObser
 		VerticalLayout vlBody = this.patientData();
 
 		this.add(vlMenu, vlBody);
-		this.setAlignItems(Alignment.CENTER);
+		
 	}
 
 	/**
